@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29728.190
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tramiauto.Common", "tramiauto.Common\tramiauto.Common.csproj", "{3353154E-0F78-4BBD-9C74-FE45D02DB459}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tramiauto.Web", "tramiauto.Web\tramiauto.Web.csproj", "{D86DCE2B-6C3E-4C2C-BE3A-BE10B9BE02D0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3353154E-0F78-4BBD-9C74-FE45D02DB459}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3353154E-0F78-4BBD-9C74-FE45D02DB459}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3353154E-0F78-4BBD-9C74-FE45D02DB459}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3353154E-0F78-4BBD-9C74-FE45D02DB459}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D86DCE2B-6C3E-4C2C-BE3A-BE10B9BE02D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D86DCE2B-6C3E-4C2C-BE3A-BE10B9BE02D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D86DCE2B-6C3E-4C2C-BE3A-BE10B9BE02D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D86DCE2B-6C3E-4C2C-BE3A-BE10B9BE02D0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {17F5E2BE-5D0D-4879-AA5D-84DD39B67B61}
+	EndGlobalSection
+EndGlobal
