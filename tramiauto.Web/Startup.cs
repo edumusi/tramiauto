@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using tramiauto.Web.Models;
+using tramiauto.Web.Models.InitDB;
 
 namespace tramiauto.Web
 {
@@ -29,7 +30,7 @@ namespace tramiauto.Web
             {
                 cfg.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
-
+            services.AddTransient<SeedDb>();
             services.AddControllersWithViews();
         }
 

@@ -33,5 +33,7 @@ namespace tramiauto.Web.Models.Entities
         /**************RELATIONSHIP*****************/
         public ICollection<Tramite> Tramites { get; set; }
 
+        
+
     }
 }
