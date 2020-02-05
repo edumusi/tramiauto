@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using tramiauto.Web.Models;
 
 namespace tramiauto.Web.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20200204231704_UserDb")]
+    partial class UserDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -182,12 +184,12 @@ namespace tramiauto.Web.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
-                    b.Property<int?>("UsuarioId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UsuarioId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Automotores");
                 });
@@ -340,6 +342,42 @@ namespace tramiauto.Web.Migrations
                     b.ToTable("TramiteAdjuntos");
                 });
 
+            modelBuilder.Entity("tramiauto.Web.Models.Entities.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("DatosFiscalesRfc")
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(30)")
+                        .HasMaxLength(30);
+
+                    b.Property<string>("FixedPhone")
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(30)")
+                        .HasMaxLength(30);
+
+                    b.Property<string>("UserLoginId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DatosFiscalesRfc");
+
+                    b.HasIndex("UserLoginId");
+
+                    b.ToTable("User");
+                });
+
             modelBuilder.Entity("tramiauto.Web.Models.Entities.UserLogin", b =>
                 {
                     b.Property<string>("Id")
@@ -405,42 +443,6 @@ namespace tramiauto.Web.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("tramiauto.Web.Models.Entities.Usuario", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("DatosFiscalesRfc")
-                        .HasColumnType("nvarchar(30)");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(30)")
-                        .HasMaxLength(30);
-
-                    b.Property<string>("FixedPhone")
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(30)")
-                        .HasMaxLength(30);
-
-                    b.Property<string>("UserLoginId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DatosFiscalesRfc");
-
-                    b.HasIndex("UserLoginId");
-
-                    b.ToTable("Usuarios");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -494,9 +496,9 @@ namespace tramiauto.Web.Migrations
 
             modelBuilder.Entity("tramiauto.Web.Models.Entities.Automotor", b =>
                 {
-                    b.HasOne("tramiauto.Web.Models.Entities.Usuario", null)
+                    b.HasOne("tramiauto.Web.Models.Entities.User", null)
                         .WithMany("Automotores")
-                        .HasForeignKey("UsuarioId");
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("tramiauto.Web.Models.Entities.Tramite", b =>
@@ -523,7 +525,7 @@ namespace tramiauto.Web.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("tramiauto.Web.Models.Entities.Usuario", b =>
+            modelBuilder.Entity("tramiauto.Web.Models.Entities.User", b =>
                 {
                     b.HasOne("tramiauto.Web.Models.Entities.DatosFiscales", "DatosFiscales")
                         .WithMany()

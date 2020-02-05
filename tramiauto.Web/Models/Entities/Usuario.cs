@@ -1,15 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace tramiauto.Web.Models.Entities
 {
-    public class User
-    {
+    public class Usuario 
+    {               
+
         [Key]
-        [Display(Name = "Correo Electrónico")]
-        [Required(ErrorMessage      = MessageCenter.labelTextFiedlRequired)]        
-        [MaxLength(50, ErrorMessage = MessageCenter.labelTextFiedlMaxLength)]
-        public string Email { get; set; }
+        public int Id { get; set; }
+
+        public UserLogin UserLogin { get; set; }
 
 
         [Display(Name = "Nombre")]
@@ -27,10 +28,11 @@ namespace tramiauto.Web.Models.Entities
         [MaxLength(20, ErrorMessage = MessageCenter.labelTextFiedlMaxLength)]
         public string FixedPhone { get; set; }
 
-        [Display(Name = "Celular")]
-        [Required(ErrorMessage      = MessageCenter.labelTextFiedlRequired)]
-        [MaxLength(20, ErrorMessage = MessageCenter.labelTextFiedlMaxLength)]
-        public string CellPhone { get; set; }
+        [Display(Name = "Celular")]        
+        public string CellPhone => $"{UserLogin.PhoneNumber} ";
+
+        [Display(Name = "Correo Electrónico")]
+        public string Correo  => $"{UserLogin.Email} ";
 
         [Display(Name = "Nombre del Usuario")] 
         public string FullName => $"{FirstName} {LastName}";

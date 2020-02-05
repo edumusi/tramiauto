@@ -4,12 +4,16 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using tramiauto.Web.Helpers;
 using tramiauto.Web.Models;
+using tramiauto.Web.Models.Entities;
 using tramiauto.Web.Models.InitDB;
 
 namespace tramiauto.Web
@@ -22,15 +26,27 @@ namespace tramiauto.Web
         }
 
         public IConfiguration Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
+        
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<DataContext>(cfg =>
+            services.Configure<CookiePolicyOptions>(options =>
             {
-                cfg.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+                options.CheckConsentNeeded    = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+            services.AddIdentity<UserLogin, IdentityRole>(cfg =>{ cfg.User.RequireUniqueEmail        = true;
+                                                                 cfg.Password.RequireDigit           = false;
+                                                                 cfg.Password.RequiredUniqueChars    = 0;
+                                                                 cfg.Password.RequireLowercase       = false;
+                                                                 cfg.Password.RequireNonAlphanumeric = false;
+                                                                 cfg.Password.RequireUppercase       = false;
+                                                                }).AddEntityFrameworkStores<DataContext>();
+
+            /*** INYECCIÓN DE DEPENDENCIAS tres tipo: Transient(Solo se ejecuta una sola vez), singleton (carga en memoria se mantiene), scope (se inyecta cada vez que se necesita, crea una nueva instancia) ***/
+            services.AddDbContext<DataContext>(cfg => { cfg.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")); });
+            services.AddScoped<IUserHelper, UserHelper>();
             services.AddTransient<SeedDb>();
+            /*** INYECCIÓN DE DEPENDENCIAS ***/
             services.AddControllersWithViews();
         }
 
@@ -49,10 +65,10 @@ namespace tramiauto.Web
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
-
             app.UseAuthorization();
+            app.UseAuthentication();
+            app.UseCookiePolicy();
 
             app.UseEndpoints(endpoints =>
             {
