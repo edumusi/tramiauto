@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using tramiauto.Common.Model;
 using tramiauto.Web.Models.Entities;
+
 
 /*** 
  * Interfaz para el manejo de los usuarios, INYECCIÓN DE DEPENDENCIAS en el starup
@@ -21,6 +20,10 @@ namespace tramiauto.Web.Helpers
         Task AddUserToRoleAsync(UserLogin user, string roleName);
 
         Task<bool> IsUserInRoleAsync(UserLogin user, string roleName);
+
+        Task<SignInResult> LoginAsync(LoginTARequest model);
+
+        Task LogoutAsync();
 
     }//Class
 }//Namespace

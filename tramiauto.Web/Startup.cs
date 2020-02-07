@@ -34,19 +34,24 @@ namespace tramiauto.Web
                 options.CheckConsentNeeded    = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-            services.AddIdentity<UserLogin, IdentityRole>(cfg =>{ cfg.User.RequireUniqueEmail        = true;
-                                                                 cfg.Password.RequireDigit           = false;
-                                                                 cfg.Password.RequiredUniqueChars    = 0;
-                                                                 cfg.Password.RequireLowercase       = false;
-                                                                 cfg.Password.RequireNonAlphanumeric = false;
-                                                                 cfg.Password.RequireUppercase       = false;
-                                                                }).AddEntityFrameworkStores<DataContext>();
+            services.AddIdentity<UserLogin, IdentityRole>(cfg =>{ cfg.User.RequireUniqueEmail         = true;
+                                                                  cfg.Password.RequireDigit           = false;                                                                  
+                                                                  cfg.Password.RequireLowercase       = false;
+                                                                  cfg.Password.RequireNonAlphanumeric = false;
+                                                                  cfg.Password.RequireUppercase       = false;
+                                                                  cfg.Password.RequiredUniqueChars    = 0;
+                                                                })
+                    .AddRoles<IdentityRole>()
+                    .AddEntityFrameworkStores<DataContext>()
+                    .AddDefaultTokenProviders()
+                    .AddErrorDescriber<CustomIdentityErrorDescriber>();
 
             /*** INYECCIÓN DE DEPENDENCIAS tres tipo: Transient(Solo se ejecuta una sola vez), singleton (carga en memoria se mantiene), scope (se inyecta cada vez que se necesita, crea una nueva instancia) ***/
             services.AddDbContext<DataContext>(cfg => { cfg.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")); });
             services.AddScoped<IUserHelper, UserHelper>();
             services.AddTransient<SeedDb>();
             /*** INYECCIÓN DE DEPENDENCIAS ***/
+
             services.AddControllersWithViews();
         }
 
@@ -63,19 +68,17 @@ namespace tramiauto.Web
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+         
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
             app.UseRouting();
-            app.UseAuthorization();
+
             app.UseAuthentication();
+            app.UseAuthorization();
             app.UseCookiePolicy();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
-            });
+            app.UseEndpoints(endpoints => { endpoints.MapControllerRoute( name : "default", pattern : "{controller=Home}/{action=Index}/{id?}"); });
         }
-    }
-}
+    }//Startup
+}//Namespace

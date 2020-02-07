@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,23 +10,22 @@ using tramiauto.Web.Models.Entities;
 
 namespace tramiauto.Web.Controllers
 {
-    
-    public class UsuariosController : Controller
+    public class TipoTramitesController : Controller
     {
-        private readonly DataContext _dataContext;
-        
-        public UsuariosController(DataContext context)
+        private readonly DataContext _context;
+
+        public TipoTramitesController(DataContext context)
         {
-            _dataContext = context;
+            _context = context;
         }
 
-        [Authorize(Roles = "Admin")]
+        // GET: TipoTramites
         public async Task<IActionResult> Index()
         {
-            return View(await _dataContext.Usuarios.ToListAsync());
+            return View(await _context.TipoTramites.ToListAsync());
         }
 
-        // GET: Usuarios/Details/5
+        // GET: TipoTramites/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -35,36 +33,39 @@ namespace tramiauto.Web.Controllers
                 return NotFound();
             }
 
-            var usuario = await _dataContext.Usuarios.FirstOrDefaultAsync(m => m.Id == id);
-            if (usuario == null)
-                { return NotFound(); }
+            var tipoTramite = await _context.TipoTramites
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (tipoTramite == null)
+            {
+                return NotFound();
+            }
 
-            return View(usuario);
+            return View(tipoTramite);
         }
 
-        // GET: Usuarios/Create
+        // GET: TipoTramites/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Usuarios/Create
+        // POST: TipoTramites/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,FixedPhone")] Usuario usuario)
+        public async Task<IActionResult> Create([Bind("Id,Nombre,Descripcion,Costo,TiempoOperacion")] TipoTramite tipoTramite)
         {
             if (ModelState.IsValid)
             {
-                _dataContext.Add(usuario);
-                await _dataContext.SaveChangesAsync();
+                _context.Add(tipoTramite);
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(usuario);
+            return View(tipoTramite);
         }
 
-        // GET: Usuarios/Edit/5
+        // GET: TipoTramites/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -72,22 +73,22 @@ namespace tramiauto.Web.Controllers
                 return NotFound();
             }
 
-            var usuario = await _dataContext.Usuarios.FindAsync(id);
-            if (usuario == null)
+            var tipoTramite = await _context.TipoTramites.FindAsync(id);
+            if (tipoTramite == null)
             {
                 return NotFound();
             }
-            return View(usuario);
+            return View(tipoTramite);
         }
 
-        // POST: Usuarios/Edit/5
+        // POST: TipoTramites/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,FixedPhone")] Usuario usuario)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Descripcion,Costo,TiempoOperacion")] TipoTramite tipoTramite)
         {
-            if (id != usuario.Id)
+            if (id != tipoTramite.Id)
             {
                 return NotFound();
             }
@@ -96,12 +97,12 @@ namespace tramiauto.Web.Controllers
             {
                 try
                 {
-                    _dataContext.Update(usuario);
-                    await _dataContext.SaveChangesAsync();
+                    _context.Update(tipoTramite);
+                    await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!UsuarioExists(usuario.Id))
+                    if (!TipoTramiteExists(tipoTramite.Id))
                     {
                         return NotFound();
                     }
@@ -112,10 +113,10 @@ namespace tramiauto.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(usuario);
+            return View(tipoTramite);
         }
 
-        // GET: Usuarios/Delete/5
+        // GET: TipoTramites/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -123,30 +124,30 @@ namespace tramiauto.Web.Controllers
                 return NotFound();
             }
 
-            var usuario = await _dataContext.Usuarios
+            var tipoTramite = await _context.TipoTramites
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (usuario == null)
+            if (tipoTramite == null)
             {
                 return NotFound();
             }
 
-            return View(usuario);
+            return View(tipoTramite);
         }
 
-        // POST: Usuarios/Delete/5
+        // POST: TipoTramites/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var usuario = await _dataContext.Usuarios.FindAsync(id);
-            _dataContext.Usuarios.Remove(usuario);
-            await _dataContext.SaveChangesAsync();
+            var tipoTramite = await _context.TipoTramites.FindAsync(id);
+            _context.TipoTramites.Remove(tipoTramite);
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool UsuarioExists(int id)
+        private bool TipoTramiteExists(int id)
         {
-            return _dataContext.Usuarios.Any(e => e.Id == id);
+            return _context.TipoTramites.Any(e => e.Id == id);
         }
     }
 }

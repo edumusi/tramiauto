@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,23 +10,22 @@ using tramiauto.Web.Models.Entities;
 
 namespace tramiauto.Web.Controllers
 {
-    
-    public class UsuariosController : Controller
+    public class TramitesController : Controller
     {
-        private readonly DataContext _dataContext;
-        
-        public UsuariosController(DataContext context)
+        private readonly DataContext _context;
+
+        public TramitesController(DataContext context)
         {
-            _dataContext = context;
+            _context = context;
         }
 
-        [Authorize(Roles = "Admin")]
+        // GET: Tramites
         public async Task<IActionResult> Index()
         {
-            return View(await _dataContext.Usuarios.ToListAsync());
+            return View(await _context.Tramites.ToListAsync());
         }
 
-        // GET: Usuarios/Details/5
+        // GET: Tramites/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -35,36 +33,39 @@ namespace tramiauto.Web.Controllers
                 return NotFound();
             }
 
-            var usuario = await _dataContext.Usuarios.FirstOrDefaultAsync(m => m.Id == id);
-            if (usuario == null)
-                { return NotFound(); }
+            var tramite = await _context.Tramites
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (tramite == null)
+            {
+                return NotFound();
+            }
 
-            return View(usuario);
+            return View(tramite);
         }
 
-        // GET: Usuarios/Create
+        // GET: Tramites/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Usuarios/Create
+        // POST: Tramites/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,FixedPhone")] Usuario usuario)
+        public async Task<IActionResult> Create([Bind("Id,Nombre,Descripcion,Costo,TiempoEntrega,FechaEntrega,FechaRegistro,Status")] Tramite tramite)
         {
             if (ModelState.IsValid)
             {
-                _dataContext.Add(usuario);
-                await _dataContext.SaveChangesAsync();
+                _context.Add(tramite);
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(usuario);
+            return View(tramite);
         }
 
-        // GET: Usuarios/Edit/5
+        // GET: Tramites/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -72,22 +73,22 @@ namespace tramiauto.Web.Controllers
                 return NotFound();
             }
 
-            var usuario = await _dataContext.Usuarios.FindAsync(id);
-            if (usuario == null)
+            var tramite = await _context.Tramites.FindAsync(id);
+            if (tramite == null)
             {
                 return NotFound();
             }
-            return View(usuario);
+            return View(tramite);
         }
 
-        // POST: Usuarios/Edit/5
+        // POST: Tramites/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,FixedPhone")] Usuario usuario)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Descripcion,Costo,TiempoEntrega,FechaEntrega,FechaRegistro,Status")] Tramite tramite)
         {
-            if (id != usuario.Id)
+            if (id != tramite.Id)
             {
                 return NotFound();
             }
@@ -96,12 +97,12 @@ namespace tramiauto.Web.Controllers
             {
                 try
                 {
-                    _dataContext.Update(usuario);
-                    await _dataContext.SaveChangesAsync();
+                    _context.Update(tramite);
+                    await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!UsuarioExists(usuario.Id))
+                    if (!TramiteExists(tramite.Id))
                     {
                         return NotFound();
                     }
@@ -112,10 +113,10 @@ namespace tramiauto.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(usuario);
+            return View(tramite);
         }
 
-        // GET: Usuarios/Delete/5
+        // GET: Tramites/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -123,30 +124,30 @@ namespace tramiauto.Web.Controllers
                 return NotFound();
             }
 
-            var usuario = await _dataContext.Usuarios
+            var tramite = await _context.Tramites
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (usuario == null)
+            if (tramite == null)
             {
                 return NotFound();
             }
 
-            return View(usuario);
+            return View(tramite);
         }
 
-        // POST: Usuarios/Delete/5
+        // POST: Tramites/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var usuario = await _dataContext.Usuarios.FindAsync(id);
-            _dataContext.Usuarios.Remove(usuario);
-            await _dataContext.SaveChangesAsync();
+            var tramite = await _context.Tramites.FindAsync(id);
+            _context.Tramites.Remove(tramite);
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool UsuarioExists(int id)
+        private bool TramiteExists(int id)
         {
-            return _dataContext.Usuarios.Any(e => e.Id == id);
+            return _context.Tramites.Any(e => e.Id == id);
         }
     }
 }

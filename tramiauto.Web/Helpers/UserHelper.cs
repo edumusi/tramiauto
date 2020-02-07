@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
+using tramiauto.Common.Model;
 using tramiauto.Web.Models.Entities;
 
 
@@ -11,14 +12,17 @@ namespace tramiauto.Web.Helpers
 {
     public class UserHelper : IUserHelper
     {
-        private readonly UserManager<UserLogin>    _userManager;
+        private readonly UserManager<UserLogin>  _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly SignInManager<UserLogin> _signInManager;
 
-        public UserHelper(UserManager<UserLogin>    userManager,
-                          RoleManager<IdentityRole> roleManager)
+        public UserHelper(UserManager<UserLogin>     userManager
+                         , RoleManager<IdentityRole> roleManager
+                         , SignInManager<UserLogin>  signInManager)
                         {
-                            _userManager = userManager;
-                            _roleManager = roleManager;
+                            _userManager   = userManager;
+                            _roleManager   = roleManager;
+                            _signInManager = signInManager;
                         }
 
         public async Task<IdentityResult> AddUserAsync(UserLogin user, string password)
@@ -48,6 +52,20 @@ namespace tramiauto.Web.Helpers
         public async Task<bool> IsUserInRoleAsync(UserLogin user, string roleName)
         {
             return await _userManager.IsInRoleAsync(user, roleName);
+        }
+
+        public async Task<SignInResult> LoginAsync(LoginTARequest model)
+        {
+            return await _signInManager.PasswordSignInAsync(
+                model.Email,
+                model.Password,
+                model.RememberMe,
+                false);
+        }
+
+        public async Task LogoutAsync()
+        {
+            await _signInManager.SignOutAsync();
         }
 
     }//class
