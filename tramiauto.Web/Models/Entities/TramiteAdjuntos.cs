@@ -9,11 +9,11 @@ namespace tramiauto.Web.Models.Entities
         public int Id { get; set; }
 
         [Display(Name = "Tipo Adjunto")]        
-        [MaxLength(50, ErrorMessage = MessageCenter.labelTextFiedlMaxLength)]
+        [MaxLength(50, ErrorMessage = MessageCenter.labelTextFieldRequired)]
         public string Tipo { get; set; }
 
         [Display(Name = "Ruta")]
-        [MaxLength(300, ErrorMessage = MessageCenter.labelTextFiedlMaxLength)]
+        [MaxLength(300, ErrorMessage = MessageCenter.labelTextFieldRequired)]
         public string Ruta { get; set; }
 
         // TODO: Change the path when publish
@@ -21,7 +21,7 @@ namespace tramiauto.Web.Models.Entities
 
         /**************RELATIONSHIP*****************/
         [Display(Name = "Tramite")]
-        [Required(ErrorMessage = MessageCenter.labelTextFiedlRequired)]
+        [Required(ErrorMessage = MessageCenter.labelTextFieldRequired)]
         public Tramite Tramite { get; set; }
     }
 }

@@ -11,30 +11,30 @@ namespace tramiauto.Web.Models.Entities
         public int Id { get; set; }
 
         [Display(Name = "Tramite")]
-        [Required(ErrorMessage = MessageCenter.labelTextFiedlRequired)]
-        [MaxLength(50, ErrorMessage = MessageCenter.labelTextFiedlMaxLength)]
+        [Required(ErrorMessage = MessageCenter.labelTextFieldRequired)]
+        [MaxLength(50, ErrorMessage = MessageCenter.labelTextFieldMaxLength)]
         public string Nombre { get; set; }
 
         [Display(Name = "Descripción")]
-        [MaxLength(300, ErrorMessage = MessageCenter.labelTextFiedlMaxLength)]
+        [MaxLength(300, ErrorMessage = MessageCenter.labelTextFieldMaxLength)]
         public string Descripcion { get; set; }
 
         [Display(Name = "Costo")]
-        [Required(ErrorMessage          = MessageCenter.labelTextFiedlRequired)]
-        [MaxLength(7, ErrorMessage      = MessageCenter.labelTextFiedlMaxLength)]
+        [Required(ErrorMessage          = MessageCenter.labelTextFieldRequired)]
+        [MaxLength(7, ErrorMessage      = MessageCenter.labelTextFieldMaxLength)]
         [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
         [Column(TypeName = "decimal(18,4)")]
         public decimal Costo { get; set; }
 
         [Display(Name = "Días Habiles")]
-        [Required(ErrorMessage     = MessageCenter.labelTextFiedlRequired)]
-        [MaxLength(5, ErrorMessage = MessageCenter.labelTextFiedlMaxLength)]
+        [Required(ErrorMessage     = MessageCenter.labelTextFieldRequired)]
+        [MaxLength(5, ErrorMessage = MessageCenter.labelTextFieldMaxLength)]
         public int TiempoOperacion { get; set; }
 
         /**************RELATIONSHIP*****************/
         public ICollection<Tramite> Tramites { get; set; }
 
-        
 
-    }
-}
+
+    }//CLASS
+}//NAMESPACE

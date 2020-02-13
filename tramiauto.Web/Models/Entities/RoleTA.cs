@@ -10,5 +10,5 @@ namespace tramiauto.Web.Models.Entities
         public const string Admin   = "Admin";
         public const string Gestor  = "Gestor";
         public const string Usuario = "Usuario";
-    }
-}
+    }//CLASS
+}//NAMESPACE

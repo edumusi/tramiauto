@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using tramiauto.Common.Model;
+using tramiauto.Web.Helpers;
 using tramiauto.Web.Models;
 
 namespace tramiauto.Web.Controllers.API
@@ -21,22 +22,27 @@ namespace tramiauto.Web.Controllers.API
         }
 
         [Route("GetUsuarioByEmail")]
-        [HttpPost]        
-        //public async Task<IActionResult> GetUserByEmailAsync(EmailRequest request)
-            public IActionResult GetUserByEmailAsync(EmailRequest request)
+        [HttpPost]
+        public async Task<IActionResult> GetUserByEmailAsync([FromBody]EmailRequest request)        
         {
-            if (!ModelState.IsValid )
-               { return BadRequest(); }
-/*
-            var usuario = await _dataContext.Usuarios.FirstOrDefaultAsync( u => u.Correo.ToUpper() == request.Email.ToUpper() );
+            if (!ModelState.IsValid)
+               { return BadRequest(MessageErrorHelper.showModelStateError(ModelState)); }
 
+            var usuario = await _dataContext.Usuarios.Include(c => c.Automotores  )
+                                                     .Include(c => c.Tramites     )                                                     
+                                                     .Include(c => c.DatosFiscales)
+                                                     .FirstOrDefaultAsync( u =>u.UserLogin.NormalizedEmail == request.Email.ToUpper());
             if(usuario == null)
-              { return NotFound(); }
+            {
+                //ModelState.AddModelError(string.Empty, MessageCenter.labelEmailNotFound);
+                return NotFound(request); 
+            }
 
-            return Ok(usuario);
-*/
-return Ok();
-        }
+            return Ok();
+
+        }//GetUsuarioByEmail
+
+
 
         [Route("GetUser")]
         [HttpGet]        

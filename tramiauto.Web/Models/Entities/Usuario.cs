@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 using tramiauto.Common.Model;
 
 namespace tramiauto.Web.Models.Entities
@@ -15,26 +16,28 @@ namespace tramiauto.Web.Models.Entities
 
 
         [Display(Name = "Nombre")]
-        [Required(ErrorMessage      = MessageCenter.labelTextFiedlRequired)]
-        [MaxLength(30, ErrorMessage = MessageCenter.labelTextFiedlMaxLength)]
-
+        [Required(ErrorMessage      = MessageCenter.labelTextFieldRequired)]
+        [MaxLength(30, ErrorMessage = MessageCenter.labelTextFieldMaxLength)]
         public string FirstName { get; set; }
 
         [Display(Name = "Apellido")]
-        [Required(ErrorMessage      = MessageCenter.labelTextFiedlRequired)]
-        [MaxLength(30, ErrorMessage = MessageCenter.labelTextFiedlMaxLength)]
+        [Required(ErrorMessage      = MessageCenter.labelTextFieldRequired)]
+        [MaxLength(30, ErrorMessage = MessageCenter.labelTextFieldMaxLength)]
         public string LastName { get; set; }
 
         [Display(Name = "Teléfono Fijo")]
-        [MaxLength(20, ErrorMessage = MessageCenter.labelTextFiedlMaxLength)]
+        [MaxLength(20, ErrorMessage = MessageCenter.labelTextFieldMaxLength)]
         public string FixedPhone { get; set; }
 
+        [JsonIgnore]
         [Display(Name = "Celular")]        
         public string CellPhone => $"{UserLogin.PhoneNumber} ";
 
+        [JsonIgnore]
         [Display(Name = "Correo Electrónico")]
         public string Correo  => $"{UserLogin.Email} ";
 
+        [JsonIgnore]
         [Display(Name = "Nombre del Usuario")] 
         public string FullName => $"{FirstName} {LastName}";
 
@@ -42,8 +45,11 @@ namespace tramiauto.Web.Models.Entities
         [Display(Name = "Automotores")]
         public ICollection<Automotor> Automotores { get; set; }
 
+        [Display(Name = "Tramites")]
+        public ICollection<Tramite> Tramites { get; set; }
+
         [Display(Name = "Dirección Fiscal")]
         public DatosFiscales DatosFiscales { get; set; }
 
-    }
-}
+    }//CLASS
+}//NAMESPACE
