@@ -15,6 +15,9 @@ using tramiauto.Web.Helpers;
 using tramiauto.Web.Models;
 using tramiauto.Web.Models.Entities;
 using tramiauto.Web.Models.InitDB;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace tramiauto.Web
 {
@@ -45,6 +48,19 @@ namespace tramiauto.Web
                     .AddEntityFrameworkStores<DataContext>()
                     .AddDefaultTokenProviders()
                     .AddErrorDescriber<CustomIdentityErrorDescriber>();
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                    .AddCookie()
+                    .AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters
+                                                                                    {   ValidateIssuer   = true,
+                                                                                        ValidateAudience = true,
+                                                                                        ValidateLifetime = true,
+                                                                                        ValidIssuer      = Configuration["TramiAutoSettings:JwtIssuer"],
+                                                                                        ValidAudience    = Configuration["TramiAutoSettings:Jwtaudience"],
+                                                                                        ValidateIssuerSigningKey = true,
+                                                                                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["TramiAutoSettings:JwtSecretKey"])),
+                                                                                        ClockSkew = TimeSpan.Zero
+                                                                                    });
 
             /*** INYECCIÓN DE DEPENDENCIAS tres tipo: Transient(Solo se ejecuta una sola vez), singleton (carga en memoria se mantiene), scope (se inyecta cada vez que se necesita, crea una nueva instancia) ***/
             services.AddDbContext<DataContext>(cfg => { cfg.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")); });

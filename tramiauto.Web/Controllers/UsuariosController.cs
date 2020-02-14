@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -26,6 +27,19 @@ namespace tramiauto.Web.Controllers
         {
             return View(await _dataContext.Usuarios.ToListAsync());
         }
+
+
+        /****************************** METODO DE CONSULTAR ALL USERS WITH TOKEN INI**************************/
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+
+            return Ok(await _dataContext.Usuarios.ToListAsync());
+
+        }
+        /****************************** METODO DE CONSULTAR ALL USERS WITH TOKEN END **************************/
+
 
         // GET: Usuarios/Details/5
         public async Task<IActionResult> Details(int? id)

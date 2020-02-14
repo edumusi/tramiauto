@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace tramiauto.Common.Model
 {
@@ -13,5 +14,12 @@ namespace tramiauto.Common.Model
         public string Password { get; set; }
 
         public bool RememberMe { get; set; }
+
+        public string Token { get; set; }
+        public string Rol { get; set; }
+        public DateTime ValidToken { get; set; }
+        public DateTime ExpirationToken { get; set; }
+        public bool TokenExpired { get; set; }
+
     }//class
 }//NameSpace

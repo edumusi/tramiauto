@@ -25,5 +25,7 @@ namespace tramiauto.Web.Helpers
 
         Task LogoutAsync();
 
+        Task<SignInResult> ValidatePasswordAsync(UserLogin user, string password);
+
     }//Class
 }//Namespace

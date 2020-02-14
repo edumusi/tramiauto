@@ -68,5 +68,10 @@ namespace tramiauto.Web.Helpers
             await _signInManager.SignOutAsync();
         }
 
+        public async Task<SignInResult> ValidatePasswordAsync(UserLogin user, string password)
+        {
+            return await _signInManager.CheckPasswordSignInAsync(user, password, false);
+        }
+
     }//class
 }//NameSpace
