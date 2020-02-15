@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using tramiauto.Common;
+using tramiauto.Common.Model.Request;
 
 namespace tramiauto.Web.Controllers
 {

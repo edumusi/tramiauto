@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
-using tramiauto.Common.Model;
+using tramiauto.Common.Model.Request;
 using tramiauto.Web.Models.Entities;
 
 

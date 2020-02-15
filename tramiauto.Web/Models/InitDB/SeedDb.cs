@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using tramiauto.Web.Helpers;
 using tramiauto.Web.Models.Entities;
-using tramiauto.Common.Model;
+using tramiauto.Common.Model.DataEntity;
 
 namespace tramiauto.Web.Models.InitDB
 {
@@ -22,10 +20,10 @@ namespace tramiauto.Web.Models.InitDB
         public async Task SeedAsync()
         {
             await _context.Database.EnsureCreatedAsync();            
-            await CheckTipoTramitesAsync();
+       //     await CheckTipoTramitesAsync();
             await CheckRoles();
             await CheckUserAsync( "Eduardo", "Muñoz", "ems@convivere.mx", "350 634 2747", "admin123", RoleTA.Admin);
-            await CheckUserAsync( "Irving", "Sanchez", "eduardo.munoz.siller@gmail.com", "350 634 2747", "gestor123", RoleTA.Gestor);
+            await CheckUserAsync( "Irving", "Sanchez", "isanchez@everestgestoria.com", "350 634 2747", "gestor123", RoleTA.Gestor);
             await CheckUserAsync( "Mauricio", "test", "ems@convivere.casa", "350 634 2747", "user123", RoleTA.Usuario);           
         }
 
@@ -36,16 +34,18 @@ namespace tramiauto.Web.Models.InitDB
             await _userHelper.CheckRoleAsync(RoleTA.Gestor);
             await _userHelper.CheckRoleAsync(RoleTA.Usuario);
         }
+        /*
         private async Task CheckTipoTramitesAsync()
         {
             if (!_context.TipoTramites.Any())
             {
-                _context.TipoTramites.Add(new Entities.TipoTramite { Nombre = "Renovación Trajeta Circulación", Descripcion = "Renovación Trajeta Circulación", Costo = 450, TiempoOperacion = 3 });
-                _context.TipoTramites.Add(new Entities.TipoTramite { Nombre = "Cambio de Propetario", Descripcion = "Cambio de Propetario", Costo = 450, TiempoOperacion = 5 });
-                _context.TipoTramites.Add(new Entities.TipoTramite { Nombre = "Placas", Descripcion = "Placas", Costo = 450, TiempoOperacion = 5 });
+                _context.TipoTramites.Add(new TipoTramite { Nombre = "Renovación Trajeta Circulación", Descripcion = "Renovación Trajeta Circulación", Costo = 450, TiempoOperacion = 3 });
+                _context.TipoTramites.Add(new TipoTramite { Nombre = "Cambio de Propetario", Descripcion = "Cambio de Propetario", Costo = 450, TiempoOperacion = 5 });
+                _context.TipoTramites.Add(new TipoTramite { Nombre = "Placas", Descripcion = "Placas", Costo = 450, TiempoOperacion = 5 });
                 await _context.SaveChangesAsync();
             }
-        }
+          
+    }  */
 
         private async Task CheckUserAsync(string firstName, string lastName, string email, string phone, string pwd, string role)
         {

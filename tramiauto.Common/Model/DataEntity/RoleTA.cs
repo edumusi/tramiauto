@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿
 
-namespace tramiauto.Web.Models.Entities
+namespace tramiauto.Common.Model.DataEntity
 {
     public static class RoleTA
     {

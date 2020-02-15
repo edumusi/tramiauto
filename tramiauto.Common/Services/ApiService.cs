@@ -3,14 +3,15 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
-using tramiauto.Common.Model;
 using Newtonsoft.Json;
+using tramiauto.Common.Model.Request;
+using tramiauto.Common.Model.Response;
 
 namespace tramiauto.Common.Services
 {
     public class ApiService : IApiService
     {
-        public async Task<Response> GetTokenAsync(string urlBase,
+        public async Task<ResponseAPI> GetTokenAsync(string urlBase,
                                                   string controller, 
                                                   string method,
                                                   LoginTARequest request)
@@ -26,17 +27,17 @@ namespace tramiauto.Common.Services
                 var result   = await response.Content.ReadAsStringAsync();// Respuesta de la llamada API
 
                 if (!response.IsSuccessStatusCode) //Si regreso un BAd request
-                { return new Response { IsSuccess = false, Message = result }; }
+                { return new ResponseAPI { IsSuccess = false, Message = result }; }
 
                 var token = JsonConvert.DeserializeObject<TokenResponse>(result);
 
-                return new Response { IsSuccess = true, Result = token };
+                return new ResponseAPI { IsSuccess = true, Result = token };
             }
             catch (Exception ex)
-            { return new Response { IsSuccess = false, Message = ex.Message }; }
+            { return new ResponseAPI { IsSuccess = false, Message = ex.Message }; }
         }
 
-        public async Task<Response> GetUsuarioByEmail(string urlBase,
+        public async Task<ResponseAPI> GetUsuarioByEmail(string urlBase,
                                                       string servicePrefix,
                                                       string controller,
                                                       string tokenType,
@@ -57,15 +58,15 @@ namespace tramiauto.Common.Services
                 var result = await response.Content.ReadAsStringAsync();
 
                 if (!response.IsSuccessStatusCode)
-                { return new Response { IsSuccess = false, Message = result }; }
+                { return new ResponseAPI { IsSuccess = false, Message = result }; }
 
                 var owner = JsonConvert.DeserializeObject<UsuarioResponse>(result);
 
-                return new Response { IsSuccess = true, Result = owner };
+                return new ResponseAPI { IsSuccess = true, Result = owner };
 
             }
             catch (Exception ex)
-            { return new Response { IsSuccess = false, Message = ex.Message }; }
+            { return new ResponseAPI { IsSuccess = false, Message = ex.Message }; }
 
         }
     }//CLASS

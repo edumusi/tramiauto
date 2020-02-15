@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using tramiauto.Common;
 
-namespace tramiauto.Web.Models.Entities
+namespace tramiauto.Common.Model.DataEntity
 {
     public class TipoTramite
     {

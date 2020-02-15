@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace tramiauto.Common.Model
+namespace tramiauto.Common.Model.Response
 {
-    public class Response
+    public class ResponseAPI
     {
         public bool IsSuccess { get; set; }
 

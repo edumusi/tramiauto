@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace tramiauto.Common.Model
+namespace tramiauto.Common.Model.Request
 {
     public class LoginTARequest
     {

@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using tramiauto.Common.Model.DataEntity;
 using tramiauto.Web.Models;
-using tramiauto.Web.Models.Entities;
 
 namespace tramiauto.Web.Controllers
 {

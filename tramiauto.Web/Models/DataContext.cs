@@ -1,7 +1,9 @@
 ﻿
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using tramiauto.Common.Model.DataEntity;
 using tramiauto.Web.Models.Entities;
+using TipoTramite = tramiauto.Common.Model.DataEntity.TipoTramite;
 
 namespace tramiauto.Web.Models
 {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace tramiauto.Common.Model
+namespace tramiauto.Common.Model.Response
 {
     public class TipoTramiteResponse
     {

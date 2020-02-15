@@ -1,11 +1,7 @@
 ﻿using Prism.Commands;
-using Prism.Mvvm;
 using Prism.Navigation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using tramiauto.Common;
-using tramiauto.Common.Model;
+using tramiauto.Common.Model.Request;
 using tramiauto.Common.Services;
 
 namespace tramiauto.App.ViewModels

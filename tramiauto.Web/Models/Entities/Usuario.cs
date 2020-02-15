@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 using tramiauto.Common;
+using tramiauto.Common.Model.DataEntity;
 
 namespace tramiauto.Web.Models.Entities
 {

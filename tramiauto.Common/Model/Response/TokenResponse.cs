@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace tramiauto.Common.Model
+namespace tramiauto.Common.Model.Response
 {
     public class TokenResponse
     {

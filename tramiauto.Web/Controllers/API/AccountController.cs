@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using tramiauto.Common.Model;
 using tramiauto.Web.Helpers;
 using tramiauto.Web.Models;
 using tramiauto.Web.Models.Entities;
@@ -15,6 +12,9 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using tramiauto.Common;
+using tramiauto.Common.Model.Request;
+using tramiauto.Common.Model.Response;
+using tramiauto.Common.Model.DataEntity;
 
 namespace tramiauto.Web.Controllers.API
 {
@@ -130,7 +130,7 @@ namespace tramiauto.Web.Controllers.API
                                                                             , FechaEntrega  = t.FechaEntrega
                                                                             , FechaRegistro = t.FechaRegistro
                                                                             , Status        = t.Status
-                                                                            , TipoTramite   = ToTipoTramiteResponsee(t.TipoTramite)
+//                                                                            , TipoTramite   = ToTipoTramiteResponsee(t.TipoTramite)
                                                                             , AdjuntosResponse = t.Adjuntos?.Select(a => new TramiteAdjuntosResponse { Id   = a.Id
                                                                                                                                                     , Tipo = a.Tipo
                                                                                                                                                     , Ruta = a.Ruta
@@ -139,7 +139,7 @@ namespace tramiauto.Web.Controllers.API
                 , DatosFiscalesResponse = ToDatosFiscalesResponse(usuario.DatosFiscales)
         };
     }
-
+        /*
     private TipoTramiteResponse ToTipoTramiteResponsee(TipoTramite TipoTramite)
     {
         if (TipoTramite == null)
@@ -153,7 +153,7 @@ namespace tramiauto.Web.Controllers.API
             };
 
     }
-
+    */
     private DatosFiscalesResponse ToDatosFiscalesResponse(DatosFiscales DatosFiscales)
     {
         if (DatosFiscales == null)

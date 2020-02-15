@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using tramiauto.Common;
 
-namespace tramiauto.Web.Models.Entities
+namespace tramiauto.Common.Model.DataEntity
 {
     public class Automotor
     {
