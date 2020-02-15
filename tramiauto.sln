@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "tramiauto.Web", "tramiauto.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "tramiauto.Common", "tramiauto.Common\tramiauto.Common.csproj", "{96994538-22FD-465E-8645-70288706FDE8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tramiauto.App", "tramiauto.App\tramiauto.App\tramiauto.App.csproj", "{D779C399-D806-440D-B47F-2BAD720FA688}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "tramiauto.App", "tramiauto.App\tramiauto.App\tramiauto.App.csproj", "{D779C399-D806-440D-B47F-2BAD720FA688}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tramiauto.App.Android", "tramiauto.App\tramiauto.App.Android\tramiauto.App.Android.csproj", "{60BB0F18-403A-4E66-9490-9A09DCD7DF8B}"
 EndProject
@@ -147,7 +147,7 @@ Global
 		{A7AF7091-B710-432C-8394-AB8D2BDC9295}.AppStore|iPhone.Build.0 = AppStore|iPhone
 		{A7AF7091-B710-432C-8394-AB8D2BDC9295}.AppStore|iPhoneSimulator.ActiveCfg = AppStore|iPhoneSimulator
 		{A7AF7091-B710-432C-8394-AB8D2BDC9295}.AppStore|iPhoneSimulator.Build.0 = AppStore|iPhoneSimulator
-		{A7AF7091-B710-432C-8394-AB8D2BDC9295}.Debug|Any CPU.ActiveCfg = Debug|iPhone
+		{A7AF7091-B710-432C-8394-AB8D2BDC9295}.Debug|Any CPU.ActiveCfg = Debug|iPhoneSimulator
 		{A7AF7091-B710-432C-8394-AB8D2BDC9295}.Debug|iPhone.ActiveCfg = Debug|iPhone
 		{A7AF7091-B710-432C-8394-AB8D2BDC9295}.Debug|iPhone.Build.0 = Debug|iPhone
 		{A7AF7091-B710-432C-8394-AB8D2BDC9295}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator

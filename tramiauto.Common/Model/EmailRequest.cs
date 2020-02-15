@@ -6,8 +6,8 @@ namespace tramiauto.Common.Model
 {
     public class EmailRequest
     {
-        [Required    (ErrorMessage = MessageCenter.labelTextEmailRequired)]
-        [EmailAddress(ErrorMessage = MessageCenter.labelTextEmailInvalid) ]
+        [Required    (ErrorMessage = MessageCenter.webAppTextEmailRequired)]
+        [EmailAddress(ErrorMessage = MessageCenter.webAppTextEmailInvalid) ]
         public String Email { get; set; }
     }
 }

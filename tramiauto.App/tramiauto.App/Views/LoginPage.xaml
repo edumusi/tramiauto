@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="tramiauto.App.Views.LoginPage"
+             Title="{Binding Title}"
+>
+    <StackLayout Padding="10" >
+        <Label Text="Correo Electrónico"/>
+        <Entry Text       = "{Binding Email}"
+               Placeholder= "Ingrese correo electrónico"
+               Keyboard   = "Email"
+               />
+
+        <Label Text="Contraseña"/>
+        <Entry Text       = "{Binding Password}"
+               Placeholder= "Ingrese su contraseña"
+               IsPassword = "True"
+               />
+        
+        <ActivityIndicator IsRunning      = "{Binding IsRunning}"
+                           VerticalOptions= "CenterAndExpand"/>
+        
+        <Button Text     = "Ingresar"
+                Command  = "{Binding LoginCommand}"
+                IsEnabled= "{Binding ButtonIsEnabled}"
+                />
+
+    </StackLayout>
+    
+    
+</ContentPage>

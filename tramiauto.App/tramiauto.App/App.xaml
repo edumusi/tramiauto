@@ -6,6 +6,12 @@
 	<Application.Resources>
 
 		<!-- Application resource dictionary -->
+        <ResourceDictionary>
 
-	</Application.Resources>
+            <!-- Parameters -->
+            <x:String x:Key="UrlAPI">https://tramiauto.azurewebsites.net/api/</x:String>
+
+        </ResourceDictionary>
+
+    </Application.Resources>
 </prism:PrismApplication>

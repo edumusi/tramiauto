@@ -2,6 +2,7 @@
 using Prism.Ioc;
 using tramiauto.App.ViewModels;
 using tramiauto.App.Views;
+using tramiauto.Common.Services;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -23,13 +24,15 @@ namespace tramiauto.App
         {
             InitializeComponent();
 
-            await NavigationService.NavigateAsync("NavigationPage/MainPage");
+            await NavigationService.NavigateAsync("NavigationPage/LoginPage");
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterForNavigation<NavigationPage>();
-            containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
+            containerRegistry.Register<IApiService, ApiService>();
+
+            containerRegistry.RegisterForNavigation<NavigationPage>();            
+            containerRegistry.RegisterForNavigation<LoginPage, LoginPageViewModel>();
         }
     }
 }

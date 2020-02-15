@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using tramiauto.Common.Model;
+using tramiauto.Common;
 
 namespace tramiauto.Web.Models.Entities
 {
@@ -9,11 +9,11 @@ namespace tramiauto.Web.Models.Entities
         public int Id { get; set; }
 
         [Display(Name = "Tipo Adjunto")]        
-        [MaxLength(50, ErrorMessage = MessageCenter.labelTextFieldRequired)]
+        [MaxLength(50, ErrorMessage = MessageCenter.webAppTextFieldRequired)]
         public string Tipo { get; set; }
 
         [Display(Name = "Ruta")]
-        [MaxLength(300, ErrorMessage = MessageCenter.labelTextFieldRequired)]
+        [MaxLength(300, ErrorMessage = MessageCenter.webAppTextFieldRequired)]
         public string Ruta { get; set; }
 
         // TODO: Change the path when publish
@@ -21,7 +21,7 @@ namespace tramiauto.Web.Models.Entities
 
         /**************RELATIONSHIP*****************/
         [Display(Name = "Tramite")]
-        [Required(ErrorMessage = MessageCenter.labelTextFieldRequired)]
+        [Required(ErrorMessage = MessageCenter.webAppTextFieldRequired)]
         public Tramite Tramite { get; set; }
     }
 }

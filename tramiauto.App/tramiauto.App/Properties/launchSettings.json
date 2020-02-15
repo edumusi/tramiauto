@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "tramiauto.App": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}

@@ -14,6 +14,7 @@ using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using tramiauto.Common;
 
 namespace tramiauto.Web.Controllers.API
 {
@@ -40,7 +41,7 @@ namespace tramiauto.Web.Controllers.API
         {
             var user = await _userHelper.GetUserByEmailAsync(model.Email);
                 if (user == null)
-                {  return NotFound(MessageCenter.labelEmailNotFound + " " + model.Email);  }
+                {  return NotFound(MessageCenter.webApplabelEmailNotFound + " " + model.Email);  }
                 else
                 {
                     var result = await _userHelper.ValidatePasswordAsync(user, model.Password);
@@ -48,14 +49,14 @@ namespace tramiauto.Web.Controllers.API
                     if (result.Succeeded)
                     { return Created(string.Empty, BuildToken(model)); }
                     else
-                    { return BadRequest(MessageCenter.labelLoginFail); }
+                    { return BadRequest(MessageCenter.webApplabelLoginFail); }
                 }
         }
 
         return BadRequest();
     }
 
-    private LoginTARequest BuildToken(LoginTARequest userInfo)
+    private TokenResponse BuildToken(LoginTARequest userInfo)
     {
         var claims = new[]
         {
@@ -67,18 +68,17 @@ namespace tramiauto.Web.Controllers.API
         var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
         var expiration  = DateTime.UtcNow.AddHours(12);
 
-        JwtSecurityToken token = new JwtSecurityToken(issuer  : _configuration["TramiAutoSettings:JwtIssuer"],
+        JwtSecurityToken token = new JwtSecurityToken(  issuer  : _configuration["TramiAutoSettings:JwtIssuer"],
                                                         audience: _configuration["TramiAutoSettings:Jwtaudience"],
                                                         claims  : claims,
                                                         expires : expiration,
                                                         signingCredentials: credentials);
 
-        userInfo.Token           = new JwtSecurityTokenHandler().WriteToken(token);
-        userInfo.ExpirationToken = expiration;
-        userInfo.ValidToken      = token.ValidTo;
-
-        return userInfo;
-
+        return new TokenResponse{Token        = new JwtSecurityTokenHandler().WriteToken(token)
+                                ,Expiration   = expiration
+                                ,Valid        = token.ValidTo
+                                ,TokenExpired = true
+                               };
     }
 
     [Route("GetUsuarioByEmail")]

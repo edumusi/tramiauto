@@ -3,6 +3,7 @@ using tramiauto.Common.Model;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using tramiauto.Common;
 
 namespace tramiauto.Web.Controllers
 {
@@ -54,7 +55,7 @@ namespace tramiauto.Web.Controllers
                 }
             }
 
-            ModelState.AddModelError(string.Empty, MessageCenter.labelLoginFail);
+            ModelState.AddModelError(string.Empty, MessageCenter.webApplabelLoginFail);
             return View(model);
         }
 
