@@ -11,10 +11,10 @@ namespace tramiauto.Common.Services
 {
     public class ApiService : IApiService
     {
-        public async Task<ResponseAPI> GetTokenAsync(string urlBase,
-                                                  string controller, 
-                                                  string method,
-                                                  LoginTARequest request)
+        public async Task<ResponseAPI<TokenResponse>> GetTokenAsync(string urlBase,
+                                                                    string controller, 
+                                                                    string method,
+                                                                    LoginTARequest request)
         {
             try
             {
@@ -27,17 +27,17 @@ namespace tramiauto.Common.Services
                 var result   = await response.Content.ReadAsStringAsync();// Respuesta de la llamada API
 
                 if (!response.IsSuccessStatusCode) //Si regreso un BAd request
-                { return new ResponseAPI { IsSuccess = false, Message = result }; }
+                { return new ResponseAPI<TokenResponse> { IsSuccess = false, Message = result }; }
 
                 var token = JsonConvert.DeserializeObject<TokenResponse>(result);
 
-                return new ResponseAPI { IsSuccess = true, Result = token };
+                return new ResponseAPI<TokenResponse> { IsSuccess = true, Result = token };
             }
             catch (Exception ex)
-            { return new ResponseAPI { IsSuccess = false, Message = ex.Message }; }
+            { return new ResponseAPI<TokenResponse> { IsSuccess = false, Message = ex.Message }; }
         }
 
-        public async Task<ResponseAPI> GetUsuarioByEmail(string urlBase,
+        public async Task<ResponseAPI<UsuarioResponse>> GetUsuarioByEmail(string urlBase,
                                                       string servicePrefix,
                                                       string controller,
                                                       string tokenType,
@@ -58,15 +58,15 @@ namespace tramiauto.Common.Services
                 var result = await response.Content.ReadAsStringAsync();
 
                 if (!response.IsSuccessStatusCode)
-                { return new ResponseAPI { IsSuccess = false, Message = result }; }
+                { return new ResponseAPI<UsuarioResponse> { IsSuccess = false, Message = result }; }
 
                 var owner = JsonConvert.DeserializeObject<UsuarioResponse>(result);
 
-                return new ResponseAPI { IsSuccess = true, Result = owner };
+                return new ResponseAPI<UsuarioResponse> { IsSuccess = true, Result = owner };
 
             }
             catch (Exception ex)
-            { return new ResponseAPI { IsSuccess = false, Message = ex.Message }; }
+            { return new ResponseAPI<UsuarioResponse> { IsSuccess = false, Message = ex.Message }; }
 
         }
     }//CLASS

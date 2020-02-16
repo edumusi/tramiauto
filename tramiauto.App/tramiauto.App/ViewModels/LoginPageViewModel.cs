@@ -25,6 +25,10 @@ namespace tramiauto.App.ViewModels
             Title       = "Ingreso a Tramiauto";
             IsEnabled   = true;//Por defecto los bool son falsos
             _apiService = apiService;
+
+            //TODO: (Quitar) las credenciasles por deafutl para no digitar
+            Email = "ems@convivere.casa";
+            Email = "user123";
         }
 
         public DelegateCommand LoginCommand => _loginCommand ?? (_loginCommand = new DelegateCommand(Login));
@@ -81,6 +85,8 @@ namespace tramiauto.App.ViewModels
 
             IsEnabled = true;
             IsRunning = false;
+
+            var token = response.Result;
 
             await App.Current.MainPage.DisplayAlert("Ok", "We are making progress!", "Accept");
 

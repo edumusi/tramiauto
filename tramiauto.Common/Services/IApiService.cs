@@ -6,7 +6,7 @@ namespace tramiauto.Common.Services
 {
     public interface IApiService
     {
-        Task<ResponseAPI> GetTokenAsync(string urlBase, string servicePrefix, string controller, LoginTARequest request);
-        Task<ResponseAPI> GetUsuarioByEmail(string urlBase, string servicePrefix, string controller, string tokenType, string accessToken, string email);
+        Task<ResponseAPI<TokenResponse>> GetTokenAsync(string urlBase, string servicePrefix, string controller, LoginTARequest request);
+        Task<ResponseAPI<UsuarioResponse>> GetUsuarioByEmail(string urlBase, string servicePrefix, string controller, string tokenType, string accessToken, string email);
     }
 }
