@@ -8,13 +8,13 @@ namespace tramiauto.App.ViewModels
 {
     public class LoginPageViewModel : ViewModelBase
     {
-
         /* Atributos Privados
 * Constructor
 * Atributos Publicos
 * Metodos Publicos
 * Metodos Privatos
 */
+        private readonly INavigationService _navigationService;
         private readonly IApiService _apiService;
         private string _password;
         private bool  _isRunning;
@@ -24,11 +24,13 @@ namespace tramiauto.App.ViewModels
         {
             Title       = "Ingreso a Tramiauto";
             IsEnabled   = true;//Por defecto los bool son falsos
-            _apiService = apiService;
+
+            _navigationService = navigationService;
+            _apiService        = apiService;
 
             //TODO: (Quitar) las credenciasles por deafutl para no digitar
-            Email = "ems@convivere.casa";
-            Email = "user123";
+            Email    = "ems@convivere.casa";
+            Password = "user123";
         }
 
         public DelegateCommand LoginCommand => _loginCommand ?? (_loginCommand = new DelegateCommand(Login));
@@ -57,38 +59,61 @@ namespace tramiauto.App.ViewModels
         private async void Login()
         {
             if (string.IsNullOrEmpty(Email))
-                { await App.Current.MainPage.DisplayAlert(MessageCenter.appLabelError, MessageCenter.appTextEmailFieldRequired, MessageCenter.appLabelAceptar);
-                  return;
-                }
+            { await App.Current.MainPage.DisplayAlert(MessageCenter.appLabelError, MessageCenter.appTextEmailFieldRequired, MessageCenter.appLabelAceptar);
+                return;
+            }
 
             if (string.IsNullOrEmpty(Password))
-               { await App.Current.MainPage.DisplayAlert(MessageCenter.appLabelError, MessageCenter.appTextPassFieldRequired, MessageCenter.appLabelAceptar);
+            { await App.Current.MainPage.DisplayAlert(MessageCenter.appLabelError, MessageCenter.appTextPassFieldRequired, MessageCenter.appLabelAceptar);
                 return;
-               }
+            }
 
             IsRunning = true;
             IsEnabled = false;
 
-            var url      = MessageCenter.URL_API; // TODO usar App Resorse App.Current.Resources["UrlAPI"].ToString();
-            var request  = new LoginTARequest { Email = Email, Password = Password };
-            var response = await _apiService.GetTokenAsync(url, "Account", "CreateToken", request);
-
-            if (!response.IsSuccess)
+            var url = MessageCenter.URL;
+            var url_API = MessageCenter.URL_API; // TODO: usar App Resorse App.Current.Resources["UrlAPI"].ToString();
+            var connect = await _apiService.checkConnectivityAsync(url);
+            if (!connect)
             {
                 IsEnabled = true;
                 IsRunning = false;
-                Password  = string.Empty;
+                await App.Current.MainPage.DisplayAlert(MessageCenter.appLabelErrorConnect, MessageCenter.appLabelErrorNoInter, MessageCenter.appLabelAceptar);
+
+                return;
+            }
+
+            var request = new LoginTARequest { Email = Email, Password = Password };
+            var respToken = await _apiService.GetTokenAsync(url_API, "Account", "CreateToken", request);
+
+            if (!respToken.IsSuccess)
+            {
+                IsEnabled = true;
+                IsRunning = false;
+                Password = string.Empty;
                 await App.Current.MainPage.DisplayAlert(MessageCenter.appLabelError, MessageCenter.webApplabelLoginFail, MessageCenter.appLabelAceptar);
-                
+
                 return;
             }
 
             IsEnabled = true;
             IsRunning = false;
 
-            var token = response.Result;
+            var token = respToken.Result;
+            var respUser = await _apiService.GetUsuarioByEmailAsync(url_API, "Account", "GetUsuarioByEmail", "bearer", token.Token, Email);
+            if (!respUser.IsSuccess)
+            {
+                IsEnabled = true;
+                IsRunning = false;
+                Password = string.Empty;
+                await App.Current.MainPage.DisplayAlert(MessageCenter.appLabelError, MessageCenter.appLabelErrorNoUserToken, MessageCenter.appLabelAceptar);
 
-            await App.Current.MainPage.DisplayAlert("Ok", "We are making progress!", "Accept");
+                return;
+            }
+
+            var usuario   = respUser.Result;
+            var paramUser = new NavigationParameters { { "usuario", usuario } };
+            await _navigationService.NavigateAsync("TramitesPage", paramUser);
 
         }
     }

@@ -4,6 +4,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Plugin.Connectivity;
 using tramiauto.Common.Model.Request;
 using tramiauto.Common.Model.Response;
 
@@ -37,9 +38,9 @@ namespace tramiauto.Common.Services
             { return new ResponseAPI<TokenResponse> { IsSuccess = false, Message = ex.Message }; }
         }
 
-        public async Task<ResponseAPI<UsuarioResponse>> GetUsuarioByEmail(string urlBase,
-                                                      string servicePrefix,
-                                                      string controller,
+        public async Task<ResponseAPI<UsuarioResponse>> GetUsuarioByEmailAsync(string urlBase,
+                                                       string controller,
+                                                       string method,
                                                       string tokenType,
                                                       string accessToken,
                                                       string email)
@@ -53,12 +54,12 @@ namespace tramiauto.Common.Services
 
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(tokenType, accessToken);
 
-                var url = $"{servicePrefix}{controller}";
+                var url      = $"{controller}/{method}";
                 var response = await client.PostAsync(url, content);
-                var result = await response.Content.ReadAsStringAsync();
+                var result   = await response.Content.ReadAsStringAsync();
 
                 if (!response.IsSuccessStatusCode)
-                { return new ResponseAPI<UsuarioResponse> { IsSuccess = false, Message = result }; }
+                   { return new ResponseAPI<UsuarioResponse> { IsSuccess = false, Message = result }; }
 
                 var owner = JsonConvert.DeserializeObject<UsuarioResponse>(result);
 
@@ -67,7 +68,15 @@ namespace tramiauto.Common.Services
             }
             catch (Exception ex)
             { return new ResponseAPI<UsuarioResponse> { IsSuccess = false, Message = ex.Message }; }
-
         }
+
+        public async Task<bool> checkConnectivityAsync(string url)
+        {
+            if (!CrossConnectivity.Current.IsConnected)
+               { return false; }
+
+            return await CrossConnectivity.Current.IsRemoteReachable(url);
+        }
+
     }//CLASS
 }//NAMESACE
