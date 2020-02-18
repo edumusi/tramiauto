@@ -5,5 +5,48 @@
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="tramiauto.App.Views.TramitesPage"
              Title="{Binding Title}">
+
+            <StackLayout Padding="15">
+                <ListView ItemsSource="{Binding Tramites}"
+                          HasUnevenRows="True"
+                          >
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width = "Auto"/>
+                                <ColumnDefinition Width = "*"   />
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.Column="0" Source="{Binding FirstImage}" WidthRequest="80"/>
+                            <Grid Grid.Column="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width = "Auto"/>
+                                    <ColumnDefinition Width = "*"   />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Label Grid.Row="0" Grid.Column="0" Text="Status" FontAttributes="Bold"/>
+                                <Label Grid.Row="0" Grid.Column="1" Text="{Binding Status}" FontAttributes="Bold"/>
+                                <Label Grid.Row="1" Grid.Column="0" Text="Tramite" FontAttributes="Bold"/>
+                                <Label Grid.Row="1" Grid.Column="1" Text="{Binding Nombre}"/>
+                                <Label Grid.Row="2" Grid.Column="0" Text="Costo" FontAttributes="Bold"/>
+                                <Label Grid.Row="2" Grid.Column="1" Text="{Binding Costo, StringFormat={StaticResource formatCurrency} }" />
+                                <Label Grid.Row="3" Grid.Column="0" Text="Duracion" FontAttributes="Bold"/>
+                                <Label Grid.Row="3" Grid.Column="1" Text="{Binding TiempoEntrega, StringFormat={StaticResource formatInt}}" />
+                                <Label Grid.Row="4" Grid.Column="0" Text="Fecha Entrega" FontAttributes="Bold"/>
+                                <Label Grid.Row="4" Grid.Column="1" Text="{Binding FechaEntrega, StringFormat={StaticResource formatDatetime} }" />
+                            </Grid>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+            </StackLayout>
   
 </ContentPage>

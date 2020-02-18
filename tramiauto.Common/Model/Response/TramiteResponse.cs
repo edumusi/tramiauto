@@ -1,7 +1,9 @@
-﻿using System;
+﻿
+using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
+
 
 namespace tramiauto.Common.Model.Response
 {
@@ -47,6 +49,11 @@ namespace tramiauto.Common.Model.Response
 
         [Display(Name = "Automotor")]        
         public AutomotorResponse AutomotorResponse { get; set; }
+
+        public string FirstAdjunto => AdjuntosResponse == null || AdjuntosResponse.Count == 0
+                                    ? "https://tramiauto.azurewebsites.net/images/noImage.png"
+                                    : AdjuntosResponse.FirstOrDefault().ImageFullPath
+                                    ;
 
     }//Class
 }//Namespace
