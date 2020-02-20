@@ -1,6 +1,6 @@
 ﻿using Prism;
 using Prism.Ioc;
-using tramiauto.App.ViewModels;
+using tramiauto.App.ViewModels.Pages;
 using tramiauto.App.Views;
 using tramiauto.Common.Services;
 using Xamarin.Forms;
@@ -35,6 +35,7 @@ namespace tramiauto.App
             containerRegistry.RegisterForNavigation<LoginPage   , LoginPageViewModel>();
             containerRegistry.RegisterForNavigation<TramitesPage, TramitesPageViewModel>();
 
+            containerRegistry.RegisterForNavigation<DetailTramitePage, DetailTramitePageViewModel>();
         }
     }
 }

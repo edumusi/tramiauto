@@ -22,9 +22,13 @@
         <ActivityIndicator IsRunning      = "{Binding IsRunning}"
                            VerticalOptions= "CenterAndExpand"/>
         
-        <Button Text     = "Ingresar"
-                Command  = "{Binding LoginCommand}"
-                IsEnabled= "{Binding ButtonIsEnabled}"
+        <Button Text           = "Ingresar"
+                CornerRadius   = "25"
+                HeightRequest  = "50"
+                BackgroundColor= "DarkBlue"
+                TextColor      = "White"
+                Command        = "{Binding LoginCommand}"
+                IsEnabled      = "{Binding ButtonIsEnabled}"
                 />
 
     </StackLayout>

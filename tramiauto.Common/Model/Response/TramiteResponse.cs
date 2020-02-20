@@ -51,7 +51,7 @@ namespace tramiauto.Common.Model.Response
         public AutomotorResponse AutomotorResponse { get; set; }
 
         public string FirstAdjunto => AdjuntosResponse == null || AdjuntosResponse.Count == 0
-                                    ? "https://tramiauto.azurewebsites.net/images/noImage.png"
+                                    ? "https://tramiauto.azurewebsites.net/images/TramitesAdjuntos/noImage.png"
                                     : AdjuntosResponse.FirstOrDefault().ImageFullPath
                                     ;
 

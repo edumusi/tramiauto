@@ -4,7 +4,7 @@ using tramiauto.Common;
 using tramiauto.Common.Model.Request;
 using tramiauto.Common.Services;
 
-namespace tramiauto.App.ViewModels
+namespace tramiauto.App.ViewModels.Pages
 {
     public class LoginPageViewModel : ViewModelBase
     {
@@ -22,7 +22,7 @@ namespace tramiauto.App.ViewModels
         private DelegateCommand _loginCommand;
         public LoginPageViewModel( INavigationService navigationService, IApiService apiService) : base(navigationService)
         {
-            Title       = "Ingreso a Tramiauto";
+            Title       = MessageCenter.appTitlePageLogin;
             IsEnabled   = true;//Por defecto los bool son falsos
 
             _navigationService = navigationService;

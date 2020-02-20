@@ -16,6 +16,6 @@ namespace tramiauto.Common.Model.Response
         public string Ruta { get; set; }
 
         // TODO: Change the path when publish
-        public string ImageFullPath => $"https://tramiauto.azurewebsites.net/images/TramitesAdjuntos/{Ruta.Substring(1)}";
+        public string ImageFullPath => $"https://tramiauto.azurewebsites.net/images/TramitesAdjuntos/{Ruta}";
     }
 }

@@ -36,6 +36,10 @@ namespace tramiauto.Common
         public const String appLabelErrorNoUserToken = "Hubo un problema con elu usuario y su acceso.";
 
 
+        public const String appTitlePageLogin         = "Ingreso a Tramiauto";
+        public const String appTitlePageTramites      = "Tramites";
+        public const String appTitlePageDetailTramite = "Detalle de Tramite";
+
         /*******APP Messages********/
     }
 }
