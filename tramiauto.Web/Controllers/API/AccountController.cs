@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -7,10 +6,6 @@ using Microsoft.Extensions.Configuration;
 using tramiauto.Web.Helpers;
 using tramiauto.Web.Models;
 using tramiauto.Web.Models.Entities;
-using System.Security.Claims;
-using System.IdentityModel.Tokens.Jwt;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using tramiauto.Common;
 using tramiauto.Common.Model.Request;
 using tramiauto.Common.Model.Response;
@@ -41,45 +36,22 @@ namespace tramiauto.Web.Controllers.API
         {
             var user = await _userHelper.GetUserByEmailAsync(model.Email);
                 if (user == null)
-                {  return NotFound(MessageCenter.webApplabelEmailNotFound + " " + model.Email);  }
+                   {    return NotFound(MessageCenter.webApplabelEmailNotFound + " " + model.Email);  }
                 else
-                {
-                    var result = await _userHelper.ValidatePasswordAsync(user, model.Password);
+                    {
+                        var result = await _userHelper.ValidatePasswordAsync(user, model.Password);
 
-                    if (result.Succeeded)
-                    { return Created(string.Empty, BuildToken(model)); }
-                    else
-                    { return BadRequest(MessageCenter.webApplabelLoginFail); }
-                }
+                        if (result.Succeeded)
+                           { return Created(string.Empty, _userHelper.BuildToken(model)); }
+                        else
+                           { return BadRequest(MessageCenter.webApplabelLoginFail);       }
+                    }
         }
 
         return BadRequest();
     }
 
-    private TokenResponse BuildToken(LoginTARequest userInfo)
-    {
-        var claims = new[]
-        {
-            new Claim(JwtRegisteredClaimNames.Sub, userInfo.Email),
-            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-        };
-
-        var key         = new SymmetricSecurityKey(Encoding.UTF8.GetBytes( _configuration["TramiAutoSettings:JwtSecretKey"]) );
-        var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-        var expiration  = DateTime.UtcNow.AddHours(12);
-
-        JwtSecurityToken token = new JwtSecurityToken(  issuer  : _configuration["TramiAutoSettings:JwtIssuer"],
-                                                        audience: _configuration["TramiAutoSettings:Jwtaudience"],
-                                                        claims  : claims,
-                                                        expires : expiration,
-                                                        signingCredentials: credentials);
-
-        return new TokenResponse{Token        = new JwtSecurityTokenHandler().WriteToken(token)
-                                ,Expiration   = expiration
-                                ,Valid        = token.ValidTo
-                                ,TokenExpired = true
-                               };
-    }
+    
 
     [Route("GetUsuarioByEmail")]
     [HttpPost]
@@ -103,6 +75,9 @@ namespace tramiauto.Web.Controllers.API
 
     }//GetUsuarioByEmail
 
+
+
+
     private UsuarioResponse ToUsuarioResponse(Usuario usuario)
     {
     return new UsuarioResponse
@@ -122,15 +97,15 @@ namespace tramiauto.Web.Controllers.API
                                                                                 , Tipo        = a.Tipo
                                                                                 }).ToList()
                 , TramitesResponse = usuario.Tramites?.Select(t => new TramiteResponse
-                                                                        { Id = t.Id
+                                                                        {    Id = t.Id
                                                                             , Nombre        = t.Nombre
                                                                             , Descripcion   = t.Descripcion
                                                                             , Costo         = t.Costo
                                                                             , TiempoEntrega = t.TiempoEntrega
                                                                             , FechaEntrega  = t.FechaEntrega
                                                                             , FechaRegistro = t.FechaRegistro
-                                                                            , Status        = t.Status
-//                                                                            , TipoTramite   = ToTipoTramiteResponsee(t.TipoTramite)
+                                                                            , Status        = t.Status.Nombre
+                                                                            , TipoTramite   = ToTipoTramiteResponsee(t.TipoTramite)
                                                                             , AdjuntosResponse = t.Adjuntos?.Select(a => new TramiteAdjuntosResponse { Id   = a.Id
                                                                                                                                                     , Tipo = a.Tipo
                                                                                                                                                     , Ruta = a.Ruta
@@ -139,13 +114,13 @@ namespace tramiauto.Web.Controllers.API
                 , DatosFiscalesResponse = ToDatosFiscalesResponse(usuario.DatosFiscales)
         };
     }
-        /*
+        
     private TipoTramiteResponse ToTipoTramiteResponsee(TipoTramite TipoTramite)
     {
         if (TipoTramite == null)
             return new TipoTramiteResponse();
         else
-            return new TipoTramiteResponse { Id              = TipoTramite.Id
+            return new TipoTramiteResponse { Id               = TipoTramite.Id
                                             , Nombre          = TipoTramite.Nombre
                                             , Descripcion     = TipoTramite.Descripcion
                                             , Costo           = TipoTramite.Costo
@@ -153,7 +128,7 @@ namespace tramiauto.Web.Controllers.API
             };
 
     }
-    */
+    
     private DatosFiscalesResponse ToDatosFiscalesResponse(DatosFiscales DatosFiscales)
     {
         if (DatosFiscales == null)

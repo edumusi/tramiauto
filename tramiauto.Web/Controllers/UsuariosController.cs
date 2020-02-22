@@ -51,32 +51,12 @@ namespace tramiauto.Web.Controllers
 
             var usuario = await _dataContext.Usuarios.FirstOrDefaultAsync(m => m.Id == id);
             if (usuario == null)
-                { return NotFound(); }
+               { return NotFound(); }
 
             return View(usuario);
         }
 
-        // GET: Usuarios/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Usuarios/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,FixedPhone")] Usuario usuario)
-        {
-            if (ModelState.IsValid)
-            {
-                _dataContext.Add(usuario);
-                await _dataContext.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(usuario);
-        }
+       
 
         // GET: Usuarios/Edit/5
         public async Task<IActionResult> Edit(int? id)

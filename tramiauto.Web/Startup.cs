@@ -37,6 +37,11 @@ namespace tramiauto.Web
                 options.CheckConsentNeeded    = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+
+            services.ConfigureApplicationCookie(options => { options.LoginPath        = "/Account/NotAuthorized"; 
+                                                             options.AccessDeniedPath = "/Account/NotAuthorized"; 
+                                                           });
+
             services.AddIdentity<UserLogin, IdentityRole>(cfg =>{ cfg.User.RequireUniqueEmail         = true;
                                                                   cfg.Password.RequireDigit           = false;                                                                  
                                                                   cfg.Password.RequireLowercase       = false;
@@ -64,7 +69,8 @@ namespace tramiauto.Web
 
             /*** INYECCIÓN DE DEPENDENCIAS tres tipo: Transient(Solo se ejecuta una sola vez), singleton (carga en memoria se mantiene), scope (se inyecta cada vez que se necesita, crea una nueva instancia) ***/
             services.AddDbContext<DataContext>(cfg => { cfg.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")); });
-            services.AddScoped<IUserHelper, UserHelper>();
+            services.AddScoped<IUserHelper  , UserHelper>();
+            services.AddScoped<ICombosHelper, CombosHelper>();
             services.AddTransient<SeedDb>();
             /*** INYECCIÓN DE DEPENDENCIAS ***/
 
@@ -84,7 +90,8 @@ namespace tramiauto.Web
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-         
+
+            app.UseStatusCodePagesWithReExecute("/error/{0}");
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

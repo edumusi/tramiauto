@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using tramiauto.Common;
 using tramiauto.Web.Models;
 
 namespace tramiauto.Web.Controllers
@@ -33,5 +34,13 @@ namespace tramiauto.Web.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-    }
-}
+
+        [Route("error/404")]
+        public IActionResult Error404()
+        {
+            ViewBag.Message = MessageCenter.webAppMessagePageNotFound;
+            return View();
+        }
+
+    }//Class
+}//Namespace

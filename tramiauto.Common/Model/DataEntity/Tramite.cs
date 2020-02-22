@@ -46,13 +46,12 @@ namespace tramiauto.Common.Model.DataEntity
         [Display(Name = "Fecha Registro")]
         public DateTime FechaRegistroLocal => FechaRegistro.ToLocalTime();
 
-        [Display(Name = "Estatus")]
-        [Required(ErrorMessage     = MessageCenter.webAppTextFieldRequired)]
-        [MaxLength(20, ErrorMessage = MessageCenter.webAppTextFieldMaxLength)]
-        public string Status { get; set; }
-
 
         /**************RELATIONSHIP*****************/
+        [Display(Name = "Estatus")]
+        [Required(ErrorMessage = MessageCenter.webAppTextFieldRequired)]
+        public StatusTA Status { get; set; }
+
         [Display(Name = "Tipo de Tramite")]
         [Required(ErrorMessage = MessageCenter.webAppTextFieldRequired)]
         public TipoTramite TipoTramite { get; set; }

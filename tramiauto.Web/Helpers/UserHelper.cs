@@ -1,7 +1,20 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 using tramiauto.Common.Model.Request;
+using tramiauto.Common.Model.Response;
 using tramiauto.Web.Models.Entities;
+using tramiauto.Web.Models.ViewModel;
+using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.Extensions.Configuration;
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using tramiauto.Web.Models;
+using Microsoft.EntityFrameworkCore;
+
 
 
 
@@ -12,23 +25,75 @@ namespace tramiauto.Web.Helpers
 {
     public class UserHelper : IUserHelper
     {
-        private readonly UserManager<UserLogin>  _userManager;
+        private readonly UserManager<UserLogin>    _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly SignInManager<UserLogin> _signInManager;
+        private readonly SignInManager<UserLogin>  _signInManager;
+        private readonly IConfiguration            _configuration;
+        private readonly DataContext               _dataContext;
 
         public UserHelper(UserManager<UserLogin>     userManager
                          , RoleManager<IdentityRole> roleManager
-                         , SignInManager<UserLogin>  signInManager)
+                         , SignInManager<UserLogin>  signInManager
+                         , IConfiguration            configuration
+                         , DataContext               context)
                         {
                             _userManager   = userManager;
                             _roleManager   = roleManager;
                             _signInManager = signInManager;
+                            _configuration = configuration;
+                            _dataContext   = context;
                         }
+
+
+        public async Task<IdentityResult> AddUsuario (UsuarioViewModel view)
+        {
+            var result = await AddUserAsync(new UserLogin { UserName = view.Correo, Email = view.Correo, PhoneNumber = view.CellPhone }, view.Password);
+            if (result != IdentityResult.Success)
+            {                                
+                return IdentityResult.Failed(result.Errors.ToArray() );
+            }
+
+            var newUserLogin = await GetUserByEmailAsync(view.Correo);            
+            await AddUserToRoleAsync(newUserLogin, view.Rol);
+
+            return IdentityResult.Success;
+        }
+
+        public TokenResponse BuildToken(LoginTARequest userInfo)
+        {
+            var claims = new[]{ new Claim(JwtRegisteredClaimNames.Sub, userInfo.Email           ),
+                                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+                              };
+
+            var key         = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["TramiAutoSettings:JwtSecretKey"]));
+            var credentials = new SigningCredentials  (key, SecurityAlgorithms.HmacSha256);
+            var expiration  = DateTime.UtcNow.AddHours(12);
+
+            JwtSecurityToken token = new JwtSecurityToken(issuer  : _configuration["TramiAutoSettings:JwtIssuer"],
+                                                          audience: _configuration["TramiAutoSettings:Jwtaudience"],
+                                                          claims  : claims,
+                                                          expires : expiration,
+                                                          signingCredentials: credentials
+                                                          );
+
+            return new TokenResponse{ Token        = new JwtSecurityTokenHandler().WriteToken(token)
+                                    , Expiration   = expiration
+                                    , Valid        = token.ValidTo
+                                    , TokenExpired = true
+                                    };
+        }
+
 
         public async Task<IdentityResult> AddUserAsync(UserLogin user, string password)
         {
             return await _userManager.CreateAsync(user, password);
         }
+
+        public async Task<IdentityResult> UpdateUserAsync(UserLogin user)
+        {
+            return await _userManager.UpdateAsync(user);
+        }
+
 
         public async Task AddUserToRoleAsync(UserLogin user, string roleName)
         {
@@ -48,7 +113,7 @@ namespace tramiauto.Web.Helpers
         {
             return await _userManager.FindByEmailAsync(email);            
         }
-
+        
         public async Task<bool> IsUserInRoleAsync(UserLogin user, string roleName)
         {
             return await _userManager.IsInRoleAsync(user, roleName);
@@ -56,11 +121,10 @@ namespace tramiauto.Web.Helpers
 
         public async Task<SignInResult> LoginAsync(LoginTARequest model)
         {
-            return await _signInManager.PasswordSignInAsync(
-                model.Email,
-                model.Password,
-                model.RememberMe,
-                false);
+            return await _signInManager.PasswordSignInAsync( model.Email,
+                                                             model.Password,
+                                                             model.RememberMe,
+                                                             false);
         }
 
         public async Task LogoutAsync()
@@ -72,6 +136,27 @@ namespace tramiauto.Web.Helpers
         {
             return await _signInManager.CheckPasswordSignInAsync(user, password, false);
         }
+
+        public async Task<IdentityResult> ChangePasswordAsync(UserLogin user, string oldPassword, string newPassword)
+        {
+            return await _userManager.ChangePasswordAsync(user, oldPassword, newPassword);
+        }
+
+
+        public async Task<Usuario> GetUsuarioTAByEmailAsync(string email)
+        {            
+            return await _dataContext.Usuarios.Include(c => c.UserLogin)
+                                              .FirstOrDefaultAsync(u => u.UserLogin.NormalizedEmail == email.ToUpper());
+        }
+
+        public async void UpdateUsuarioTAB(Usuario usuario)
+        {
+            await _userManager.UpdateAsync(usuario.UserLogin);
+            _dataContext.Update(usuario);                    
+            await _dataContext.SaveChangesAsync();
+        }
+
+
 
     }//class
 }//NameSpace

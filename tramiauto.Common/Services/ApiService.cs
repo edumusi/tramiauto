@@ -35,15 +35,15 @@ namespace tramiauto.Common.Services
                 return new ResponseAPI<TokenResponse> { IsSuccess = true, Result = token };
             }
             catch (Exception ex)
-            { return new ResponseAPI<TokenResponse> { IsSuccess = false, Message = ex.Message }; }
+                  { return new ResponseAPI<TokenResponse> { IsSuccess = false, Message = ex.Message }; }
         }
 
         public async Task<ResponseAPI<UsuarioResponse>> GetUsuarioByEmailAsync(string urlBase,
-                                                       string controller,
-                                                       string method,
-                                                      string tokenType,
-                                                      string accessToken,
-                                                      string email)
+                                                                               string controller,
+                                                                               string method,
+                                                                               string tokenType,
+                                                                               string accessToken,
+                                                                               string email)
         {
             try
             {
@@ -67,7 +67,7 @@ namespace tramiauto.Common.Services
 
             }
             catch (Exception ex)
-            { return new ResponseAPI<UsuarioResponse> { IsSuccess = false, Message = ex.Message }; }
+                  { return new ResponseAPI<UsuarioResponse> { IsSuccess = false, Message = ex.Message }; }
         }
 
         public async Task<bool> checkConnectivityAsync(string url)

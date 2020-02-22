@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 using tramiauto.Common.Model.Request;
+using tramiauto.Common.Model.Response;
 using tramiauto.Web.Models.Entities;
+using tramiauto.Web.Models.ViewModel;
 
 
 /*** 
@@ -14,6 +16,7 @@ namespace tramiauto.Web.Helpers
         Task<UserLogin> GetUserByEmailAsync(string email);
 
         Task<IdentityResult> AddUserAsync(UserLogin user, string password);
+        Task<IdentityResult> UpdateUserAsync(UserLogin user);
 
         Task CheckRoleAsync(string roleName);
 
@@ -26,6 +29,17 @@ namespace tramiauto.Web.Helpers
         Task LogoutAsync();
 
         Task<SignInResult> ValidatePasswordAsync(UserLogin user, string password);
+
+        Task<IdentityResult> AddUsuario(UsuarioViewModel view);
+
+        TokenResponse BuildToken(LoginTARequest userInfo);
+
+        Task<IdentityResult> ChangePasswordAsync(UserLogin user, string oldPassword, string newPassword);
+
+        Task<Usuario> GetUsuarioTAByEmailAsync(string email);
+
+        void UpdateUsuarioTAB(Usuario usuario);
+        
 
     }//Class
 }//Namespace

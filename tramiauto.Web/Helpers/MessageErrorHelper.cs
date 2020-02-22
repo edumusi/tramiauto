@@ -14,7 +14,7 @@ namespace tramiauto.Web.Helpers
             var re = result.Errors.Select(x => new { x.Code, x.Description }).ToArray();
             var error = "";
             foreach (var e in re)
-            { error += e.Code + " - " + e.Description + Environment.NewLine; }
+            { error += e.Description ; }
 
 
             return error;
