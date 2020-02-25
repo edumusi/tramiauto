@@ -39,7 +39,21 @@ namespace tramiauto.Web.Helpers
         Task<Usuario> GetUsuarioTAByEmailAsync(string email);
 
         void UpdateUsuarioTAB(Usuario usuario);
-        
+
+
+
+        Task<string> GenerateEmailConfirmationTokenAsync(UserLogin user);
+
+        Task<IdentityResult> ConfirmEmailAsync(UserLogin user, string token);
+
+        Task<UserLogin> GetUserByIdAsync(string userId);
+
+
+
+        Task<string> GeneratePasswordResetTokenAsync(UserLogin user);
+
+        Task<IdentityResult> ResetPasswordAsync(UserLogin user, string token, string password);
+
 
     }//Class
 }//Namespace

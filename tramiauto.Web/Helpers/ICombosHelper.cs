@@ -15,5 +15,7 @@ namespace tramiauto.Web.Helpers
 
         IEnumerable<SelectListItem> GetComboRolUser();
 
+        string GetComboRolesByValue(string value);
+
     }//Class
 }//Namespace

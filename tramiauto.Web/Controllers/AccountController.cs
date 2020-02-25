@@ -16,12 +16,14 @@ namespace tramiauto.Web.Controllers
     {
         private readonly IUserHelper   _userHelper;
         private readonly ICombosHelper _combosHelper;
+        private readonly IMailHelper   _mailHelper;
         private readonly DataContext   _dataContext;
 
-        public AccountController(IUserHelper userHelper, ICombosHelper combosHelper, DataContext context)
+        public AccountController(IUserHelper userHelper, ICombosHelper combosHelper, IMailHelper mailHelper, DataContext context)
         {
             _userHelper   = userHelper;
             _combosHelper = combosHelper;
+            _mailHelper   = mailHelper;
             _dataContext  = context;
         }
 
@@ -75,40 +77,51 @@ namespace tramiauto.Web.Controllers
         {
             var view = (User.Identity.IsAuthenticated) ? new UsuarioViewModel { Roles = _combosHelper.GetComboRoles() } : new UsuarioViewModel { Roles = _combosHelper.GetComboRolUser() };
 
-            ViewBag.Message = MessageCenter.webAppTitlePageRegisterUser;
+            ViewBag.Title = MessageCenter.webAppTitlePageRegisterUser;
             return View(view);
         }
 
 
         [HttpPost]       
-        public async Task<IActionResult> Register(UsuarioViewModel view)
+        public async Task<IActionResult> Register(UsuarioViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                var rol  = _combosHelper.GetComboRoles().Where(r => r.Value == view.RoleId.ToString()).Select(r => r.Text);
-                view.Rol = rol.FirstOrDefault().ToString();
+                var rol       = _combosHelper.GetComboRoles().Where(r => r.Value == viewModel.RoleId.ToString()).Select(r => r.Text);
+                viewModel.Rol = rol.FirstOrDefault().ToString();
 
-                var addUserResult = await _userHelper.AddUsuario(view);                
+                var addUserResult = await _userHelper.AddUsuario(viewModel);                
                 if (addUserResult == IdentityResult.Success)                
                     { 
-                    var userLogin = await _userHelper.GetUserByEmailAsync(view.Correo);
-                    await _dataContext.Usuarios.AddAsync(new Usuario {  Automotores = null, DatosFiscales = null, FirstName = view.FirstName, LastName= view.LastName, Tramites =null, UserLogin = userLogin });
+                    var userLogin = await _userHelper.GetUserByEmailAsync(viewModel.Correo);
+                    await _dataContext.Usuarios.AddAsync(new Usuario {  Automotores = null, DatosFiscales = null, FirstName = viewModel.FirstName, LastName= viewModel.LastName, Tramites =null, UserLogin = userLogin });
                     await _dataContext.SaveChangesAsync();
                     //ToDo: implementar el guardado en sesión del TOKEN
-                    //TokenResponse token = _userHelper.BuildToken(new LoginTARequest { Email = view.Correo, Password = view.Password, RememberMe = false });                    
+                    /*TokenResponse token = _userHelper.BuildToken(new LoginTARequest { Email = view.Correo, Password = view.Password, RememberMe = false });                    
                     var result = await _userHelper.LoginAsync(new LoginTARequest { Email =view.Correo, Password = view.Password, RememberMe= false });
                     if (result.Succeeded)
                        { return RedirectToAction("Index", "Home"); }
+                    */
+                    var defaultToken = await _userHelper.GenerateEmailConfirmationTokenAsync(userLogin);
+                    var tokenLink = Url.Action("ConfirmEmail", "Account", new { userid = userLogin.Id,
+                                                                                token = defaultToken
+                                                                              }
+                                                , protocol: HttpContext.Request.Scheme);
+
+                    _mailHelper.SendEmailAccountConfirmation(viewModel.Correo, tokenLink);                        
+
+                    ViewBag.Message = MessageCenter.commonMessageEmailInst;
                     
-                    }
-                
+                     return View(viewModel);
+                }
+
                 ModelState.AddModelError(string.Empty, MessageErrorHelper.showIdentityResultError(addUserResult) );
-                view.Rol = rol.FirstOrDefault().ToString();
-                return View(view);
+                viewModel.Rol = rol.FirstOrDefault().ToString();
+                return View(viewModel);
 
             }
 
-            return View(view);
+            return View(viewModel);
         }
 
         //TODO: arreglar la vista para tener dos vistar parciales /In PartailView //PartailView.cshtml https://stackoverflow.com/questions/5410055/using-ajax-beginform-with-asp-net-mvc-3-razor
@@ -125,20 +138,23 @@ namespace tramiauto.Web.Controllers
                                               LastName  = user.LastName,
                                               CellPhone = user.CellPhone
                                             };
-            ViewBag.Message = MessageCenter.webAppTitlePageEditUser ;
+            ViewBag.Title = MessageCenter.webAppTitlePageEditUser;
+            
             return View(view);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ChangeUser(EditUserViewModel view)
+        public async Task<IActionResult> ChangeUser(EditUserViewModel viewModel)
         {
+            ViewBag.Title = MessageCenter.webAppTitlePageEditUser;
             if (ModelState.IsValid)
             {
-                var usuario = await _userHelper.GetUsuarioTAByEmailAsync(User.Identity.Name);
-                usuario.FirstName = view.FirstName;
-                usuario.LastName  = view.LastName;
-                usuario.UserLogin.PhoneNumber = view.CellPhone;
+                var usuario       = await _userHelper.GetUsuarioTAByEmailAsync(User.Identity.Name);
+                usuario.FirstName = viewModel.FirstName;
+                usuario.LastName  = viewModel.LastName;
+
+                usuario.UserLogin.PhoneNumber          = viewModel.CellPhone;
                 usuario.UserLogin.PhoneNumberConfirmed = false;
 
                 _userHelper.UpdateUsuarioTAB(usuario);
@@ -146,26 +162,114 @@ namespace tramiauto.Web.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            return View(view);
+            return View(viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ChangePassword(EditUserViewModel view)
+        public async Task<IActionResult> ChangePassword(EditUserViewModel viewModel)
         {
+            ViewBag.Title = MessageCenter.webAppTitlePageEditUser;
             if (ModelState.IsValid)
             {
                 var usuario = await _userHelper.GetUsuarioTAByEmailAsync(User.Identity.Name);
-                var result  = await _userHelper.ChangePasswordAsync(usuario.UserLogin, view.OldPassword, view.NewPassword);
+                var result  = await _userHelper.ChangePasswordAsync(usuario.UserLogin, viewModel.OldPassword, viewModel.NewPassword);
                 if (result.Succeeded)
-                    return RedirectToAction("ChangeUser");
+                   { return RedirectToAction("ChangeUser"); }
 
                ModelState.AddModelError(string.Empty, result.Errors.FirstOrDefault().Description); 
                 
             }
 
-            return View(view);
+            return View(viewModel);
         }
+
+
+        public async Task<IActionResult> ConfirmEmail(string userId, string token)
+        {
+            if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(token))
+               { return NotFound(); }
+
+            var user =  await _userHelper.GetUserByIdAsync(userId);
+            if (user == null)
+               { return NotFound(); }
+
+            var result = await _userHelper.ConfirmEmailAsync(user, token);
+            if (!result.Succeeded)
+               { return NotFound(); }
+
+            ViewBag.MessageConfirm = MessageCenter.commonMessageEmailConfirm;
+
+            return View();
+        }
+
+
+
+
+
+        public IActionResult RecoverPassword()
+        {
+
+            ViewBag.Title = MessageCenter.commonTitlePageRecoverPwd;
+
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RecoverPassword(EmailRequest viewModel)
+        {
+            ViewBag.Title = MessageCenter.commonTitlePageRecoverPwd;
+            if (ModelState.IsValid)
+            {
+                var user = await _userHelper.GetUserByEmailAsync(viewModel.Email);
+                if (user == null)
+                {
+                    ModelState.AddModelError(string.Empty, MessageCenter.commonMessageRecoverNoEmail);
+                    return View(viewModel);
+                }
+
+                var myToken   = await _userHelper.GeneratePasswordResetTokenAsync(user);
+                var tokenLink = Url.Action("ResetPassword", "Account", new { token = myToken }, protocol: HttpContext.Request.Scheme);
+
+                _mailHelper.SendEmailRecoverPwd(viewModel.Email, tokenLink);               
+
+                ViewBag.Message = MessageCenter.commonMessageRecoverEmail;
+
+                return View();
+
+            }
+
+            return View(viewModel);
+        }
+
+        public IActionResult ResetPassword(string token)
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel viewModel)
+        {
+            var user  = await _userHelper.GetUserByEmailAsync(viewModel.Email);
+            if (user != null)
+            {
+                var result = await _userHelper.ResetPasswordAsync(user, viewModel.Token, viewModel.Password);
+                if (result.Succeeded)
+                {
+                    ViewBag.Message = MessageCenter.commonMessagePassReset;
+                    return View();
+                }
+
+                ViewBag.Message = MessageCenter.commonMessageErrorPassReset;
+                return View(viewModel);
+            }
+
+            ViewBag.Message = MessageCenter.commonMessageRecoverNoEmail;
+
+            return View(viewModel);
+        }
+
 
 
     }//Class

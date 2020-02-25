@@ -42,7 +42,9 @@ namespace tramiauto.Web
                                                              options.AccessDeniedPath = "/Account/NotAuthorized"; 
                                                            });
 
-            services.AddIdentity<UserLogin, IdentityRole>(cfg =>{ cfg.User.RequireUniqueEmail         = true;
+            services.AddIdentity<UserLogin, IdentityRole>(cfg =>{ cfg.Tokens.AuthenticatorTokenProvider = TokenOptions.DefaultAuthenticatorProvider;
+	                                                              cfg.SignIn.RequireConfirmedEmail    = true;
+                                                                  cfg.User.RequireUniqueEmail         = true;
                                                                   cfg.Password.RequireDigit           = false;                                                                  
                                                                   cfg.Password.RequireLowercase       = false;
                                                                   cfg.Password.RequireNonAlphanumeric = false;
@@ -70,6 +72,7 @@ namespace tramiauto.Web
             /*** INYECCIÓN DE DEPENDENCIAS tres tipo: Transient(Solo se ejecuta una sola vez), singleton (carga en memoria se mantiene), scope (se inyecta cada vez que se necesita, crea una nueva instancia) ***/
             services.AddDbContext<DataContext>(cfg => { cfg.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")); });
             services.AddScoped<IUserHelper  , UserHelper>();
+            services.AddScoped<IMailHelper  , MailHelper>();
             services.AddScoped<ICombosHelper, CombosHelper>();
             services.AddTransient<SeedDb>();
             /*** INYECCIÓN DE DEPENDENCIAS ***/

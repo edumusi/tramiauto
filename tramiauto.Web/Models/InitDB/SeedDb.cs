@@ -78,6 +78,9 @@ namespace tramiauto.Web.Models.InitDB
 
                 _context.Usuarios.Add(user);
                 await _context.SaveChangesAsync();
+
+                var defaultToken = await _userHelper.GenerateEmailConfirmationTokenAsync(userLogin);
+                await _userHelper.ConfirmEmailAsync(userLogin, defaultToken);
             }
         }
 

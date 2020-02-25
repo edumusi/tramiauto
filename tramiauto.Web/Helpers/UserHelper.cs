@@ -158,5 +158,33 @@ namespace tramiauto.Web.Helpers
 
 
 
+        public async Task<IdentityResult> ConfirmEmailAsync(UserLogin user, string token)
+        {
+            return await _userManager.ConfirmEmailAsync(user, token);
+        }
+
+        public async Task<string> GenerateEmailConfirmationTokenAsync(UserLogin user)
+        {
+            return await _userManager.GenerateEmailConfirmationTokenAsync(user);
+        }
+
+        public async Task<UserLogin> GetUserByIdAsync(string userId)
+        {
+            return await _userManager.FindByIdAsync(userId);
+        }
+
+
+
+        public async Task<string> GeneratePasswordResetTokenAsync(UserLogin user)
+        {
+            return await _userManager.GeneratePasswordResetTokenAsync(user);
+        }
+
+        public async Task<IdentityResult> ResetPasswordAsync(UserLogin user, string token, string password)
+        {
+            return await _userManager.ResetPasswordAsync(user, token, password);
+        }
+
+
     }//class
 }//NameSpace

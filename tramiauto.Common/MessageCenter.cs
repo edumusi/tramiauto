@@ -32,11 +32,13 @@ namespace tramiauto.Common
 
         public const String webAppTitlePageRegisterUser = "Registro a Tramiauto";
         public const String webAppTitlePageEditUser     = "Actualizar Perfil";
+        
 
         /*******WEB APP Messages********/
 
         /*******APP Messages********/
         public const String appTextEmailFieldRequired = "El correo electrónico es obligatorio, para ingresar a la app.";
+        public const String appTextEmailUsed          = "El correo electrónico ingresado, ya se encuentra en uso por otra persona.";
         public const String appTextPassFieldRequired  = "La contraseña es obligatoria, para ingresar a la app.";
 
         public const String appLabelError   = "Error";        
@@ -44,7 +46,7 @@ namespace tramiauto.Common
 
         public const String appLabelErrorConnect = "Error de Conectividad";
         public const String appLabelErrorNoInter = "Tramiuto para su correcto funcionamiento necesita de acceso a internet, verifique su conexión.";
-        public const String appLabelErrorNoUserToken = "Hubo un problema con elu usuario y su acceso.";
+        public const String appLabelErrorNoUserToken = "Hubo un problema con el usuario y su acceso.";
 
         public const String appTitlePageLogin         = "Ingreso a Tramiauto";
         public const String appTitlePageTramites      = "Tramites";
@@ -56,6 +58,18 @@ namespace tramiauto.Common
         /*******Common Messages********/
         public const String commonMessageChoose      = "[Por favor seleccione]";
         public const String commonMessageChooseValue = "-1";
+
+
+        public const String commonMessageEmailInst    = "Para completar el registro es necesario confirmar la cuenta de correo electrónico, ha sido envido un correo con las instrucciónes de confirmación";
+        public const String commonMessageEmailConfirm = "Gracias por confirmar su cuenta de correo electrónica. Bienvenido a Tramiuto.";
+        public const String Project_Name = "Tramiauto";
+
+
+        public const String commonTitlePageRecoverPwd   = "Recuperar Contaraseña";
+        public const String commonMessageRecoverNoEmail = "La cuenta de correo elecrónico no se encuentra registrada.";
+        public const String commonMessageRecoverEmail   = "Han sido enviadas instrucciones para recuperar la contresaña al correo electrónico.";
+        public const String commonMessagePassReset      = "La contraseña ha sido reestablecida, favor de ingresar al portal.";
+        public const String commonMessageErrorPassReset = "Ha ocurrido un error al intentar reestablecer la contraseña. Favor de contactar al administrador.";
 
         /*******Common Messages********/
     }

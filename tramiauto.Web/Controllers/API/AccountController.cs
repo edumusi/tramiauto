@@ -10,6 +10,12 @@ using tramiauto.Common;
 using tramiauto.Common.Model.Request;
 using tramiauto.Common.Model.Response;
 using tramiauto.Common.Model.DataEntity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using tramiauto.Web.Models.ViewModel;
+
+
 
 namespace tramiauto.Web.Controllers.API
 {
@@ -20,12 +26,16 @@ namespace tramiauto.Web.Controllers.API
     private readonly DataContext    _dataContext;
     private readonly IConfiguration _configuration;
     private readonly IUserHelper    _userHelper;
+    private readonly IMailHelper    _mailHelper;
+    private readonly ICombosHelper  _combosHelper;
 
-    public AccountController(DataContext dataContext, IConfiguration configuration, IUserHelper userHelper)
+    public AccountController(DataContext dataContext, IConfiguration configuration, IUserHelper userHelper, IMailHelper mailHelper, ICombosHelper combosHelper)
     {
         _dataContext   = dataContext;
         _configuration = configuration;
         _userHelper    = userHelper;
+        _mailHelper    = mailHelper;
+        _combosHelper  = combosHelper;
     }
 
     [Route("CreateToken")]
@@ -58,7 +68,7 @@ namespace tramiauto.Web.Controllers.API
     public async Task<IActionResult> GetUserByEmailAsync([FromBody]EmailRequest request)
     {
         if (!ModelState.IsValid)
-            { return BadRequest(MessageErrorHelper.showModelStateError(ModelState)); }
+           { return BadRequest(MessageErrorHelper.showModelStateError(ModelState)); }
             
         var usuario = await _dataContext.Usuarios.Include(c => c.UserLogin)
                                                     .Include(c => c.Automotores)
@@ -74,6 +84,67 @@ namespace tramiauto.Web.Controllers.API
         return Ok(ToUsuarioResponse(usuario));
 
     }//GetUsuarioByEmail
+
+    // ******************************APP ******************************************/
+    [Route("RegisterUser")]
+    [HttpPost]
+    public async Task<IActionResult> RegisterUserAsync([FromBody] NewUserRequest request)
+    {
+        if (!ModelState.IsValid)
+           { return BadRequest(new Resp<object>{ IsSuccess = false, Message = MessageErrorHelper.showModelStateError(ModelState) }); }
+
+        var user  = await _userHelper.GetUserByEmailAsync(request.Correo);
+        if (user != null)
+           { return BadRequest(new Resp<object> { IsSuccess = false, Message = MessageCenter.appTextEmailUsed }); }
+
+        var newUser = new UsuarioViewModel { Correo    = request.Correo
+                                            , CellPhone = request.CellPhone
+                                            , FirstName = request.FirstName
+                                            , LastName  = request.LastName
+                                            , RoleId    = request.RoleId
+                                            , Rol       = _combosHelper.GetComboRolesByValue(request.RoleId.ToString())
+                                            , Password  = request.Password                                               
+                                            , PasswordConfirm = request.PasswordConfirm                                               
+                                            };
+
+        var addUserResult  = await _userHelper.AddUsuario(newUser);         
+        if (addUserResult != IdentityResult.Success)
+           { return BadRequest(new Resp<object> { IsSuccess = false, Message = MessageErrorHelper.showIdentityResultError(addUserResult) }); }       
+
+        var userLogin = await _userHelper.GetUserByEmailAsync(request.Correo);
+        var myToken   = await _userHelper.GenerateEmailConfirmationTokenAsync(userLogin);
+        var tokenLink = Url.Action("ConfirmEmail", "Account", new { userid = userLogin.Id,
+                                                                    token  = myToken
+                                                                  }, protocol: HttpContext.Request.Scheme);
+            
+        _mailHelper.SendEmailAccountConfirmation(request.Correo, tokenLink);
+        
+        return Ok(new Resp<object>{ IsSuccess = true, Message = MessageCenter.commonMessageEmailInst });
+
+    }    
+
+    [HttpPost]
+    [Route("RecoverPassword")]
+    public async Task<IActionResult> RecoverPassword([FromBody] EmailRequest request)
+    {
+	    if (!ModelState.IsValid)
+	       { return BadRequest(new Resp<object> { IsSuccess = false, Message = "Bad request" }); }
+
+	    var user = await _userHelper.GetUserByEmailAsync(request.Email);
+	    if (user == null)
+	       { return BadRequest(new Resp<object> { IsSuccess = false, Message = MessageCenter.commonMessageRecoverNoEmail }); }
+
+	    var myToken   = await _userHelper.GeneratePasswordResetTokenAsync(user);
+	    var tokenLink = Url.Action("ResetPassword", "Account", new { token = myToken }, protocol: HttpContext.Request.Scheme);
+        _mailHelper.SendEmailRecoverPwd(request.Email, tokenLink);
+            
+	    return Ok(new Resp<object> { IsSuccess = true, Message = MessageCenter.commonMessageRecoverEmail });
+    }
+
+
+
+    // ******************************APP ******************************************/
+
 
 
 

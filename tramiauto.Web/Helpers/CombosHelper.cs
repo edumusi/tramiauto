@@ -66,6 +66,13 @@ namespace tramiauto.Web.Helpers
             return list;
         }
 
+        public string GetComboRolesByValue(string value)
+        {
+            var roles = GetComboRoles();
+
+            return roles.Where(r => r.Value == value).Select(r => r.Text).FirstOrDefault();
+
+        }
 
     }//Class
 }//Namespace

@@ -1,11 +1,11 @@
 ﻿@model tramiauto.Web.Models.ViewModel.UsuarioViewModel
 
 @{
-    ViewData["Title"] = ViewBag.Message;
+    ViewData["Title"] = ViewBag.Title;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h4>@ViewBag.Message</h4>
+<h4>@ViewBag.Title</h4>
 
 <hr />
 <form asp-action="Register">
@@ -14,7 +14,11 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         </div>
     </div>
-
+    <div class="row">
+        <div class="text-success">
+            <p> @ViewBag.Message </p>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-4">
             <div class="form-group">
