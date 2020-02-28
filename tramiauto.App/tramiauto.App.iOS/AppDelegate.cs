@@ -1,6 +1,8 @@
 ﻿using Foundation;
 using Prism;
 using Prism.Ioc;
+using Syncfusion.SfBusyIndicator.XForms.iOS;
+using Syncfusion.SfRotator.XForms.iOS;
 using UIKit;
 
 
@@ -23,6 +25,11 @@ namespace tramiauto.App.iOS
         {
             global::Xamarin.Forms.Forms.Init();
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init();
+            Syncfusion.XForms.iOS.Buttons.SfButtonRenderer.Init();
+
+            new SfBusyIndicatorRenderer();
+
+            new SfRotatorRenderer();
 
             LoadApplication(new App(new iOSInitializer()));
 

@@ -1,45 +1,50 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using tramiauto.Common.Model.DataEntity;
+using tramiauto.Common.Services;
+using tramiauto.Web.Helpers;
 using tramiauto.Web.Models;
 
 namespace tramiauto.Web.Controllers
 {
     public class TramitesController : Controller
     {
-        private readonly DataContext _context;
+        private readonly DataContext  _dataContext;
+        private readonly IMenuService _menuService;
+        private readonly IUserHelper  _userHelper;
 
-        public TramitesController(DataContext context)
+        public TramitesController(DataContext context, IUserHelper userHelper, IMenuService menuService)
         {
-            _context = context;
+            _dataContext = context;
+            _menuService = menuService;
+            _userHelper = userHelper;
         }
 
-    //    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        //    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            return View( await _context.Tramites.ToListAsync() );
+            ViewBag.MenuLeft = _menuService.GenerateMenuWebAppLeftHeader(User.Identity.IsAuthenticated, _userHelper.GetRol((User.Identity as ClaimsIdentity)).FirstOrDefault());
+            ViewBag.MenuRight = _menuService.GenerateMenuWebAppRightHeader(User.Identity.IsAuthenticated, User.Identity.Name);
+
+            return View( await _dataContext.Tramites.ToListAsync() );
         }
 
         // GET: Tramites/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
-            {
-                return NotFound();
-            }
+               { return NotFound(); }
 
-            var tramite = await _context.Tramites
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var tramite = await _dataContext.Tramites.FirstOrDefaultAsync(m => m.Id == id);
             if (tramite == null)
-            {
-                return NotFound();
-            }
+               { return NotFound(); }
 
             return View(tramite);
         }
@@ -59,8 +64,8 @@ namespace tramiauto.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(tramite);
-                await _context.SaveChangesAsync();
+                _dataContext.Add(tramite);
+                await _dataContext.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(tramite);
@@ -70,15 +75,12 @@ namespace tramiauto.Web.Controllers
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
-            {
-                return NotFound();
-            }
+               { return NotFound(); }
 
-            var tramite = await _context.Tramites.FindAsync(id);
+            var tramite = await _dataContext.Tramites.FindAsync(id);
             if (tramite == null)
-            {
-                return NotFound();
-            }
+               { return NotFound(); }
+
             return View(tramite);
         }
 
@@ -98,19 +100,15 @@ namespace tramiauto.Web.Controllers
             {
                 try
                 {
-                    _context.Update(tramite);
-                    await _context.SaveChangesAsync();
+                    _dataContext.Update(tramite);
+                    await _dataContext.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!TramiteExists(tramite.Id))
-                    {
-                        return NotFound();
-                    }
+                       { return NotFound(); }
                     else
-                    {
-                        throw;
-                    }
+                       { throw; }
                 }
                 return RedirectToAction(nameof(Index));
             }
@@ -125,7 +123,7 @@ namespace tramiauto.Web.Controllers
                 return NotFound();
             }
 
-            var tramite = await _context.Tramites
+            var tramite = await _dataContext.Tramites
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (tramite == null)
             {
@@ -140,15 +138,15 @@ namespace tramiauto.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var tramite = await _context.Tramites.FindAsync(id);
-            _context.Tramites.Remove(tramite);
-            await _context.SaveChangesAsync();
+            var tramite = await _dataContext.Tramites.FindAsync(id);
+            _dataContext.Tramites.Remove(tramite);
+            await _dataContext.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool TramiteExists(int id)
         {
-            return _context.Tramites.Any(e => e.Id == id);
+            return _dataContext.Tramites.Any(e => e.Id == id);
         }
     }
 }

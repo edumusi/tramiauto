@@ -1,26 +1,36 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using tramiauto.Common.Model.DataEntity;
+using tramiauto.Common.Services;
+using tramiauto.Web.Helpers;
 using tramiauto.Web.Models;
 
 namespace tramiauto.Web.Controllers
 {
     public class TipoTramitesController : Controller
     {
-        private readonly DataContext _context;
+        private readonly DataContext _dataContext;
+        private readonly IMenuService _menuService;
+        private readonly IUserHelper  _userHelper;
 
-        public TipoTramitesController(DataContext context)
+        public TipoTramitesController(DataContext context, IUserHelper userHelper, IMenuService menuService)
         {
-            _context = context;
+            _dataContext = context;
+            _menuService = menuService;
+            _userHelper = userHelper;
         }
 
         // GET: TipoTramites
         public async Task<IActionResult> Index()
         {
-            return View(await _context.TipoTramites.ToListAsync());
+            ViewBag.MenuLeft  = _menuService.GenerateMenuWebAppLeftHeader(User.Identity.IsAuthenticated, _userHelper.GetRol((User.Identity as ClaimsIdentity)).FirstOrDefault());
+            ViewBag.MenuRight = _menuService.GenerateMenuWebAppRightHeader(User.Identity.IsAuthenticated, User.Identity.Name);            
+
+            return View(await _dataContext.TipoTramites.ToListAsync());
         }
 
         // GET: TipoTramites/Details/5
@@ -31,7 +41,7 @@ namespace tramiauto.Web.Controllers
                 return NotFound();
             }
 
-            var tipoTramite = await _context.TipoTramites
+            var tipoTramite = await _dataContext.TipoTramites
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (tipoTramite == null)
             {
@@ -56,8 +66,8 @@ namespace tramiauto.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(tipoTramite);
-                await _context.SaveChangesAsync();
+                _dataContext.Add(tipoTramite);
+                await _dataContext.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(tipoTramite);
@@ -71,7 +81,7 @@ namespace tramiauto.Web.Controllers
                 return NotFound();
             }
 
-            var tipoTramite = await _context.TipoTramites.FindAsync(id);
+            var tipoTramite = await _dataContext.TipoTramites.FindAsync(id);
             if (tipoTramite == null)
             {
                 return NotFound();
@@ -95,8 +105,8 @@ namespace tramiauto.Web.Controllers
             {
                 try
                 {
-                    _context.Update(tipoTramite);
-                    await _context.SaveChangesAsync();
+                    _dataContext.Update(tipoTramite);
+                    await _dataContext.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -122,7 +132,7 @@ namespace tramiauto.Web.Controllers
                 return NotFound();
             }
 
-            var tipoTramite = await _context.TipoTramites
+            var tipoTramite = await _dataContext.TipoTramites
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (tipoTramite == null)
             {
@@ -137,15 +147,15 @@ namespace tramiauto.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var tipoTramite = await _context.TipoTramites.FindAsync(id);
-            _context.TipoTramites.Remove(tipoTramite);
-            await _context.SaveChangesAsync();
+            var tipoTramite = await _dataContext.TipoTramites.FindAsync(id);
+            _dataContext.TipoTramites.Remove(tipoTramite);
+            await _dataContext.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool TipoTramiteExists(int id)
         {
-            return _context.TipoTramites.Any(e => e.Id == id);
+            return _dataContext.TipoTramites.Any(e => e.Id == id);
         }
     }
 }

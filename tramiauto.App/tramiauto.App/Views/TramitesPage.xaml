@@ -1,9 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:prism="http://prismlibrary.com"
+             xmlns:prism="http://prismlibrary.com"            
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"        	 
+         	 xmlns:syncfusion="clr-namespace:Syncfusion.SfRotator.XForms;assembly=Syncfusion.SfRotator.XForms"
              prism:ViewModelLocator.AutowireViewModel="True"
-             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              x:Class="tramiauto.App.Views.TramitesPage"
              BackgroundColor="Silver"
              Title="{Binding Title}">
@@ -23,14 +24,17 @@
                                 <TapGestureRecognizer Command="{Binding SelectTramiteCommand}"/>
                             </Frame.GestureRecognizers>
                             <StackLayout>
-                                <ffimageloading:CachedImage CacheDuration="50"                                                            
-                                                            ErrorPlaceholder="ErrorImagen"
-                                                            DownsampleToViewSize="True"                                                            
-                                                            LoadingPlaceholder="CargandoImagen"
-                                                            RetryCount="3"
-                                                            RetryDelay="600"                                                            
-                                                            Source="{Binding FirstAdjunto}"
-                                                            WidthRequest="100"/>
+                                <ffimageloading:CachedImage
+                                    Aspect="AspectFit"
+                                    CacheDuration= "50"
+                                    DownsampleToViewSize = "true"
+                                    ErrorPlaceholder= "ErrorImage"
+                                    HeightRequest="200"
+                                    LoadingPlaceholder= "LoaderImage"
+                                    RetryCount= "3"
+                                    RetryDelay= "600"
+                                    Source="{Binding FirstAdjunto}"/>
+                                
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width = "*"   />
@@ -47,17 +51,21 @@
                                             <RowDefinition Height="Auto"/>
                                             <RowDefinition Height="Auto"/>
                                             <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
                                         </Grid.RowDefinitions>
                                         <Label Grid.Row="0" Grid.Column="0" Text="Status" FontAttributes="Bold"/>
-                                        <Label Grid.Row="0" Grid.Column="1" Text="{Binding Status}" FontAttributes="Bold"/>
+                                        <Label Grid.Row="0" Grid.Column="1" Text="{Binding Status.Nombre}" FontAttributes="Bold"/>
                                         <Label Grid.Row="1" Grid.Column="0" Text="Tramite" FontAttributes="Bold"/>
                                         <Label Grid.Row="1" Grid.Column="1" Text="{Binding Nombre}"/>
-                                        <Label Grid.Row="2" Grid.Column="0" Text="Costo" FontAttributes="Bold"/>
-                                        <Label Grid.Row="2" Grid.Column="1" Text="{Binding Costo, StringFormat={StaticResource formatCurrency} }" />
-                                        <Label Grid.Row="3" Grid.Column="0" Text="Duracion" FontAttributes="Bold"/>
-                                        <Label Grid.Row="3" Grid.Column="1" Text="{Binding TiempoEntrega, StringFormat={StaticResource formatInt}}" />
-                                        <Label Grid.Row="4" Grid.Column="0" Text="Fecha Entrega" FontAttributes="Bold"/>
-                                        <Label Grid.Row="4" Grid.Column="1" Text="{Binding FechaEntrega, StringFormat={StaticResource formatDatetime} }" />
+                                        <Label Grid.Row="2" Grid.Column="0" Text="Automotor" FontAttributes="Bold"/>
+                                        <Label Grid.Row="2" Grid.Column="1" Text="{Binding AutomotorResponse.Marca}"/>
+                                        <Label Grid.Row="3" Grid.Column="0" Text="Costo" FontAttributes="Bold"/>
+                                        <Label Grid.Row="3" Grid.Column="1" Text="{Binding Costo, StringFormat={StaticResource formatCurrency} }" />
+                                        <Label Grid.Row="4" Grid.Column="0" Text="Duracion" FontAttributes="Bold"/>
+                                        <Label Grid.Row="4" Grid.Column="1" Text="{Binding TiempoEntrega, StringFormat={StaticResource formatInt}}" />
+                                        <Label Grid.Row="5" Grid.Column="0" Text="Fecha Entrega" FontAttributes="Bold"/>
+                                        <Label Grid.Row="5" Grid.Column="1" Text="{Binding FechaEntrega, StringFormat={StaticResource formatDatetime} }" />
                                     </Grid>
                                     <Image Grid.Column="1" Source="moreDetail"/>
                                 </Grid>

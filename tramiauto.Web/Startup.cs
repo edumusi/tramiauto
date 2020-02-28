@@ -18,6 +18,7 @@ using tramiauto.Web.Models.InitDB;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using tramiauto.Common.Services;
 
 namespace tramiauto.Web
 {
@@ -74,6 +75,7 @@ namespace tramiauto.Web
             services.AddScoped<IUserHelper  , UserHelper>();
             services.AddScoped<IMailHelper  , MailHelper>();
             services.AddScoped<ICombosHelper, CombosHelper>();
+            services.AddScoped<IMenuService , MenuService>();
             services.AddTransient<SeedDb>();
             /*** INYECCIÓN DE DEPENDENCIAS ***/
 

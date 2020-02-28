@@ -109,6 +109,14 @@ namespace tramiauto.Web.Helpers
             }
         }
 
+        public List<string> GetRol(ClaimsIdentity identity)
+        {
+            return identity.Claims
+                           .Where (c => c.Type == ClaimTypes.Role)
+                           .Select(c => c.Value)
+                           .ToList();
+        }
+
         public async Task<UserLogin> GetUserByEmailAsync(string email)
         {
             return await _userManager.FindByEmailAsync(email);            
@@ -148,6 +156,13 @@ namespace tramiauto.Web.Helpers
             return await _dataContext.Usuarios.Include(c => c.UserLogin)
                                               .FirstOrDefaultAsync(u => u.UserLogin.NormalizedEmail == email.ToUpper());
         }
+
+        public async Task<IList<string>> GetRolesByUserAsync(UserLogin user)
+        {
+            return await _userManager.GetRolesAsync(user);
+        }
+
+        
 
         public async void UpdateUsuarioTAB(Usuario usuario)
         {

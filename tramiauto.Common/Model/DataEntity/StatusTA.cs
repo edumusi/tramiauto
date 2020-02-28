@@ -17,7 +17,11 @@ namespace tramiauto.Common.Model.DataEntity
         [Display(Name = "Descripción")]
         [MaxLength(300, ErrorMessage = MessageCenter.webAppTextFieldMaxLength)]
         public string Descripcion { get; set; }
-       
+
+        [Display(Name = "Orden")]
+        [Required(ErrorMessage = MessageCenter.webAppTextFieldRequired)]
+        public int Orden { get; set; }
+
 
         /**************RELATIONSHIP*****************/
         public ICollection<Tramite> Tramites { get; set; }

@@ -1,6 +1,8 @@
-﻿using Prism.Commands;
+﻿using Newtonsoft.Json;
+using Prism.Commands;
 using Prism.Navigation;
 using tramiauto.Common;
+using tramiauto.Common.Helpers;
 using tramiauto.Common.Model.Request;
 using tramiauto.Common.Services;
 
@@ -15,7 +17,7 @@ namespace tramiauto.App.ViewModels.Pages
 * Metodos Privatos
 */
         private readonly INavigationService _navigationService;
-        private readonly IApiService _apiService;
+        private readonly IApiService        _apiService;
         private string _password;
         private bool  _isRunning;
         private bool  _isEnabled;
@@ -71,9 +73,9 @@ namespace tramiauto.App.ViewModels.Pages
             IsRunning = true;
             IsEnabled = false;
 
-            var url = MessageCenter.URL;
+            var url     = MessageCenter.URL;
             var url_API = MessageCenter.URL_API; // TODO: usar App Resorse App.Current.Resources["UrlAPI"].ToString();
-            var connect = await _apiService.checkConnectivityAsync(url);
+            var connect = await _apiService.CheckConnectivityAsync(url);
             if (!connect)
             {
                 IsEnabled = true;
@@ -83,7 +85,7 @@ namespace tramiauto.App.ViewModels.Pages
                 return;
             }
 
-            var request = new LoginTARequest { Email = Email, Password = Password };
+            var request   = new LoginTARequest { Email = Email, Password = Password };
             var respToken = await _apiService.GetTokenAsync(url_API, "Account", "CreateToken", request);
 
             if (!respToken.IsSuccess)
@@ -99,22 +101,25 @@ namespace tramiauto.App.ViewModels.Pages
             IsEnabled = true;
             IsRunning = false;
 
-            var token = respToken.Result;
+            var token    = respToken.Result;
             var respUser = await _apiService.GetUsuarioByEmailAsync(url_API, "Account", "GetUsuarioByEmail", "bearer", token.Token, Email);
             if (!respUser.IsSuccess)
             {
                 IsEnabled = true;
                 IsRunning = false;
-                Password = string.Empty;
+                Password  = string.Empty;
                 await App.Current.MainPage.DisplayAlert(MessageCenter.appLabelError, MessageCenter.appLabelErrorNoUserToken, MessageCenter.appLabelAceptar);
 
                 return;
             }
 
-            var usuario   = respUser.Result;
-            var paramUser = new NavigationParameters { { "usuario", usuario } };
-            await _navigationService.NavigateAsync("TramitesPage", paramUser);
+            var usuario      = respUser.Result;
+            Settings.Usuario = JsonConvert.SerializeObject(usuario);
+            Settings.Token   = JsonConvert.SerializeObject(token);
 
+            await _navigationService.NavigateAsync("/TramiteMasterDetailPage/NavigationPage/TramitesPage");
+            IsEnabled = true;
+            IsRunning = false;
         }
     }
 }

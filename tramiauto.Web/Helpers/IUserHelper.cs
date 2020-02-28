@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using tramiauto.Common.Model.Request;
 using tramiauto.Common.Model.Response;
@@ -20,9 +22,13 @@ namespace tramiauto.Web.Helpers
 
         Task CheckRoleAsync(string roleName);
 
+        List<string> GetRol(ClaimsIdentity identity);
+
         Task AddUserToRoleAsync(UserLogin user, string roleName);
 
         Task<bool> IsUserInRoleAsync(UserLogin user, string roleName);
+
+        Task<IList<string>> GetRolesByUserAsync(UserLogin user);
 
         Task<SignInResult> LoginAsync(LoginTARequest model);
 

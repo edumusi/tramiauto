@@ -33,24 +33,40 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <Label Grid.Row="0" Grid.Column="0" Text="Tipo Tramite" FontAttributes="Bold"/>
-                <Label Grid.Row="0" Grid.Column="1" Text="{Binding Tramite.TipoTramite.Nombre, StringFormat={StaticResource formatDatetime} }" />
-                <Label Grid.Row="1" Grid.Column="0" Text="Status" FontAttributes="Bold"/>
-                <Label Grid.Row="1" Grid.Column="1" Text="{Binding Tramite.Status}" FontAttributes="Bold"/>
-                <Label Grid.Row="2" Grid.Column="0" Text="Tramite" FontAttributes="Bold"/>
-                <Label Grid.Row="2" Grid.Column="1" Text="{Binding Tramite.Nombre}"/>
-                <Label Grid.Row="3" Grid.Column="0" Text="Descripción" FontAttributes="Bold"/>
-                <Label Grid.Row="3" Grid.Column="1" Text="{Binding Tramite.Descripcion}"/>
-                <Label Grid.Row="4" Grid.Column="0" Text="Costo" FontAttributes="Bold"/>
-                <Label Grid.Row="4" Grid.Column="1" Text="{Binding Tramite.Costo, StringFormat={StaticResource formatCurrency} }" />
-                <Label Grid.Row="5" Grid.Column="0" Text="Duracion" FontAttributes="Bold"/>
-                <Label Grid.Row="5" Grid.Column="1" Text="{Binding Tramite.TiempoEntrega, StringFormat={StaticResource formatInt}}" />
-                <Label Grid.Row="6" Grid.Column="0" Text="Fecha Entrega" FontAttributes="Bold"/>
-                <Label Grid.Row="6" Grid.Column="1" Text="{Binding Tramite.FechaEntrega, StringFormat={StaticResource formatDatetime} }" />
-                <Label Grid.Row="7" Grid.Column="0" Text="Automotor" FontAttributes="Bold"/>
-                <Label Grid.Row="7" Grid.Column="1" Text="{Binding Tramite.AdjuntosResponse.Count}" />
-        </Grid>
+                <Label Grid.Row="0" Grid.Column="0" Text="Documentos Cargados" FontAttributes="Bold"/>
+                <Label Grid.Row="0" Grid.Column="1" Text="{Binding Tramite.AdjuntosResponse.Count}" />
+                <Label Grid.Row="1" Grid.Column="0" Text="Tipo Tramite" FontAttributes="Bold"/>
+                <Label Grid.Row="1" Grid.Column="1" Text="{Binding Tramite.TipoTramite.Nombre, StringFormat={StaticResource formatDatetime} }" />
+                <Label Grid.Row="2" Grid.Column="0" Text="Status" FontAttributes="Bold"/>
+                <Label Grid.Row="2" Grid.Column="1" Text="{Binding Tramite.Status.Nombre}" FontAttributes="Bold"/>
+                <Label Grid.Row="3" Grid.Column="0" Text="Tramite" FontAttributes="Bold"/>
+                <Label Grid.Row="3" Grid.Column="1" Text="{Binding Tramite.Nombre}"/>
+                <Label Grid.Row="4" Grid.Column="0" Text="Descripción" FontAttributes="Bold"/>
+                <Label Grid.Row="4" Grid.Column="1" Text="{Binding Tramite.Descripcion}"/>
+                <Label Grid.Row="5" Grid.Column="0" Text="Costo" FontAttributes="Bold"/>
+                <Label Grid.Row="5" Grid.Column="1" Text="{Binding Tramite.Costo, StringFormat={StaticResource formatCurrency} }" />
+                <Label Grid.Row="6" Grid.Column="0" Text="Duracion" FontAttributes="Bold"/>
+                <Label Grid.Row="6" Grid.Column="1" Text="{Binding Tramite.TiempoEntrega, StringFormat={StaticResource formatInt}}" />
+                <Label Grid.Row="7" Grid.Column="0" Text="Fecha Entrega" FontAttributes="Bold"/>
+                <Label Grid.Row="7" Grid.Column="1" Text="{Binding Tramite.FechaEntrega, StringFormat={StaticResource formatDatetime} }" />
+                <Label Grid.Row="8" Grid.Column="0" Text="Automotor" FontAttributes="Bold" VerticalOptions="Center"/>
+                <Grid  Grid.Row="8" Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width = "Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Label Grid.Row="0" Grid.Column="0" Text="{Binding Tramite.AutomotorResponse.Tipo}" />
+                        <Label Grid.Row="1" Grid.Column="0" Text="{Binding Tramite.AutomotorResponse.Marca}" />
+                        <Label Grid.Row="2" Grid.Column="0" Text="{Binding Tramite.AutomotorResponse.Modelo}" />
+                    </Grid>
+          </Grid>
        </Frame>      
     </StackLayout>        
     </ScrollView>

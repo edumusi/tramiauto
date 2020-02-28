@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using tramiauto.Common.Services;
+using tramiauto.Web.Helpers;
 using tramiauto.Web.Models;
 using tramiauto.Web.Models.Entities;
 
@@ -16,15 +19,22 @@ namespace tramiauto.Web.Controllers
     public class UsuariosController : Controller
     {
         private readonly DataContext _dataContext;
-        
-        public UsuariosController(DataContext context)
+        private readonly IMenuService _menuService;
+        private readonly IUserHelper  _userHelper;
+
+        public UsuariosController(DataContext context, IUserHelper userHelper, IMenuService menuService)
         {
             _dataContext = context;
+            _menuService = menuService;
+            _userHelper  = userHelper;
         }
 
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index()
         {
+            ViewBag.MenuLeft  = _menuService.GenerateMenuWebAppLeftHeader(User.Identity.IsAuthenticated, _userHelper.GetRol((User.Identity as ClaimsIdentity)).FirstOrDefault());
+            ViewBag.MenuRight = _menuService.GenerateMenuWebAppRightHeader(User.Identity.IsAuthenticated, User.Identity.Name);
+            
             return View(await _dataContext.Usuarios.ToListAsync());
         }
 

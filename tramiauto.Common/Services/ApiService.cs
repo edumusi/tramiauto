@@ -47,10 +47,10 @@ namespace tramiauto.Common.Services
         {
             try
             {
-                var request = new EmailRequest { Email = email };
-                var requestString = JsonConvert.SerializeObject(request);
-                var content = new StringContent(requestString, Encoding.UTF8, "application/json");
-                var client = new HttpClient { BaseAddress = new Uri(urlBase) };
+                var request    = new EmailRequest { Email = email };
+                var requestStr = JsonConvert.SerializeObject(request);
+                var content    = new StringContent(requestStr, Encoding.UTF8, "application/json");
+                var client     = new HttpClient { BaseAddress = new Uri(urlBase) };
 
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(tokenType, accessToken);
 
@@ -61,16 +61,16 @@ namespace tramiauto.Common.Services
                 if (!response.IsSuccessStatusCode)
                    { return new ResponseAPI<UsuarioResponse> { IsSuccess = false, Message = result }; }
 
-                var owner = JsonConvert.DeserializeObject<UsuarioResponse>(result);
+                var usuario = JsonConvert.DeserializeObject<UsuarioResponse>(result);
 
-                return new ResponseAPI<UsuarioResponse> { IsSuccess = true, Result = owner };
+                return new ResponseAPI<UsuarioResponse> { IsSuccess = true, Result = usuario };
 
             }
             catch (Exception ex)
                   { return new ResponseAPI<UsuarioResponse> { IsSuccess = false, Message = ex.Message }; }
         }
 
-        public async Task<bool> checkConnectivityAsync(string url)
+        public async Task<bool> CheckConnectivityAsync(string url)
         {
             if (!CrossConnectivity.Current.IsConnected)
                { return false; }

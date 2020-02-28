@@ -53,13 +53,13 @@ namespace tramiauto.Web.Models.InitDB
         {
             if (!_context.StatusTA.Any())
             {
-                _context.StatusTA.Add(new StatusTA { Nombre = "Registrado", Descripcion = "Tramite registrado y pagado" });
-                _context.StatusTA.Add(new StatusTA { Nombre = "Validado"  , Descripcion = "Validacion de documentación y armado de expediente para imprimir" });
-                _context.StatusTA.Add(new StatusTA { Nombre = "Asignado"  , Descripcion = "Asignado a Gestor para ejecutar el tramite, entrega de expediente y costo del tramite" });
-                _context.StatusTA.Add(new StatusTA { Nombre = "Reasignado", Descripcion = "Reasignado a Gestor para ejecutar el tramite, entrega de expediente y costo del tramite" });
-                _context.StatusTA.Add(new StatusTA { Nombre = "Completo"  , Descripcion = "Tramite realizado en la dependcia gubernamental" });
-                _context.StatusTA.Add(new StatusTA { Nombre = "Entregado" , Descripcion = "Tramite entregado al cliente" });
-                _context.StatusTA.Add(new StatusTA { Nombre = "Evaluado"  , Descripcion = "Cliente califica el servicio" });
+                _context.StatusTA.Add(new StatusTA { Nombre = "Registrado", Descripcion = "Tramite registrado y pagado", Orden = 1 });
+                _context.StatusTA.Add(new StatusTA { Nombre = "Validado"  , Descripcion = "Validacion de documentación y armado de expediente para imprimir", Orden = 2 });
+                _context.StatusTA.Add(new StatusTA { Nombre = "Asignado"  , Descripcion = "Asignado a Gestor para ejecutar el tramite, entrega de expediente y costo del tramite", Orden = 3 });
+                _context.StatusTA.Add(new StatusTA { Nombre = "Reasignado", Descripcion = "Reasignado a Gestor para ejecutar el tramite, entrega de expediente y costo del tramite", Orden = 4 });
+                _context.StatusTA.Add(new StatusTA { Nombre = "Completo"  , Descripcion = "Tramite realizado en la dependcia gubernamental", Orden = 5 });
+                _context.StatusTA.Add(new StatusTA { Nombre = "Entregado" , Descripcion = "Tramite entregado al cliente", Orden = 6 });
+                _context.StatusTA.Add(new StatusTA { Nombre = "Evaluado"  , Descripcion = "Cliente califica el servicio", Orden = 7 });
                 await _context.SaveChangesAsync();
             }
           

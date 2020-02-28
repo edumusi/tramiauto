@@ -14,8 +14,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using tramiauto.Web.Models.ViewModel;
-
-
+using System.Security.Claims;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace tramiauto.Web.Controllers.API
 {
@@ -65,6 +66,7 @@ namespace tramiauto.Web.Controllers.API
 
     [Route("GetUsuarioByEmail")]
     [HttpPost]
+   /*[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]*/
     public async Task<IActionResult> GetUserByEmailAsync([FromBody]EmailRequest request)
     {
         if (!ModelState.IsValid)
@@ -74,6 +76,8 @@ namespace tramiauto.Web.Controllers.API
                                                     .Include(c => c.Automotores)
                                                     .Include(c => c.Tramites).ThenInclude(a => a.Adjuntos)
                                                     .Include(c => c.Tramites).ThenInclude(t => t.TipoTramite)
+                                                    .Include(c => c.Tramites).ThenInclude(s => s.Status)
+                                                    .Include(c => c.Tramites).ThenInclude(b => b.Automotor)
                                                     .Include(c => c.DatosFiscales)
                                                     .FirstOrDefaultAsync(u => u.UserLogin.NormalizedEmail == request.Email.ToUpper());
         if (usuario == null)
@@ -81,7 +85,9 @@ namespace tramiauto.Web.Controllers.API
             return NotFound(request);
         }
 
-        return Ok(ToUsuarioResponse(usuario));
+        IList<string> roles = await _userHelper.GetRolesByUserAsync(usuario?.UserLogin);        
+
+        return Ok(ToUsuarioResponse(usuario, roles.FirstOrDefault().ToString() ));
 
     }//GetUsuarioByEmail
 
@@ -149,18 +155,19 @@ namespace tramiauto.Web.Controllers.API
 
 
 
-    private UsuarioResponse ToUsuarioResponse(Usuario usuario)
+    private UsuarioResponse ToUsuarioResponse(Usuario usuario, string rol)
     {
     return new UsuarioResponse
-                { Id           = usuario.Id
+                { Id         = usuario.Id
                 , FirstName  = usuario.FirstName
                 , LastName   = usuario.LastName
                 , FixedPhone = usuario.FixedPhone
                 , CellPhone  = usuario.UserLogin?.PhoneNumber
-                , Correo     = usuario.UserLogin?.Email                    
+                , Correo     = usuario.UserLogin?.Email
+                , Rol        = rol
 
                 , AutomotorResponses = usuario.Automotores?.Select(a => new AutomotorResponse
-                                                                                { Id           = a.Id
+                                                                                { Id          = a.Id
                                                                                 , NumeroMotor = a.NumeroMotor
                                                                                 , NumeroSerie = a.NumeroSerie
                                                                                 , Marca       = a.Marca
@@ -168,20 +175,27 @@ namespace tramiauto.Web.Controllers.API
                                                                                 , Tipo        = a.Tipo
                                                                                 }).ToList()
                 , TramitesResponse = usuario.Tramites?.Select(t => new TramiteResponse
-                                                                        {    Id = t.Id
+                                                                           {  Id            = t.Id
                                                                             , Nombre        = t.Nombre
                                                                             , Descripcion   = t.Descripcion
                                                                             , Costo         = t.Costo
                                                                             , TiempoEntrega = t.TiempoEntrega
                                                                             , FechaEntrega  = t.FechaEntrega
                                                                             , FechaRegistro = t.FechaRegistro
-                                                                            , Status        = t.Status.Nombre
+                                                                            , Status        = new StatusResponse { Nombre = t.Status.Nombre, Descripcion = t.Status.Descripcion, Orden = t.Status.Orden }
                                                                             , TipoTramite   = ToTipoTramiteResponsee(t.TipoTramite)
+                                                                            , AutomotorResponse = new AutomotorResponse{ Id = t.Automotor.Id
+                                                                                                                       , NumeroMotor = t.Automotor.NumeroMotor
+                                                                                                                       , NumeroSerie = t.Automotor.NumeroSerie
+                                                                                                                       , Marca  = t.Automotor.Marca
+                                                                                                                       , Modelo = t.Automotor.Modelo
+                                                                                                                       , Tipo   = t.Automotor.Tipo
+                                                                                                                       }
                                                                             , AdjuntosResponse = t.Adjuntos?.Select(a => new TramiteAdjuntosResponse { Id   = a.Id
-                                                                                                                                                    , Tipo = a.Tipo
-                                                                                                                                                    , Ruta = a.Ruta
+                                                                                                                                                     , Tipo = a.Tipo
+                                                                                                                                                     , Ruta = a.Ruta
                                                                                                                     }).ToList()
-                                                                }).ToList()
+                                                                            }).ToList()
                 , DatosFiscalesResponse = ToDatosFiscalesResponse(usuario.DatosFiscales)
         };
     }

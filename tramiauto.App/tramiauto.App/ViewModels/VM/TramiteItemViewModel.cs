@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Newtonsoft.Json;
 using Prism.Commands;
 using Prism.Navigation;
+using tramiauto.Common.Helpers;
 using tramiauto.Common.Model.Response;
 
 namespace tramiauto.App.ViewModels.VM
@@ -10,7 +12,7 @@ namespace tramiauto.App.ViewModels.VM
     public class TramiteItemViewModel: TramiteResponse
     {
         private readonly INavigationService _navigationService;
-        private DelegateCommand _selectTramiteCommand;
+        private          DelegateCommand    _selectTramiteCommand;
 
         public TramiteItemViewModel(INavigationService navigationService)
         {
@@ -21,7 +23,7 @@ namespace tramiauto.App.ViewModels.VM
 
         private async void SelectTramite()
         {
-             var paramTramite = new NavigationParameters { { "tramite", this } };
+            var paramTramite = new NavigationParameters { { "tramite", this } };
             await _navigationService.NavigateAsync("DetailTramitePage", paramTramite);
         }
 

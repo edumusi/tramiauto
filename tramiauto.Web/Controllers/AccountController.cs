@@ -9,6 +9,8 @@ using tramiauto.Web.Models.ViewModel;
 using tramiauto.Common.Model.Response;
 using tramiauto.Web.Models;
 using tramiauto.Web.Models.Entities;
+using tramiauto.Common.Services;
+using System.Security.Claims;
 
 namespace tramiauto.Web.Controllers
 {
@@ -17,13 +19,15 @@ namespace tramiauto.Web.Controllers
         private readonly IUserHelper   _userHelper;
         private readonly ICombosHelper _combosHelper;
         private readonly IMailHelper   _mailHelper;
+        private readonly IMenuService  _menuService;
         private readonly DataContext   _dataContext;
 
-        public AccountController(IUserHelper userHelper, ICombosHelper combosHelper, IMailHelper mailHelper, DataContext context)
+        public AccountController(IUserHelper userHelper, ICombosHelper combosHelper, IMailHelper mailHelper, IMenuService menuService, DataContext context)
         {
             _userHelper   = userHelper;
             _combosHelper = combosHelper;
             _mailHelper   = mailHelper;
+            _menuService  = menuService;
             _dataContext  = context;
         }
 
@@ -37,6 +41,8 @@ namespace tramiauto.Web.Controllers
             if (User.Identity.IsAuthenticated)
                { return RedirectToAction("Index", "Home");  }
 
+            ViewBag.MenuLeft  = _menuService.GenerateMenuWebAppLeftHeader(User.Identity.IsAuthenticated, _userHelper.GetRol((User.Identity as ClaimsIdentity)).FirstOrDefault());
+            ViewBag.MenuRight = _menuService.GenerateMenuWebAppRightHeader(User.Identity.IsAuthenticated, User.Identity.Name);
             return View();
         }
 
@@ -77,7 +83,9 @@ namespace tramiauto.Web.Controllers
         {
             var view = (User.Identity.IsAuthenticated) ? new UsuarioViewModel { Roles = _combosHelper.GetComboRoles() } : new UsuarioViewModel { Roles = _combosHelper.GetComboRolUser() };
 
-            ViewBag.Title = MessageCenter.webAppTitlePageRegisterUser;
+            ViewBag.Title     = MessageCenter.webAppTitlePageRegisterUser;
+            ViewBag.MenuLeft  = _menuService.GenerateMenuWebAppLeftHeader(User.Identity.IsAuthenticated, _userHelper.GetRol((User.Identity as ClaimsIdentity)).FirstOrDefault());
+            ViewBag.MenuRight = _menuService.GenerateMenuWebAppRightHeader(User.Identity.IsAuthenticated, User.Identity.Name);            
             return View(view);
         }
 
@@ -138,8 +146,9 @@ namespace tramiauto.Web.Controllers
                                               LastName  = user.LastName,
                                               CellPhone = user.CellPhone
                                             };
-            ViewBag.Title = MessageCenter.webAppTitlePageEditUser;
-            
+            ViewBag.Title     = MessageCenter.webAppTitlePageEditUser;
+            ViewBag.MenuLeft  = _menuService.GenerateMenuWebAppLeftHeader(User.Identity.IsAuthenticated, _userHelper.GetRol((User.Identity as ClaimsIdentity)).FirstOrDefault());
+            ViewBag.MenuRight = _menuService.GenerateMenuWebAppRightHeader(User.Identity.IsAuthenticated, User.Identity.Name);
             return View(view);
         }
 
@@ -199,7 +208,8 @@ namespace tramiauto.Web.Controllers
                { return NotFound(); }
 
             ViewBag.MessageConfirm = MessageCenter.commonMessageEmailConfirm;
-
+            ViewBag.MenuLeft       = _menuService.GenerateMenuWebAppLeftHeader(User.Identity.IsAuthenticated, _userHelper.GetRol((User.Identity as ClaimsIdentity)).FirstOrDefault());
+            ViewBag.MenuRight      = _menuService.GenerateMenuWebAppRightHeader(User.Identity.IsAuthenticated, User.Identity.Name);
             return View();
         }
 
@@ -207,17 +217,18 @@ namespace tramiauto.Web.Controllers
 
 
 
-        public IActionResult RecoverPassword()
+        public IActionResult RecuperarContrasena()
         {
 
-            ViewBag.Title = MessageCenter.commonTitlePageRecoverPwd;
-
+            ViewBag.Title     = MessageCenter.commonTitlePageRecoverPwd;
+            ViewBag.MenuLeft  = _menuService.GenerateMenuWebAppLeftHeader(User.Identity.IsAuthenticated, _userHelper.GetRol((User.Identity as ClaimsIdentity)).FirstOrDefault());
+            ViewBag.MenuRight = _menuService.GenerateMenuWebAppRightHeader(User.Identity.IsAuthenticated, User.Identity.Name);
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> RecoverPassword(EmailRequest viewModel)
+        public async Task<IActionResult> RecuperarContrasena(EmailRequest viewModel)
         {
             ViewBag.Title = MessageCenter.commonTitlePageRecoverPwd;
             if (ModelState.IsValid)
@@ -245,6 +256,8 @@ namespace tramiauto.Web.Controllers
 
         public IActionResult ResetPassword(string token)
         {
+            ViewBag.MenuLeft  = _menuService.GenerateMenuWebAppLeftHeader(User.Identity.IsAuthenticated, _userHelper.GetRol((User.Identity as ClaimsIdentity)).FirstOrDefault());
+            ViewBag.MenuRight = _menuService.GenerateMenuWebAppRightHeader(User.Identity.IsAuthenticated, User.Identity.Name);            
             return View();
         }
 

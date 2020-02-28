@@ -1,4 +1,9 @@
-﻿using Xamarin.Forms;
+﻿using tramiauto.Common.Helpers;
+using tramiauto.Common.Model.Response;
+using Newtonsoft.Json;
+using System.Collections.Generic;
+using Xamarin.Forms;
+
 
 namespace tramiauto.App.Views
 {
@@ -8,5 +13,7 @@ namespace tramiauto.App.Views
         {
             InitializeComponent();
         }
-    }
-}
+
+        
+}//class
+}//NameSpace

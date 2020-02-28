@@ -10,7 +10,7 @@ namespace tramiauto.Common.Services
 
         Task<ResponseAPI<UsuarioResponse>> GetUsuarioByEmailAsync(string urlBase, string servicePrefix, string controller, string tokenType, string accessToken, string email);
 
-        Task<bool> checkConnectivityAsync(string url);
+        Task<bool> CheckConnectivityAsync(string url);
 
     }
 }

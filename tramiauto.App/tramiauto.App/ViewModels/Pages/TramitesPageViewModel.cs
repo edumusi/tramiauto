@@ -9,6 +9,8 @@ using tramiauto.Common.Model.Response;
 using tramiauto.Common.Model.DataEntity;
 using tramiauto.Common;
 using tramiauto.App.ViewModels.VM;
+using Newtonsoft.Json;
+using tramiauto.Common.Helpers;
 
 namespace tramiauto.App.ViewModels.Pages
 {
@@ -16,11 +18,14 @@ namespace tramiauto.App.ViewModels.Pages
     {
         private readonly INavigationService _navigationService;
         private UsuarioResponse _usuario;
-        private ObservableCollection<TramiteItemViewModel> _tramites;
+        private TokenResponse   _token;
+
+        private ObservableCollection<TramiteItemViewModel> _tramites;        
+
         public TramitesPageViewModel(INavigationService navigationService): base (navigationService)
         {
             _navigationService = navigationService;
-            Title = MessageCenter.appTitlePageTramites;            
+            LoadUsuarioToken();
         }
 
         public ObservableCollection<TramiteItemViewModel> Tramites
@@ -28,34 +33,32 @@ namespace tramiauto.App.ViewModels.Pages
             get => _tramites;
             set => SetProperty(ref _tramites, value);
         }
+              
 
-        public override void OnNavigatedTo(INavigationParameters parameters)
+        private void LoadUsuarioToken()
         {
-            base.OnNavigatedTo(parameters);
+            _token   = JsonConvert.DeserializeObject<TokenResponse>(Settings.Token);
+            _usuario = JsonConvert.DeserializeObject<UsuarioResponse>(Settings.Usuario);
 
-            if (parameters.ContainsKey("usuario"))
-               { 
-                 _usuario  = parameters.GetValue<UsuarioResponse>("usuario");
-                 Title     = _usuario.Rol== RoleTA.Usuario? $" Mis {MessageCenter.appTitlePageTramites}..." : $"{MessageCenter.appTitlePageTramites} de {_usuario.FullName}";
-                //Tramites = new ObservableCollection<TramiteResponse>(_usuario.TramitesResponse);
-                //TODO: Como es otra clase que se hereda, por el comando se necesita
-                Tramites = new ObservableCollection<TramiteItemViewModel>( _usuario.TramitesResponse.Select(p => new TramiteItemViewModel(_navigationService) 
-                                                                                                                                         { AdjuntosResponse = p.AdjuntosResponse
-                                                                                                                                           , AutomotorResponse = p.AutomotorResponse
-                                                                                                                                           , Costo = p.Costo
-                                                                                                                                           , Descripcion = p.Descripcion
-                                                                                                                                           , FechaEntrega = p.FechaEntrega
-                                                                                                                                           , FechaRegistro = p.FechaRegistro 
-                                                                                                                                           , Id = p.Id
-                                                                                                                                           , Nombre = p.Nombre
-                                                                                                                                           , Status = p.Status
-                                                                                                                                           , TiempoEntrega = p.TiempoEntrega
-                                                                                                                                           , TipoTramite = p.TipoTramite
-                                                                                                                                          }
-                                                                                                           ).ToList() );
-               }
-
-
+            Title = _usuario.Rol == RoleTA.Usuario ? $" Mis {MessageCenter.appTitlePageTramites}" : $"{MessageCenter.appTitlePageTramites} de {_usuario.FullName}";
+            Tramites = new ObservableCollection<TramiteItemViewModel>(_usuario.TramitesResponse
+                                                                                .Select(p => new TramiteItemViewModel(_navigationService)
+                                                                                {
+                                                                                    AdjuntosResponse = p.AdjuntosResponse
+                                                                                    ,AutomotorResponse = p.AutomotorResponse
+                                                                                    ,Costo = p.Costo
+                                                                                    ,Descripcion = p.Descripcion
+                                                                                    ,FechaEntrega = p.FechaEntrega
+                                                                                    ,FechaRegistro = p.FechaRegistro
+                                                                                    ,Id = p.Id
+                                                                                    ,Nombre = p.Nombre
+                                                                                    ,Status = p.Status
+                                                                                    ,TiempoEntrega = p.TiempoEntrega
+                                                                                    ,TipoTramite = p.TipoTramite
+                                                                                }
+                                                                                ).ToList());
         }
-    }
-}
+       
+
+    }//Class
+}//Namespace

@@ -16,8 +16,8 @@ namespace tramiauto.Common.Model.DataEntity
         [MaxLength(300, ErrorMessage = MessageCenter.webAppTextFieldRequired)]
         public string Ruta { get; set; }
 
-        // TODO: Change the path when publish
-        public string ImageFullPath => $"https://TBD.azurewebsites.net{Ruta.Substring(1)}";
+        // TODO: Change the path when publish        
+        public string ImageFullPath => $"https://tramiauto.azurewebsites.net/images/TramitesAdjuntos/{Ruta}";
 
         /**************RELATIONSHIP*****************/
         [Display(Name = "Tramite")]

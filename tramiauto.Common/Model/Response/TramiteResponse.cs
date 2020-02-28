@@ -39,7 +39,7 @@ namespace tramiauto.Common.Model.Response
         public DateTime FechaRegistroLocal => FechaRegistro.ToLocalTime();
 
         [Display(Name = "Estatus")]        
-        public string Status { get; set; }
+        public StatusResponse Status { get; set; }
        
         [Display(Name = "Tipo de Tramite")]
         public TipoTramiteResponse TipoTramite { get; set; }
