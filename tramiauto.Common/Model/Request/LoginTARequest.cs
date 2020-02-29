@@ -13,7 +13,11 @@ namespace tramiauto.Common.Model.Request
         [MinLength(6)]
         public string Password { get; set; }
 
-        public bool RememberMe { get; set; }       
+        public bool RememberMe { get; set; }     
+        
+        public bool IsRunning  { get; set; }
+
+        public bool IsEnabled  { get; set; }
 
     }//class
 }//NameSpace

@@ -2,17 +2,18 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="http://prismlibrary.com"
-             prism:ViewModelLocator.AutowireViewModel="True"
-             xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+             prism:ViewModelLocator.AutowireViewModel="True"             
              xmlns:busyindicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
+             xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"            
              x:Class="tramiauto.App.Views.LoginPage"
              Title="{Binding Title}"
->
+    >
     <ScrollView>
         <AbsoluteLayout>
             <StackLayout Padding="10"
                          AbsoluteLayout.LayoutBounds="0,0,1,1"
             	         AbsoluteLayout.LayoutFlags="All">
+
                 <Image Source="Logo" WidthRequest="180"/>
                 <Label Text="Correo Electrónico"/>
                 <Entry Text       = "{Binding Email}"
@@ -39,7 +40,7 @@
                                   ImageAlignment="Start"
                                   Text="Ingresar"
                                   Command   = "{Binding LoginCommand}"
-                                  IsEnabled = "{Binding ButtonIsEnabled}"/>
+                                  IsEnabled = "{Binding IsEnabled}"/>
             </StackLayout>
             <busyindicator:SfBusyIndicator  
                 	        AnimationType="DoubleCircle"

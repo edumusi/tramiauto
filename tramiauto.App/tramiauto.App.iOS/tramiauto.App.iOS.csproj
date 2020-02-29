@@ -195,10 +195,19 @@
     <PackageReference Include="Syncfusion.Xamarin.Buttons.IOS">
       <Version>17.4.0.51</Version>
     </PackageReference>
+    <PackageReference Include="Syncfusion.Xamarin.Expander">
+      <Version>17.4.0.51</Version>
+    </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfBusyIndicator">
       <Version>17.4.0.51</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfBusyIndicator.IOS">
+      <Version>17.4.0.51</Version>
+    </PackageReference>
+    <PackageReference Include="Syncfusion.Xamarin.SfComboBox">
+      <Version>17.4.0.51</Version>
+    </PackageReference>
+    <PackageReference Include="Syncfusion.Xamarin.SfComboBox.IOS">
       <Version>17.4.0.51</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfRotator">

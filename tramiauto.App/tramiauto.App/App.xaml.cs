@@ -40,7 +40,8 @@ namespace tramiauto.App
             containerRegistry.RegisterForNavigation<MapPage                , MapPageViewModel>();
             containerRegistry.RegisterForNavigation<ModifyUserPage         , ModifyUserPageViewModel>();
             containerRegistry.RegisterForNavigation<DetailTramitePage      , DetailTramitePageViewModel>();
-            containerRegistry.RegisterForNavigation<TramiteMasterDetailPage, TramiteMasterDetailPageViewModel>();
+            containerRegistry.RegisterForNavigation<TramiteMasterDetailPage, TramiteMasterDetailPageViewModel>();            
+            containerRegistry.RegisterForNavigation<NuevoTramitePage       , NuevoTramitePageViewModel>();
         }
     }//Class
 }//Namespace

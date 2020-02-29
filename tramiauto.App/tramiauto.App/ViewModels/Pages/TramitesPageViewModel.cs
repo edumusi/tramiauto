@@ -19,8 +19,10 @@ namespace tramiauto.App.ViewModels.Pages
         private readonly INavigationService _navigationService;
         private UsuarioResponse _usuario;
         private TokenResponse   _token;
+        private DelegateCommand _newTramiteCommand;
 
-        private ObservableCollection<TramiteItemViewModel> _tramites;        
+        private ObservableCollection<TramiteItemViewModel> _tramites;
+        public DelegateCommand NewTramiteCommand => _newTramiteCommand ?? (_newTramiteCommand = new DelegateCommand(NewTramite));
 
         public TramitesPageViewModel(INavigationService navigationService): base (navigationService)
         {
@@ -33,7 +35,14 @@ namespace tramiauto.App.ViewModels.Pages
             get => _tramites;
             set => SetProperty(ref _tramites, value);
         }
-              
+
+        private async void NewTramite()
+        {
+            await App.Current.MainPage.DisplayAlert("VER", "Entro new tramite", MessageCenter.appLabelAceptar);
+
+            await _navigationService.NavigateAsync("/TramiteMasterDetailPage/NavigationPage/NuevoTramitePage");           
+        }
+
 
         private void LoadUsuarioToken()
         {

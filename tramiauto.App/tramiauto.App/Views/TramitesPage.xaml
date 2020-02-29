@@ -2,39 +2,49 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="http://prismlibrary.com"            
-             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"        	 
-         	 xmlns:syncfusion="clr-namespace:Syncfusion.SfRotator.XForms;assembly=Syncfusion.SfRotator.XForms"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="tramiauto.App.Views.TramitesPage"
+             xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"             
              BackgroundColor="Silver"
              Title="{Binding Title}">
 
             <StackLayout Padding="15">
-                <ListView BackgroundColor="Transparent"
-                          ItemsSource="{Binding Tramites}"
-                          HasUnevenRows="True"
-                          SeparatorVisibility="None"
-                          >
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <Frame CornerRadius="25"
-                               Margin="0,0,0,6">
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding SelectTramiteCommand}"/>
-                            </Frame.GestureRecognizers>
-                            <StackLayout>
-                                <ffimageloading:CachedImage
-                                    Aspect="AspectFit"
-                                    CacheDuration= "50"
-                                    DownsampleToViewSize = "true"
-                                    ErrorPlaceholder= "ErrorImage"
-                                    HeightRequest="200"
-                                    LoadingPlaceholder= "LoaderImage"
-                                    RetryCount= "3"
-                                    RetryDelay= "600"
-                                    Source="{Binding FirstAdjunto}"/>
-                                
+                <buttons:SfButton HeightRequest="50"
+                                  WidthRequest="200"
+                                  VerticalOptions="Center"
+                                  HorizontalOptions="CenterAndExpand"                                  
+                                  CornerRadius="25"
+                                  HasShadow="True"
+                                  BorderWidth="1"
+                                  BorderColor="Gray"
+                                  BackgroundColor="#0741AD"
+                                  ImageSource="ic_input.png"
+                                  ShowIcon="True"
+                                  ImageAlignment="Start"
+                                  Text="Nuevo Tramite"
+                                  Command   = "{Binding NewTramiteCommand}"
+                                  />
+
+            <ListView BackgroundColor="Transparent" ItemsSource="{Binding Tramites}" HasUnevenRows="True" SeparatorVisibility="None">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Frame CornerRadius="25" Margin="0,0,0,6">
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding SelectTramiteCommand}"/>
+                                    </Frame.GestureRecognizers>
+                                    <StackLayout>
+                                    <ffimageloading:CachedImage Aspect="AspectFit"
+                                                                CacheDuration= "50"
+                                                                DownsampleToViewSize = "true"
+                                                                ErrorPlaceholder= "ErrorImage"
+                                                                HeightRequest="200"
+                                                                LoadingPlaceholder= "LoaderImage"
+                                                                RetryCount= "3"
+                                                                RetryDelay= "600"
+                                                                Source="{Binding FirstAdjunto}"/>
+
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width = "*"   />
@@ -70,11 +80,11 @@
                                     <Image Grid.Column="1" Source="moreDetail"/>
                                 </Grid>
                             </StackLayout>
-                        </Frame>    
+                        </Frame>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-            </StackLayout>
+    </StackLayout>
   
 </ContentPage>
