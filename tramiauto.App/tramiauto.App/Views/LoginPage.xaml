@@ -2,12 +2,75 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="http://prismlibrary.com"
-             prism:ViewModelLocator.AutowireViewModel="True"             
+             prism:ViewModelLocator.AutowireViewModel="True"
+             xmlns:local="clr-namespace:tramiauto.App"             
+             xmlns:dataForm="clr-namespace:Syncfusion.XForms.DataForm;assembly=Syncfusion.SfDataForm.XForms"
              xmlns:busyindicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
              xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"            
              x:Class="tramiauto.App.Views.LoginPage"
              Title="{Binding Title}"
-    >
+             >
+    
+    <ContentPage.Behaviors>
+        <local:DataFormLoginBehavior />
+    </ContentPage.Behaviors>
+    
+    <ContentPage.Content>
+        <Grid Padding="10"
+              AbsoluteLayout.LayoutBounds = "0, 0, 1, 1"
+              AbsoluteLayout.LayoutFlags  = "All">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+
+            <Image Grid.Row = "0" Source ="Logo" WidthRequest="500" HeightRequest="100" />
+            <ScrollView  Grid.Row         = "1">
+                <dataForm:SfDataForm x:Name          = "dfLogin"
+                                VerticalOptions  = "FillAndExpand" 
+                                HorizontalOptions= "FillAndExpand"                                
+                                ContainerType    = "Outlined"
+						        DataObject       = "{Binding LoginTA}"
+                                NotifyPropertyChanges="True"
+                                />
+            </ScrollView>
+            <busyindicator:SfBusyIndicator  
+                            Grid.Row         = "1"
+                	        AnimationType="DoubleCircle"
+                	        AbsoluteLayout.LayoutBounds="2, 2, .5, .5"
+                	        AbsoluteLayout.LayoutFlags="All"
+                	        BackgroundColor="Transparent"
+                	        HorizontalOptions="Center"
+                            VerticalOptions="Center"
+                	        TextColor="#0741AD"                	        
+                	        Title="Cargando..."                	        
+                	        ViewBoxWidth="80" ViewBoxHeight="80"
+                            IsVisible="{Binding IsRunning}"                
+                	        />
+            <buttons:SfButton Grid.Row         = "2"
+                              WidthRequest     = "200" 
+                              HeightRequest    = "50"                                                                   
+                              HorizontalOptions= "Center"
+                              VerticalOptions  = "Center"
+                              HasShadow        = "True"
+                              CornerRadius     = "25"                                  
+                              BackgroundColor  = "#0741AD" 
+                              BorderColor      = "Gray" 
+                              BorderWidth      = "1"
+                              ShowIcon         = "True" 
+                              ImageSource      = "ic_input.png"                                  
+                              Text             = "Ingresar" 
+                              ImageAlignment   = "Start"
+                              Command          = "{Binding LoginCommand}"
+                              CommandParameter = "{x:Reference dfLogin}"
+                              IsEnabled        = "{Binding IsEnabled}"
+                              />
+           
+        </Grid>
+        
+    </ContentPage.Content>
+    <!--
     <ScrollView>
         <AbsoluteLayout>
             <StackLayout Padding="10"
@@ -57,5 +120,5 @@
 
         </AbsoluteLayout>
     </ScrollView>
-
+-->
 </ContentPage>

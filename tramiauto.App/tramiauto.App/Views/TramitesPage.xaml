@@ -23,7 +23,7 @@
                                   ShowIcon="True"
                                   ImageAlignment="Start"
                                   Text="Nuevo Tramite"
-                                  Command   = "{Binding NewTramiteCommand}"
+                                  Command = "{Binding NewTramiteCommand}"
                                   />
 
             <ListView BackgroundColor="Transparent" ItemsSource="{Binding Tramites}" HasUnevenRows="True" SeparatorVisibility="None">

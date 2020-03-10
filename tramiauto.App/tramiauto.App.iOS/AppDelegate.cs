@@ -3,7 +3,7 @@ using Prism;
 using Prism.Ioc;
 using Syncfusion.SfBusyIndicator.XForms.iOS;
 using Syncfusion.SfRotator.XForms.iOS;
-
+using Syncfusion.XForms.iOS.DataForm;
 using UIKit;
 
 
@@ -27,9 +27,12 @@ namespace tramiauto.App.iOS
             new Syncfusion.XForms.iOS.ComboBox.SfComboBoxRenderer();
 
             global::Xamarin.Forms.Forms.Init();
+
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init();
             Syncfusion.XForms.iOS.Buttons.SfButtonRenderer.Init();
             Syncfusion.XForms.iOS.Accordion.SfAccordionRenderer.Init();
+
+            SfDataFormRenderer.Init();
 
             new SfBusyIndicatorRenderer();
 

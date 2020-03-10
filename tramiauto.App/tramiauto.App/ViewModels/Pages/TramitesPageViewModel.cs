@@ -38,8 +38,6 @@ namespace tramiauto.App.ViewModels.Pages
 
         private async void NewTramite()
         {
-            await App.Current.MainPage.DisplayAlert("VER", "Entro new tramite", MessageCenter.appLabelAceptar);
-
             await _navigationService.NavigateAsync("/TramiteMasterDetailPage/NavigationPage/NuevoTramitePage");           
         }
 

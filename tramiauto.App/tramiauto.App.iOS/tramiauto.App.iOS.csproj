@@ -210,6 +210,12 @@
     <PackageReference Include="Syncfusion.Xamarin.SfComboBox.IOS">
       <Version>17.4.0.51</Version>
     </PackageReference>
+    <PackageReference Include="Syncfusion.Xamarin.SfDataForm">
+      <Version>17.4.0.51</Version>
+    </PackageReference>
+    <PackageReference Include="Syncfusion.Xamarin.SfDataForm.IOS">
+      <Version>17.4.0.51</Version>
+    </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfRotator">
       <Version>17.4.0.51</Version>
     </PackageReference>

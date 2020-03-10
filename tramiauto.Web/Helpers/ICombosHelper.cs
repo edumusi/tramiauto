@@ -1,7 +1,7 @@
 ﻿
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.Rendering;
-
+using tramiauto.Common.Model.Response;
 
 namespace tramiauto.Web.Helpers
 {
@@ -16,6 +16,8 @@ namespace tramiauto.Web.Helpers
         IEnumerable<SelectListItem> GetComboRolUser();
 
         string GetComboRolesByValue(string value);
+
+        List<TipoTramiteResponse> GetTipoTramites();
 
     }//Class
 }//Namespace

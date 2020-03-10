@@ -30,7 +30,7 @@ namespace tramiauto.Common.Model.Response
         [Display(Name = "Nombre del Usuario")]
         public string FullName => $"{FirstName} {LastName}";
 
-        /**************RELATIONSHIP*****************/
+        
         [Display(Name = "Automotores")]
         public ICollection<AutomotorResponse> AutomotorResponses { get; set; }
 
@@ -39,6 +39,9 @@ namespace tramiauto.Common.Model.Response
 
         [Display(Name = "Dirección Fiscal")]
         public DatosFiscalesResponse DatosFiscalesResponse { get; set; }
-    
-}//CLASS
+
+        [Display(Name = "Tramites")]
+        public ICollection<TipoTramiteResponse> TiposTramite { get; set; }
+
+    }//CLASS
 }//NAMESPACE

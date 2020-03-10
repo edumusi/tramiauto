@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using tramiauto.Common.Model.DataEntity;
 using tramiauto.Common;
 using tramiauto.Web.Models;
+using tramiauto.Common.Model.Response;
 
 namespace tramiauto.Web.Helpers
 {
@@ -66,6 +67,13 @@ namespace tramiauto.Web.Helpers
             return list;
         }
 
+        public List<TipoTramiteResponse> GetTipoTramites()
+        {
+            var list = _dataContext.TipoTramites.Select(tt=> new TipoTramiteResponse { Id = tt.Id, Costo = tt.Costo, Nombre = tt.Nombre, Descripcion= tt.Descripcion, TiempoOperacion=tt.TiempoOperacion }
+                                                       ).OrderBy(v => v.Id).ToList();          
+
+            return list;
+        }
         public string GetComboRolesByValue(string value)
         {
             var roles = GetComboRoles();

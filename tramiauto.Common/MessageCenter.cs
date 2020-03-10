@@ -8,11 +8,12 @@ namespace tramiauto.Common
     public static class MessageCenter
     {
         /*******URL CONSTANT********/
-        public const String URL     = "https://tramiauto.azurewebsites.net/";
-        public const String URL_API = "https://tramiauto.azurewebsites.net/api/";
+        public const String URL         = "https://tramiauto.azurewebsites.net/";
+        public const String URL_API     = "https://tramiauto.azurewebsites.net/api/";
+        public const String URL_IMG_APP = "https://tramiauto.azurewebsites.net/images/app/";
         /*******URL CONSTANT********/
 
-        /*******WEB APP Messages********/        
+        /*******WEB APP Messages********/
         public const String webAppTextFieldRequired  = "El campo {0} es obligatorio.";
         public const String webAppTextFieldMaxLength = "El campo {0} no puede tener más de {1} caractéres.";
         public const String webAppTextFieldBetween   = "El campo {0} debe tener entre {2} y {1} caractéres.";
@@ -48,9 +49,13 @@ namespace tramiauto.Common
         public const String appLabelErrorNoInter = "Tramiuto para su correcto funcionamiento necesita de acceso a internet, verifique su conexión.";
         public const String appLabelErrorNoUserToken = "Hubo un problema con el usuario y su acceso.";
 
-        public const String appTitlePageLogin         = "Ingreso a Tramiauto";
+        public const String appTitlePageLogin         = "Bienvenido a Tramiauto";
         public const String appTitlePageTramites      = "Tramites";
         public const String appTitlePageDetailTramite = "Detalle de Tramite";
+        public const String appGroupName1DFTramite    = "Tipo Tramite";
+        public const String appGroupName2DFTramite    = "Documentos";
+        public const String appGroupName3DFTramite    = "Forma de Pago";
+        public const String appTitleDocsTramite       = "Requisitos/Docs - ";
 
         /*******APP Messages********/
 

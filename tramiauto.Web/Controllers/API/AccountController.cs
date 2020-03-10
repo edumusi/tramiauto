@@ -81,13 +81,14 @@ namespace tramiauto.Web.Controllers.API
                                                     .Include(c => c.DatosFiscales)
                                                     .FirstOrDefaultAsync(u => u.UserLogin.NormalizedEmail == request.Email.ToUpper());
         if (usuario == null)
-        {//ModelState.AddModelError(string.Empty, MessageCenter.labelEmailNotFound);
-            return NotFound(request);
-        }
+           { return NotFound(request); }
 
         IList<string> roles = await _userHelper.GetRolesByUserAsync(usuario?.UserLogin);        
 
-        return Ok(ToUsuarioResponse(usuario, roles.FirstOrDefault().ToString() ));
+        return Ok(ToUsuarioResponse(usuario
+                                   , roles.FirstOrDefault().ToString()
+                                   , _combosHelper.GetTipoTramites())
+                 );
 
     }//GetUsuarioByEmail
 
@@ -155,7 +156,7 @@ namespace tramiauto.Web.Controllers.API
 
 
 
-    private UsuarioResponse ToUsuarioResponse(Usuario usuario, string rol)
+    private UsuarioResponse ToUsuarioResponse(Usuario usuario, string rol, ICollection<TipoTramiteResponse> tiposTramite)
     {
     return new UsuarioResponse
                 { Id         = usuario.Id
@@ -165,7 +166,6 @@ namespace tramiauto.Web.Controllers.API
                 , CellPhone  = usuario.UserLogin?.PhoneNumber
                 , Correo     = usuario.UserLogin?.Email
                 , Rol        = rol
-
                 , AutomotorResponses = usuario.Automotores?.Select(a => new AutomotorResponse
                                                                                 { Id          = a.Id
                                                                                 , NumeroMotor = a.NumeroMotor
@@ -197,6 +197,7 @@ namespace tramiauto.Web.Controllers.API
                                                                                                                     }).ToList()
                                                                             }).ToList()
                 , DatosFiscalesResponse = ToDatosFiscalesResponse(usuario.DatosFiscales)
+                , TiposTramite = tiposTramite
         };
     }
         

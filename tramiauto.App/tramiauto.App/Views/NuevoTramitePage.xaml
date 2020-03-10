@@ -2,23 +2,73 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
-             xmlns:ListCollection="clr-namespace:System.Collections.Generic;assembly=netstandard"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"             
+             xmlns:dataForm="clr-namespace:Syncfusion.XForms.DataForm;assembly=Syncfusion.SfDataForm.XForms"
+             xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"            
+             xmlns:local="clr-namespace:tramiauto.App"
              mc:Ignorable="d"
              x:Class="tramiauto.App.Views.NuevoTramitePage"
              Title="{Binding Title}">
-    <ContentPage.Content>
-        <StackLayout VerticalOptions="Start" HorizontalOptions="Start" Padding="30">
+    
+    <ContentPage.Behaviors>
+        <local:DataFormTramiteBehavior />
+    </ContentPage.Behaviors>
 
-            <combobox:SfComboBox x:Name="comboBox" 
-                                 HeightRequest="40" 
-                                 DropDownCornerRadius="6"
-                                 DataSource="{Binding TipoTramites}" 
-                                 DisplayMemberPath="Nombre" 
-                                 SelectedIndex="0"
-                                 />
-            
-        </StackLayout>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+            <ScrollView>
+                <dataForm:SfDataForm x:Name           = "dfTramite"
+                                     VerticalOptions  = "FillAndExpand" 
+                                     HorizontalOptions= "FillAndExpand"                                 
+                                     Grid.Row         = "0"
+                                     LabelPosition    = "Top"                                   
+                                     ContainerType    = "Outlined"
+						             DataObject       = "{Binding Tramite}"
+                                     NotifyPropertyChanges="True"
+                                     />
+            </ScrollView>
+
+            <buttons:SfButton x:Name           = "button" 
+                              Grid.Row         = "1"
+                              HeightRequest    = "50"
+                              WidthRequest     = "200"
+                              VerticalOptions  = "Center"
+                              HorizontalOptions= "Center"
+                              CornerRadius     = "25"
+                              HasShadow        = "True"
+                              BorderWidth      = "1"
+                              BorderColor      = "Gray"
+                              BackgroundColor  = "#0741AD"
+                              ImageSource      = "ic_input.png"
+                              ShowIcon         = "True"
+                              ImageAlignment   = "Start"
+                              Text             = "Tramitar"
+                              Command          = "{Binding NewTramiteCommand}"
+                              CommandParameter = "{x:Reference dfTramite}"
+                            />
+
+            <buttons:SfButton x:Name           = "buttonDocs" 
+                              Grid.Row         = "2"
+                              HeightRequest    = "50"
+                              WidthRequest     = "150"
+                              VerticalOptions  = "Center"
+                              HorizontalOptions= "Center"
+                              CornerRadius     = "25"
+                              HasShadow        = "True"
+                              BorderWidth      = "1"
+                              BorderColor      = "Gray"
+                              BackgroundColor  = "#0741AD"
+                              ImageSource      = "ic_input.png"
+                              ShowIcon         = "True"
+                              ImageAlignment   = "Start"
+                              Text             = "Docs"
+                              Command          = "{Binding AddDocsCommand}"                              
+                            />
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

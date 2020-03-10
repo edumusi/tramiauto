@@ -42,6 +42,7 @@ namespace tramiauto.Web.Models.InitDB
         {
             if (!_context.TipoTramites.Any())
             {
+                _context.TipoTramites.Add(new TipoTramite { Nombre = "Seleccione un Tramite", Descripcion = "Favor de seleccionar un tramite", Costo = -1, TiempoOperacion = -1 });
                 _context.TipoTramites.Add(new TipoTramite { Nombre = "Renovación Trajeta Circulación", Descripcion = "Renovación Trajeta Circulación", Costo = 450, TiempoOperacion = 3 });
                 _context.TipoTramites.Add(new TipoTramite { Nombre = "Cambio de Propetario", Descripcion = "Cambio de Propetario", Costo = 450, TiempoOperacion = 5 });
                 _context.TipoTramites.Add(new TipoTramite { Nombre = "Placas", Descripcion = "Placas", Costo = 450, TiempoOperacion = 5 });
