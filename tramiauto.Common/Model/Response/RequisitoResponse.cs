@@ -5,23 +5,19 @@ using System.Text;
 
 namespace tramiauto.Common.Model.Response
 {
-    public class TipoTramiteResponse
-    {
+    public class RequisitoResponse
+    {     
         public int Id { get; set; }
+
         [Display(Name = "Orden")]
         public int Orden { get; set; }
 
-        [Display(Name = "Tramite")]        
+        [Display(Name = "Requisito")]        
         public string Nombre { get; set; }
 
         [Display(Name = "Descripción")]        
         public string Descripcion { get; set; }
-
-        [Display(Name = "Costo")]
-        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]        
-        public decimal Costo { get; set; }
-
-        [Display(Name = "Días Habiles")]        
-        public int TiempoOperacion { get; set; }
+        
+        public int  IdTipoTramite { get; set; }
     }
 }

@@ -8,6 +8,7 @@
              xmlns:busyindicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
              xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"            
              x:Class="tramiauto.App.Views.LoginPage"
+             BackgroundColor="Silver"
              Title="{Binding Title}"
              >
     

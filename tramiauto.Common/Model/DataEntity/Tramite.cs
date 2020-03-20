@@ -16,6 +16,11 @@ namespace tramiauto.Common.Model.DataEntity
         [MaxLength(50, ErrorMessage = MessageCenter.webAppTextFieldMaxLength)]
         public string Nombre { get; set; }
 
+        [Display(Name = "Folio")]
+        [Required(ErrorMessage = MessageCenter.webAppTextFieldRequired)]
+        [MaxLength(10, ErrorMessage = MessageCenter.webAppTextFieldMaxLength)]
+        public string Folio { get; set; }
+
         [Display(Name = "Descripción")]        
         [MaxLength(300, ErrorMessage = MessageCenter.webAppTextFieldMaxLength)]
         public string Descripcion { get; set; }

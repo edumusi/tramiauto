@@ -43,5 +43,8 @@ namespace tramiauto.Common.Model.Response
         [Display(Name = "Tramites")]
         public ICollection<TipoTramiteResponse> TiposTramite { get; set; }
 
+        [Display(Name = "Requisitos")]
+        public ICollection<RequisitoResponse> Requisitos   { get; set; }
+
     }//CLASS
 }//NAMESPACE

@@ -4,10 +4,10 @@ using Android.OS;
 
 namespace tramiauto.App.Droid
 {
-    [Activity(
-        Theme = "@style/Theme.Splash",
-        MainLauncher = true,
-        NoHistory = true)]
+    [Activity( Theme        = "@style/Theme.Splash",
+               MainLauncher = true,
+               NoHistory    = true)
+    ]
     public class SplashActivity : Activity
     {
         protected override void OnCreate(Bundle bundle)

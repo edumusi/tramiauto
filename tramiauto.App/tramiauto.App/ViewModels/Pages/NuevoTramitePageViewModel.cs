@@ -16,6 +16,7 @@ namespace tramiauto.App.ViewModels.Pages
         private Command _addDocsCommand;
         //private UsuarioResponse _usuario;
         public Tramite Tramite { get; set; }
+        public bool IsVisibleButtonDoc { get; set; }
 
         public Command NewTramiteCommand => _newTramiteCommand ?? (_newTramiteCommand = new Command(NewTramite));
 
@@ -24,8 +25,10 @@ namespace tramiauto.App.ViewModels.Pages
         public NuevoTramitePageViewModel(INavigationService navigationService) : base(navigationService)
         {
             _navigationService = navigationService;
-            Title = "Solicitar Tramite";
-            
+
+            Title              = "Solicitar Tramite";
+            IsVisibleButtonDoc = true;
+
             var tramite = new Tramite();
             tramite.PropertyChanged += Tramite_PropertyChanged;
             Tramite  = tramite;            
@@ -38,9 +41,8 @@ namespace tramiauto.App.ViewModels.Pages
             {
                 var item = sender as Tramite;
                 Int32.TryParse(item.TipoTramite, out int x);
-                Tramite.Monto = 800 * x;
-                App.Current.MainPage.DisplayAlert("DataFormPageViewModel", $"TRAMITE: [{e.PropertyName}] [{x}] [{item.TipoTramite}] [{Tramite.Monto}]", MessageCenter.appLabelAceptar);
-            }
+                Tramite.Monto = 800 * x;               
+            }            
         }
 
         private async void NewTramite(object sender)
@@ -58,7 +60,7 @@ namespace tramiauto.App.ViewModels.Pages
 
         private async void AddDocs(object sender)
         {            
-            await App.Current.MainPage.DisplayAlert("AddDocs", $"AddDocsl: {Tramite.TipoTramite} - {Tramite.Verificacion} - {Tramite.TipoPago} - {Tramite.Monto}", MessageCenter.appLabelAceptar);
+         //   await App.Current.MainPage.DisplayAlert("AddDocs", $"AddDocsl: {Tramite.TipoTramite} - {Tramite.Verificacion} - {Tramite.TipoPago} - {Tramite.Monto}", MessageCenter.appLabelAceptar);
 
             var paramTramite = new NavigationParameters { { "tramite", Tramite } };
             await _navigationService.NavigateAsync("DocsPage", paramTramite);

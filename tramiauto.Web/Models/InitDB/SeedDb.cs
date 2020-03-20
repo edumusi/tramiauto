@@ -19,14 +19,15 @@ namespace tramiauto.Web.Models.InitDB
 
         public async Task SeedAsync()
         {
-            await _context.Database.EnsureCreatedAsync();            
-            await CheckTipoTramitesAsync();
+            await _context.Database.EnsureCreatedAsync();
             await CheckStatusTAAsync();
             await CheckRoles();
-            await CheckUserAsync( "Eduardo", "Admin", "ems@convivere.mx", "350 634 2747", "admin123", RoleTA.Admin);
-            await CheckUserAsync( "Irving", "Ejecutivo", "isanchez@everestgestoria.com", "350 634 2747", "eje123", RoleTA.Ejecutivo);
-            await CheckUserAsync("Juan", "Gestor", "eduardo_m81@hotmail.com", "350 634 2747", "gestor123", RoleTA.Gestor);
-            await CheckUserAsync( "Mauricio", "Usuario", "ems@convivere.casa", "350 634 2747", "user123", RoleTA.Usuario);           
+            await CheckUserAsync( "Eduardo" , "Admin"    , "ems@convivere.mx"            , "350 634 2747", "admin123" , RoleTA.Admin);
+            await CheckUserAsync( "Irving"  , "Ejecutivo", "isanchez@everestgestoria.com", "350 634 2747", "eje123"   , RoleTA.Ejecutivo);
+            await CheckUserAsync( "Juan"    , "Gestor"   , "eduardo_m81@hotmail.com"     , "350 634 2747", "gestor123", RoleTA.Gestor);
+            await CheckUserAsync( "Mauricio", "Usuario"  , "ems@convivere.casa"          , "350 634 2747", "user123"  , RoleTA.Usuario);
+            CheckTipoTramitesAsync();
+            
         }
 
 
@@ -38,19 +39,37 @@ namespace tramiauto.Web.Models.InitDB
             await _userHelper.CheckRoleAsync(RoleTA.Usuario);
         }
 
-        private async Task CheckTipoTramitesAsync()
+        private void CheckTipoTramitesAsync()
         {
-            if (!_context.TipoTramites.Any())
-            {
-                _context.TipoTramites.Add(new TipoTramite { Nombre = "Seleccione un Tramite", Descripcion = "Favor de seleccionar un tramite", Costo = -1, TiempoOperacion = -1 });
-                _context.TipoTramites.Add(new TipoTramite { Nombre = "Renovación Trajeta Circulación", Descripcion = "Renovación Trajeta Circulación", Costo = 450, TiempoOperacion = 3 });
-                _context.TipoTramites.Add(new TipoTramite { Nombre = "Cambio de Propetario", Descripcion = "Cambio de Propetario", Costo = 450, TiempoOperacion = 5 });
-                _context.TipoTramites.Add(new TipoTramite { Nombre = "Placas", Descripcion = "Placas", Costo = 450, TiempoOperacion = 5 });
-                await _context.SaveChangesAsync();
+            if (!_context.TipoTramites.Any() && !_context.Requisitos.Any())
+            {                
+                _context.TipoTramites.Add(new TipoTramite { Orden = 1, Nombre = "Renovación Trajeta Circulación", Descripcion = "Renovación Trajeta Circulación", Costo = 850, TiempoOperacion = 3 });
+                _context.TipoTramites.Add(new TipoTramite { Orden = 2, Nombre = "Cambio de Propetario", Descripcion = "Cambio de Propetario", Costo = 750, TiempoOperacion = 5 });
+                _context.TipoTramites.Add(new TipoTramite { Orden = 3, Nombre = "Placas", Descripcion = "Placas", Costo = 1000, TiempoOperacion = 8 });
+                _context.TipoTramites.Add(new TipoTramite { Orden = 0, Nombre = "Seleccione un Tramite", Descripcion = "Favor de seleccionar un tramite", Costo = -1, TiempoOperacion = -1 });
+                _context.SaveChanges();
+
+                _context.Requisitos.Add(new Requisito { TipoTramite = _context.TipoTramites.Where(tt => tt.Orden == 0).FirstOrDefault(), Orden = 0, Nombre = "Seleccione un requisito", Descripcion = "Favor de seleccionar un requisito" });
+
+                _context.Requisitos.Add(new Requisito { TipoTramite = _context.TipoTramites.Where(tt => tt.Orden == 1).FirstOrDefault(), Orden = 0, Nombre = "Seleccione un requisito", Descripcion = "Favor de seleccionar un requisito" });
+                _context.Requisitos.Add(new Requisito { TipoTramite = _context.TipoTramites.Where(tt => tt.Orden == 1).FirstOrDefault(), Orden = 1, Nombre = "Tenencia", Descripcion = "Pago de Tenencia" });
+                _context.Requisitos.Add(new Requisito { TipoTramite = _context.TipoTramites.Where(tt => tt.Orden == 1).FirstOrDefault(), Orden = 2, Nombre = "Verificacion", Descripcion = "Pago de Verificacion" });
+                _context.Requisitos.Add(new Requisito { TipoTramite = _context.TipoTramites.Where(tt => tt.Orden == 1).FirstOrDefault(), Orden = 3, Nombre = "Factura", Descripcion = "Factura / Carta Factura" });
+
+                _context.Requisitos.Add(new Requisito { TipoTramite = _context.TipoTramites.Where(tt => tt.Orden == 2).FirstOrDefault(), Orden = 0, Nombre = "Seleccione un requisito", Descripcion = "Favor de seleccionar un requisito" });
+                _context.Requisitos.Add(new Requisito { TipoTramite = _context.TipoTramites.Where(tt => tt.Orden == 2).FirstOrDefault(), Orden = 1, Nombre = "Tenencia", Descripcion = "Pago de Tenencia" });
+                _context.Requisitos.Add(new Requisito { TipoTramite = _context.TipoTramites.Where(tt => tt.Orden == 2).FirstOrDefault(), Orden = 2, Nombre = "Verificacion", Descripcion = "Verificacion" });
+
+                _context.Requisitos.Add(new Requisito { TipoTramite = _context.TipoTramites.Where(tt => tt.Orden == 3).FirstOrDefault(), Orden = 0, Nombre = "Seleccione un requisito", Descripcion = "Favor de seleccionar un requisito" });
+                _context.Requisitos.Add(new Requisito { TipoTramite = _context.TipoTramites.Where(tt => tt.Orden == 3).FirstOrDefault(), Orden = 1, Nombre = "Multas", Descripcion = "Pago de Multas" });
+                _context.Requisitos.Add(new Requisito { TipoTramite = _context.TipoTramites.Where(tt => tt.Orden == 3).FirstOrDefault(), Orden = 2, Nombre = "Comprobante de Domicilio", Descripcion = "Comprobante de Domicilioo" });
+                _context.SaveChanges();
             }
         }
 
-         private async Task CheckStatusTAAsync()
+       
+
+        private async Task CheckStatusTAAsync()
         {
             if (!_context.StatusTA.Any())
             {

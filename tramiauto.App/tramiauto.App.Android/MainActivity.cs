@@ -21,6 +21,7 @@ namespace tramiauto.App.Droid
             ToolbarResource   = Resource.Layout.Toolbar;
 
             base.OnCreate(bundle);
+            Plugin.CurrentActivity.CrossCurrentActivity.Current.Activity = this;
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init(true);
@@ -28,6 +29,11 @@ namespace tramiauto.App.Droid
             new SfRotatorRenderer();
 
             LoadApplication(new App(new AndroidInitializer()));
+        }
+
+        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Android.Content.PM.Permission[] grantResults)
+        {
+            Plugin.Permissions.PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
 

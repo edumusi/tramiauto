@@ -16,6 +16,7 @@ namespace tramiauto.Web.Models
         public DbSet<DatosFiscales>   DatosFiscales   { get; set; }
         public DbSet<StatusTA>        StatusTA        { get; set; }
         public DbSet<TipoTramite>     TipoTramites    { get; set; }
+        public DbSet<Requisito>       Requisitos       { get; set; }
         public DbSet<Tramite>         Tramites        { get; set; }
         public DbSet<TramiteAdjuntos> TramiteAdjuntos { get; set; }        
         public DbSet<Usuario>         Usuarios        { get; set; }

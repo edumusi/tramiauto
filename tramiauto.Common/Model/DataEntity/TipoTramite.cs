@@ -9,6 +9,9 @@ namespace tramiauto.Common.Model.DataEntity
         [Key]
         public int Id { get; set; }
 
+        [Display(Name = "Orden")]
+        public int Orden { get; set; }
+
         [Display(Name = "Tramite")]
         [Required(ErrorMessage = MessageCenter.webAppTextFieldRequired)]
         [MaxLength(50, ErrorMessage = MessageCenter.webAppTextFieldMaxLength)]

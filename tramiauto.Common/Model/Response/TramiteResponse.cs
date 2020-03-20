@@ -14,6 +14,9 @@ namespace tramiauto.Common.Model.Response
         [Display(Name = "Tramite")]        
         public string Nombre { get; set; }
 
+        [Display(Name = "Folio")]        
+        public string Folio { get; set; }
+
         [Display(Name = "Descripción")]        
         public string Descripcion { get; set; }
 

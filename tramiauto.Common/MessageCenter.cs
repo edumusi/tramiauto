@@ -42,12 +42,17 @@ namespace tramiauto.Common
         public const String appTextEmailUsed          = "El correo electrónico ingresado, ya se encuentra en uso por otra persona.";
         public const String appTextPassFieldRequired  = "La contraseña es obligatoria, para ingresar a la app.";
 
-        public const String appLabelError   = "Error";        
-        public const String appLabelAceptar = "Aceptar";
+        public const String appLabelError      = "Error";
+        public const String appLabelAceptar    = "Aceptar";
+        public const String appLabelErrorNoCam = "Error No Cámara";
+        public const String appLabelErrorTram  = "Requisito o Doc";
+        public const String appLabelErrorTR    = "Favor de seleccionar el requisito o documento a anexar";
+        public const String appDirDocs         = "mx.tramiauto";
 
-        public const String appLabelErrorConnect = "Error de Conectividad";
-        public const String appLabelErrorNoInter = "Tramiuto para su correcto funcionamiento necesita de acceso a internet, verifique su conexión.";
+        public const String appLabelErrorConnect     = "Error de Conectividad";
+        public const String appLabelErrorNoInter     = "Tramiuto para su correcto funcionamiento necesita de acceso a internet, verifique su conexión.";
         public const String appLabelErrorNoUserToken = "Hubo un problema con el usuario y su acceso.";
+        public const String appLabelErrorNoCamara    = "No fue posible habilitar la cámara del dispositivo para Escanear el documento.";
 
         public const String appTitlePageLogin         = "Bienvenido a Tramiauto";
         public const String appTitlePageTramites      = "Tramites";

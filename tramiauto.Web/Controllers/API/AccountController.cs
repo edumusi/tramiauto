@@ -83,11 +83,15 @@ namespace tramiauto.Web.Controllers.API
         if (usuario == null)
            { return NotFound(request); }
 
-        IList<string> roles = await _userHelper.GetRolesByUserAsync(usuario?.UserLogin);        
+        List<TipoTramiteResponse> tiposTramite =  _combosHelper.GetTipoTramites();
+        IList<string>             roles        = await _userHelper.GetRolesByUserAsync(usuario?.UserLogin);
+        List<Requisito>           requisitos   = await _dataContext.Requisitos.Include(r => r.TipoTramite).ToListAsync();
 
-        return Ok(ToUsuarioResponse(usuario
+        return Ok(ToUsuarioResponse( usuario
                                    , roles.FirstOrDefault().ToString()
-                                   , _combosHelper.GetTipoTramites())
+                                   , tiposTramite
+                                   , requisitos
+                                   )
                  );
 
     }//GetUsuarioByEmail
@@ -104,7 +108,7 @@ namespace tramiauto.Web.Controllers.API
         if (user != null)
            { return BadRequest(new Resp<object> { IsSuccess = false, Message = MessageCenter.appTextEmailUsed }); }
 
-        var newUser = new UsuarioViewModel { Correo    = request.Correo
+        var newUser = new UsuarioViewModel {  Correo    = request.Correo
                                             , CellPhone = request.CellPhone
                                             , FirstName = request.FirstName
                                             , LastName  = request.LastName
@@ -156,7 +160,7 @@ namespace tramiauto.Web.Controllers.API
 
 
 
-    private UsuarioResponse ToUsuarioResponse(Usuario usuario, string rol, ICollection<TipoTramiteResponse> tiposTramite)
+    private UsuarioResponse ToUsuarioResponse(Usuario usuario, string rol, ICollection<TipoTramiteResponse> tiposTramite, List<Requisito> requisitos)
     {
     return new UsuarioResponse
                 { Id         = usuario.Id
@@ -198,7 +202,8 @@ namespace tramiauto.Web.Controllers.API
                                                                             }).ToList()
                 , DatosFiscalesResponse = ToDatosFiscalesResponse(usuario.DatosFiscales)
                 , TiposTramite = tiposTramite
-        };
+                , Requisitos   = requisitos?.Select(r => new RequisitoResponse { Id = r.Id, Orden = r.Orden, Nombre=r.Nombre, Descripcion=r.Descripcion, IdTipoTramite= r.TipoTramite.Id }).ToList()
+    };
     }
         
     private TipoTramiteResponse ToTipoTramiteResponsee(TipoTramite TipoTramite)

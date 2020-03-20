@@ -11,19 +11,28 @@ using System.Collections;
 using System.Reflection;
 using System.Text;
 using Xamarin.Forms;
+using tramiauto.App.Model;
+using Syncfusion.XForms.Buttons;
 
 namespace tramiauto.App
 {
     public class DataFormTramiteBehavior : Behavior<ContentPage>
     {
 
-        SfDataForm dataForm = null;        
+        SfDataForm dataForm = null;
+        SfButton  buttonDoc = null;
         protected override void OnAttachedTo(ContentPage bindable)
         {
-
+            buttonDoc = bindable.FindByName<SfButton>("buttonDocs");
+            Grid     grid = bindable.FindByName<Grid>("Grid_NRP");
+            ScrollView sv = bindable.FindByName<ScrollView>("SV_NRP");
             base.OnAttachedTo(bindable);
-            dataForm = bindable.FindByName<SfDataForm>("dfTramite");
-
+            dataForm  = bindable.FindByName<SfDataForm>("dfTramite");
+            
+            //buttonDoc = dataForm.Parent.Parent.AutomationId;
+            string t = string.Empty ;//dataForm?.Parent?.Parent?.AutomationId;
+            string tt = dataForm?.Parent?.ToString();
+            App.Current.MainPage.DisplayAlert("DataFormTramiteBehavior", $"OnAttachedTo: [{buttonDoc.AutomationId}] - [{grid.AutomationId} - [{sv.AutomationId}]", MessageCenter.appLabelAceptar);
             dataForm.SourceProvider = new SourceProviderExt();
             dataForm.RegisterEditor("TipoTramite"  , "Picker");                        
           //  dataForm.RegisterEditor("image"        , new CustomImageEditor(dataForm));
@@ -38,13 +47,16 @@ namespace tramiauto.App
         {
             if (e.DataFormItem != null && e.DataFormItem.Name == "TipoTramite")
             {
-                (e.DataFormItem as DataFormPickerItem).DisplayMemberPath = "Nombre";
-                (e.DataFormItem as DataFormPickerItem).ValueMemberPath   = "Id";
+                (e.DataFormItem as DataFormPickerItem).DisplayMemberPath = "Name";
+                (e.DataFormItem as DataFormPickerItem).ValueMemberPath   = "Value";
                 e.DataFormItem.ShowLabel = false;
             }
            
-            if (e.DataFormGroupItem != null && e.DataFormGroupItem.GroupName == MessageCenter.appGroupName2DFTramite)
-                e.DataFormGroupItem.IsExpanded = false;
+            if (e.DataFormGroupItem != null && e.DataFormGroupItem.GroupName == MessageCenter.appGroupName2DFTramite)                
+            {
+                e.DataFormGroupItem.IsExpanded = false; 
+                //buttonDoc.IsVisible = false; 
+            }
 
             if (e.DataFormGroupItem != null && e.DataFormGroupItem.GroupName == MessageCenter.appGroupName3DFTramite)           
                 e.DataFormGroupItem.IsExpanded = false;
@@ -74,8 +86,8 @@ namespace tramiauto.App
         private readonly UsuarioResponse _usuario = JsonConvert.DeserializeObject<UsuarioResponse>(Settings.Usuario);
         public override IList GetSource(string sourceName)
         {
-            if (sourceName == "TipoTramite")
-            { return _usuario.TiposTramite.ToList<TipoTramiteResponse>(); }
+            if( sourceName == "TipoTramite" )
+              { return _usuario.TiposTramite.OrderBy(tt => tt.Orden).Select(tipo => new ItemCombo { Value = tipo.Id, Name = tipo.Nombre }).ToList(); }
 
             return new List<string>();
 
@@ -118,4 +130,5 @@ namespace tramiauto.App
         }
     }//Class
     
+
     }//Namespace
