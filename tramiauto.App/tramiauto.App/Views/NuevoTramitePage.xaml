@@ -1,10 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-              xmlns:local="clr-namespace:tramiauto.App"             
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"             
              x:Class="tramiauto.App.Views.NuevoTramitePage"             
              xmlns:syncfusion="clr-namespace:Syncfusion.XForms.Accordion;assembly=Syncfusion.Expander.XForms"
-             xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"            
+             xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+             xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+             xmlns:numericBox="clr-namespace:Syncfusion.SfNumericTextBox.XForms;assembly=Syncfusion.SfNumericTextBox.XForms"
              Title="{Binding Title}">
     <ContentPage.Content>
         <StackLayout>
@@ -18,7 +19,13 @@
                         </syncfusion:AccordionItem.Header>
                         <syncfusion:AccordionItem.Content>
                             <Grid Padding="10,10,10,10" BackgroundColor="#FFFFFF">
-                                <Label TextColor="#303030" Text="Hamburger accompanied with melted cheese. The term itself is a portmanteau of the words cheese and hamburger. The cheese is usually sliced, then added a short time before the hamburger finishes cooking to allow it to melt." VerticalTextAlignment="Center"/>
+                                <inputLayout:SfTextInputLayout
+                                   Hint="Amount"
+                                   HelperText="Required *">
+                                   <numericBox:SfNumericTextBox 
+                                      Value="123.45"
+                                      FormatString="c" />
+                                </inputLayout:SfTextInputLayout>
                             </Grid>
                         </syncfusion:AccordionItem.Content>
                     </syncfusion:AccordionItem>
@@ -31,7 +38,18 @@
                         </syncfusion:AccordionItem.Header>
                         <syncfusion:AccordionItem.Content>
                             <Grid BackgroundColor="#FFFFFF">
-                                <Label TextColor="#303030" Text="Veggie burger, garden burger, or tofu burger uses a meat analogue, a meat substitute such as tofu, textured vegetable protein, seitan (wheat gluten), Quorn, beans, grains or an assortment of vegetables, which are ground up and formed into patties."  VerticalTextAlignment="Center"/>
+                                <inputLayout:SfTextInputLayout
+                                Hint="Birth date"
+                                ErrorText="Name required*"
+                                HasError="True"
+                                ShowCharCount="true"
+                                CharMaxLength="8"
+                                LeadingViewPosition="Inside" >
+                                <Entry />
+                                <inputLayout:SfTextInputLayout.LeadingView>
+                                        <Label Text="&#x1F5D2;"/>
+                                 </inputLayout:SfTextInputLayout.LeadingView>
+                                </inputLayout:SfTextInputLayout>
                                 <buttons:SfButton x:Name           = "buttonDocs"                                                                     
                                                   HeightRequest    = "50"
                                                   WidthRequest     = "80"
@@ -62,7 +80,14 @@
                         </syncfusion:AccordionItem.Header>
                         <syncfusion:AccordionItem.Content>
                             <Grid Padding="10,10,10,10" BackgroundColor="#FFFFFF">
-                                <Label TextColor="#303030" Text="Prepared with ground beef, mixed with onions and barbecue sauce, and then grilled. Once the meat has been turned once, barbecue sauce is spread on top and grilled until the sauce caramelizes." VerticalTextAlignment="Center"/>
+                                <inputLayout:SfTextInputLayout
+                                    Hint="Name"
+                                    InputViewPadding="5" 
+                                    OutlineCornerRadius="8"
+                                    ContainerType="Outlined"
+                                    HelperText="Enter your name">
+                                    <Entry />
+                                </inputLayout:SfTextInputLayout>
                             </Grid>
                         </syncfusion:AccordionItem.Content>
                     </syncfusion:AccordionItem>

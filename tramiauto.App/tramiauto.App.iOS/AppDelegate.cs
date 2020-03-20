@@ -4,6 +4,7 @@ using Prism.Ioc;
 using Syncfusion.SfBusyIndicator.XForms.iOS;
 using Syncfusion.SfRotator.XForms.iOS;
 using Syncfusion.XForms.iOS.DataForm;
+using Syncfusion.XForms.iOS.TextInputLayout;
 using UIKit;
 
 
@@ -33,6 +34,7 @@ namespace tramiauto.App.iOS
             Syncfusion.XForms.iOS.Accordion.SfAccordionRenderer.Init();
 
             SfDataFormRenderer.Init();
+            SfTextInputLayoutRenderer.Init();
 
             new SfBusyIndicatorRenderer();
 

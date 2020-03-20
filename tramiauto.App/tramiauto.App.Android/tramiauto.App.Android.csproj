@@ -65,6 +65,9 @@
     <PackageReference Include="Syncfusion.Xamarin.Buttons.Android">
       <Version>17.4.0.51</Version>
     </PackageReference>
+    <PackageReference Include="Syncfusion.Xamarin.Core">
+      <Version>17.4.0.55</Version>
+    </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.Expander">
       <Version>17.4.0.51</Version>
     </PackageReference>
