@@ -1,4 +1,5 @@
-﻿using Prism;
+﻿using Openpay.Xamarin;
+using Prism;
 using Prism.Ioc;
 using tramiauto.App.ViewModels.Pages;
 using tramiauto.App.Views;
@@ -11,11 +12,9 @@ namespace tramiauto.App
 {
     public partial class App
     {
-        /* 
-         * The Xamarin Forms XAML Previewer in Visual Studio uses System.Activator.CreateInstance.
-         * This imposes a limitation in which the App class must have a default constructor. 
-         * App(IPlatformInitializer initializer = null) cannot be handled by the Activator.
-         */
+        private const string OPENPAY_ID         = "murhuosyqouvqptjzlkr";
+        private const string OPENPAY_PUBLIC_KEY = "pk_79e455b48c0341da8a0aa7fd959af813";
+
         public App() : this(null) { }        
 
         public App(IPlatformInitializer initializer) : base(initializer) { }
@@ -23,6 +22,8 @@ namespace tramiauto.App
         protected override async void OnInitialized()
         {
             Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MjE1OTgxQDMxMzcyZTM0MmUzMG0yV2tIWEFhSitrRmYzczdsYXRKSlRIRGdKd0hKSUtETklQZ0hXWGFtQkU9;MjE1OTgyQDMxMzcyZTM0MmUzMEJibzg3RE9NcFVtQklGZWU0SVhoSWFjZG9PMEZLV3ZRTGxuSUFQYTRJSTg9;MjE1OTgzQDMxMzcyZTM0MmUzMFYyMzBmYWNHR1RWQUxadC9Xa29FSi9Fa3NpL29CWm5DRUQ3aVZwOVlxSm89;MjE1OTg0QDMxMzcyZTM0MmUzMFNkWDRtL01iUnJ3VGFJc2Q0L291aGNKZjUyaS9KblY5ZjFHNVU5MnJEMFE9;MjE1OTg1QDMxMzcyZTM0MmUzME55Ylk2dEQwWERnQ3BtRXhQT3Q5Tk4rUlVXd2dmL3pBZWsyVWwxUmNSQWc9");
+            if ( CrossOpenpay.IsSupported )
+               { CrossOpenpay.Current.Initialize(OPENPAY_ID, OPENPAY_PUBLIC_KEY, false); }
 
             InitializeComponent();
 

@@ -9,28 +9,28 @@ namespace tramiauto.Common.Model.DataEntity
         [Key]
         public int Id { get; set; }
 
-        [Display(Name = "Número de Motor")]
-        [Required(ErrorMessage      = MessageCenter.webAppTextFieldRequired)]
+        [Display  (Name = "Número de Motor")]
+        [Required (ErrorMessage     = MessageCenter.webAppTextFieldRequired)]
         [MaxLength(30, ErrorMessage = MessageCenter.webAppTextFieldMaxLength)]
         public string NumeroMotor { get; set; }
 
-        [Display(Name = "Número de Serie")]
-        [Required(ErrorMessage      = MessageCenter.webAppTextFieldRequired)]
+        [Display  (Name = "Número de Serie")]
+        [Required (ErrorMessage     = MessageCenter.webAppTextFieldRequired)]
         [MaxLength(20, ErrorMessage = MessageCenter.webAppTextFieldMaxLength)]
         public string NumeroSerie { get; set; }
 
-        [Display(Name = "Marca")]
-        [Required(ErrorMessage      = MessageCenter.webAppTextFieldRequired)]
+        [Display  (Name = "Marca")]
+        [Required (ErrorMessage     = MessageCenter.webAppTextFieldRequired)]
         [MaxLength(50, ErrorMessage = MessageCenter.webAppTextFieldMaxLength)]
         public string Marca { get; set; }
 
-        [Display(Name = "Modelo")]
-        [Required(ErrorMessage      = MessageCenter.webAppTextFieldRequired)]
+        [Display  (Name = "Modelo")]
+        [Required (ErrorMessage     = MessageCenter.webAppTextFieldRequired)]
         [MaxLength(10, ErrorMessage = MessageCenter.webAppTextFieldMaxLength)]
         public string Modelo { get; set; }
 
-        [Display(Name = "Tipo de Automotor")]
-        [Required(ErrorMessage      = MessageCenter.webAppTextFieldRequired)]
+        [Display  (Name = "Tipo de Automotor")]
+        [Required (ErrorMessage     = MessageCenter.webAppTextFieldRequired)]
         [MaxLength(50, ErrorMessage = MessageCenter.webAppTextFieldMaxLength)]
         public string Tipo { get; set; }
 

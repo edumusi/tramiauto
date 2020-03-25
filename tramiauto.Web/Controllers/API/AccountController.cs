@@ -80,19 +80,19 @@ namespace tramiauto.Web.Controllers.API
                                                     .Include(c => c.Tramites).ThenInclude(b => b.Automotor)
                                                     .Include(c => c.DatosFiscales)
                                                     .FirstOrDefaultAsync(u => u.UserLogin.NormalizedEmail == request.Email.ToUpper());
-        if (usuario == null)
+        if ( usuario == null )
            { return NotFound(request); }
 
-        List<TipoTramiteResponse> tiposTramite =  _combosHelper.GetTipoTramites();
-        IList<string>             roles        = await _userHelper.GetRolesByUserAsync(usuario?.UserLogin);
-        List<Requisito>           requisitos   = await _dataContext.Requisitos.Include(r => r.TipoTramite).ToListAsync();
+        
+        IList<string> roles = await _userHelper.GetRolesByUserAsync(usuario?.UserLogin);        
 
         return Ok(ToUsuarioResponse( usuario
-                                   , roles.FirstOrDefault().ToString()
-                                   , tiposTramite
-                                   , requisitos
-                                   )
-                 );
+                                    , roles.FirstOrDefault().ToString()
+                                    , _combosHelper.GetTipoTramites()
+                                    , await _dataContext.Requisitos.Include(r => r.TipoTramite).ToListAsync()
+                                    , await _dataContext.FormasDePago.ToListAsync()
+                                    )
+                );
 
     }//GetUsuarioByEmail
 
@@ -160,7 +160,7 @@ namespace tramiauto.Web.Controllers.API
 
 
 
-    private UsuarioResponse ToUsuarioResponse(Usuario usuario, string rol, ICollection<TipoTramiteResponse> tiposTramite, List<Requisito> requisitos)
+    private UsuarioResponse ToUsuarioResponse(Usuario usuario, string rol, ICollection<TipoTramiteResponse> tiposTramite, List<Requisito> requisitos, List<FormaDePago> formasDePago)
     {
     return new UsuarioResponse
                 { Id         = usuario.Id
@@ -203,6 +203,7 @@ namespace tramiauto.Web.Controllers.API
                 , DatosFiscalesResponse = ToDatosFiscalesResponse(usuario.DatosFiscales)
                 , TiposTramite = tiposTramite
                 , Requisitos   = requisitos?.Select(r => new RequisitoResponse { Id = r.Id, Orden = r.Orden, Nombre=r.Nombre, Descripcion=r.Descripcion, IdTipoTramite= r.TipoTramite.Id }).ToList()
+                , FormasDePago = formasDePago
     };
     }
         

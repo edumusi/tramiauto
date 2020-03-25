@@ -24,6 +24,8 @@ namespace tramiauto.App.Droid
             Plugin.CurrentActivity.CrossCurrentActivity.Current.Activity = this;
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
+            global::Openpay.Xamarin.OpenpayAndroidImpl.Init(this);
+
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init(true);
             new SfBusyIndicatorRenderer();
             new SfRotatorRenderer();

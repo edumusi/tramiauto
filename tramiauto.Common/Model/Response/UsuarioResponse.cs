@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using tramiauto.Common.Model.DataEntity;
 
 namespace tramiauto.Common.Model.Response
 {
@@ -45,6 +46,9 @@ namespace tramiauto.Common.Model.Response
 
         [Display(Name = "Requisitos")]
         public ICollection<RequisitoResponse> Requisitos   { get; set; }
+
+        [Display(Name = "Formas de Pago")]
+        public ICollection<FormaDePago> FormasDePago { get; set; }
 
     }//CLASS
 }//NAMESPACE

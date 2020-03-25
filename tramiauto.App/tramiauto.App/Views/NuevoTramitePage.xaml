@@ -1,44 +1,50 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"             
-             x:Class="tramiauto.App.Views.NuevoTramitePage"             
-             xmlns:syncfusion="clr-namespace:Syncfusion.XForms.Accordion;assembly=Syncfusion.Expander.XForms"
-             xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
-             xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
-             xmlns:numericBox="clr-namespace:Syncfusion.SfNumericTextBox.XForms;assembly=Syncfusion.SfNumericTextBox.XForms"
+             x:Class          = "tramiauto.App.Views.NuevoTramitePage"             
+             xmlns:local      = "clr-namespace:tramiauto.App"
+             xmlns:syncfusion = "clr-namespace:Syncfusion.XForms.Accordion;assembly=Syncfusion.Expander.XForms"
+             xmlns:buttons    = "clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+             xmlns:inputLayout= "clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+             xmlns:numericBox = "clr-namespace:Syncfusion.SfNumericTextBox.XForms;assembly=Syncfusion.SfNumericTextBox.XForms"
+             xmlns:comboBox   = "clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
              Title="{Binding Title}">
     <ContentPage.Content>
         <StackLayout>
-            <syncfusion:SfAccordion Grid.Row="1" HeaderIconPosition="Start" ExpandMode="Multiple"  AutoScrollPosition="Top" AnimationEasing="SinOut">
+            <syncfusion:SfAccordion x:Name="LayoutRoot" Grid.Row="1" HeaderIconPosition="Start" ExpandMode="Multiple"  AutoScrollPosition="Top" AnimationEasing="SinOut">
                 <syncfusion:SfAccordion.Items>
                     <syncfusion:AccordionItem IconColor="#0741AD">
                         <syncfusion:AccordionItem.Header>
-                            <Grid>
-                                <Label TextColor="#495F6E" Text="Tipo de Tramite" HeightRequest="50" VerticalTextAlignment="Center"/>
-                            </Grid>
+                            <Grid> <Label TextColor="#495F6E" Text="Tipo de Tramite" HeightRequest="50" VerticalTextAlignment="Center"/> </Grid>
                         </syncfusion:AccordionItem.Header>
                         <syncfusion:AccordionItem.Content>
                             <Grid Padding="10,10,10,10" BackgroundColor="#FFFFFF">
-                                <inputLayout:SfTextInputLayout
+                                <comboBox:SfComboBox x:Name="comboBoxTT" VerticalOptions="FillAndExpand" DropDownCornerRadius="8" HeightRequest="40" MultiSelectMode="None" SelectedIndex="0" DataSource="{Binding TiposTramite, Mode=TwoWay}" DisplayMemberPath="Nombre" >
+                                    <comboBox:SfComboBox.Behaviors>
+                                        <local:EventToCommandBehaviorComboBox Command="{Binding SelectionChangedTT}"  EventName="SelectionChanged"/>
+                                    </comboBox:SfComboBox.Behaviors>
+                                </comboBox:SfComboBox>
+                                <!-- 
+                                  <inputLayout:SfTextInputLayout
                                    Hint="Amount"
                                    HelperText="Required *">
                                    <numericBox:SfNumericTextBox 
                                       Value="123.45"
                                       FormatString="c" />
                                 </inputLayout:SfTextInputLayout>
+                                -->
                             </Grid>
                         </syncfusion:AccordionItem.Content>
                     </syncfusion:AccordionItem>
 
                     <syncfusion:AccordionItem>
                         <syncfusion:AccordionItem.Header>
-                            <Grid>
-                                <Label TextColor="#495F6E" Text="Documentación" HeightRequest="50" VerticalTextAlignment="Center"/>
-                            </Grid>
+                            <Grid> <Label TextColor="#495F6E" Text="Documentación" HeightRequest="50" VerticalTextAlignment="Center"/> </Grid>
                         </syncfusion:AccordionItem.Header>
                         <syncfusion:AccordionItem.Content>
                             <Grid BackgroundColor="#FFFFFF">
                                 <inputLayout:SfTextInputLayout
+                                x:Name="testField"
                                 Hint="Birth date"
                                 ErrorText="Name required*"
                                 HasError="True"
@@ -50,6 +56,7 @@
                                         <Label Text="&#x1F5D2;"/>
                                  </inputLayout:SfTextInputLayout.LeadingView>
                                 </inputLayout:SfTextInputLayout>
+                                
                                 <buttons:SfButton x:Name           = "buttonDocs"                                                                     
                                                   HeightRequest    = "50"
                                                   WidthRequest     = "80"
@@ -73,13 +80,16 @@
 
                     <syncfusion:AccordionItem>
                         <syncfusion:AccordionItem.Header>
-                            <Grid>
-                                <Label TextColor="#495F6E" Text="Tipo de Pago" HeightRequest="50" VerticalTextAlignment="Center"/>
-
-                            </Grid>
+                          <Grid> <Label TextColor="#495F6E" Text="Forma de Pago" HeightRequest="50" VerticalTextAlignment="Center"/> </Grid>
                         </syncfusion:AccordionItem.Header>
                         <syncfusion:AccordionItem.Content>
                             <Grid Padding="10,10,10,10" BackgroundColor="#FFFFFF">
+                                <comboBox:SfComboBox x:Name="comboBoxFP" VerticalOptions="FillAndExpand" DropDownCornerRadius="8" HeightRequest="40" MultiSelectMode="None" SelectedIndex="0" DataSource="{Binding FormasDePago, Mode=TwoWay}" DisplayMemberPath="Nombre" >
+                                    <comboBox:SfComboBox.Behaviors>
+                                        <local:EventToCommandBehaviorComboBox Command="{Binding SelectionChangedFP}"  EventName="SelectionChanged"/>
+                                    </comboBox:SfComboBox.Behaviors>
+                                </comboBox:SfComboBox>
+                                <!--
                                 <inputLayout:SfTextInputLayout
                                     Hint="Name"
                                     InputViewPadding="5" 
@@ -88,6 +98,7 @@
                                     HelperText="Enter your name">
                                     <Entry />
                                 </inputLayout:SfTextInputLayout>
+                                -->
                             </Grid>
                         </syncfusion:AccordionItem.Content>
                     </syncfusion:AccordionItem>
@@ -109,7 +120,7 @@
                               ImageAlignment   = "Start"
                               Text             = "Tramitar"
                               Command          = "{Binding NewTramiteCommand}"
-                              CommandParameter = "{x:Reference buttonDocs}"
+                              CommandParameter = "{x:Reference LayoutRoot}"
                             />
         </StackLayout>
     </ContentPage.Content>

@@ -21,13 +21,13 @@ namespace tramiauto.Web.Models.InitDB
         {
             await _context.Database.EnsureCreatedAsync();
             await CheckStatusTAAsync();
+            await CheckFormasDePagoAsync();
             await CheckRoles();
             await CheckUserAsync( "Eduardo" , "Admin"    , "ems@convivere.mx"            , "350 634 2747", "admin123" , RoleTA.Admin);
             await CheckUserAsync( "Irving"  , "Ejecutivo", "isanchez@everestgestoria.com", "350 634 2747", "eje123"   , RoleTA.Ejecutivo);
             await CheckUserAsync( "Juan"    , "Gestor"   , "eduardo_m81@hotmail.com"     , "350 634 2747", "gestor123", RoleTA.Gestor);
             await CheckUserAsync( "Mauricio", "Usuario"  , "ems@convivere.casa"          , "350 634 2747", "user123"  , RoleTA.Usuario);
             CheckTipoTramitesAsync();
-            
         }
 
 
@@ -83,7 +83,20 @@ namespace tramiauto.Web.Models.InitDB
                 await _context.SaveChangesAsync();
             }
           
-         }  
+         }
+
+        private async Task CheckFormasDePagoAsync()
+        {
+            if (!_context.FormasDePago.Any())
+            {
+                _context.FormasDePago.Add(new FormaDePago { Tipo = "CARD" , IdOpenPay = 6, Nombre = "Tarjeta Crédito/Débito", Descripcion = "Pago con tarjeta de crédito ó débito" });
+                _context.FormasDePago.Add(new FormaDePago { Tipo = "BANK" , IdOpenPay = 7, Nombre = "Banco" , Descripcion = "Pago mediante cuenta bancaria" });
+                _context.FormasDePago.Add(new FormaDePago { Tipo = "STORE", IdOpenPay = 8, Nombre = "Tienda", Descripcion = "Pago mediante supermercados, farmacias o tiendas de conveniencia" });
+                _context.FormasDePago.Add(new FormaDePago { Tipo = "-"    , IdOpenPay = 0, Nombre = "Seleccione un método de Pago", Descripcion = "-" });
+                await _context.SaveChangesAsync();
+            }
+
+        }
 
         private async Task CheckUserAsync(string firstName, string lastName, string email, string phone, string pwd, string role)
         {

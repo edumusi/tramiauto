@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Openpay.Xamarin" Version="1.0.25.3" />
     <PackageReference Include="Syncfusion.Xamarin.Buttons" Version="17.4.0.51" />
     <PackageReference Include="Syncfusion.Xamarin.Core" Version="17.4.0.55" />
     <PackageReference Include="Syncfusion.Xamarin.Expander" Version="17.4.0.51" />
