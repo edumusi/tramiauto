@@ -8,7 +8,7 @@
              xmlns:busyindicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
              xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"            
              x:Class="tramiauto.App.Views.LoginPage"
-             BackgroundColor="Silver"
+             BackgroundColor="{StaticResource OficialWhiteColor}"
              Title="{Binding Title}"
              >
     
@@ -27,8 +27,8 @@
             </Grid.RowDefinitions>
 
             <Image Grid.Row = "0" Source ="Logo" WidthRequest="500" HeightRequest="100" />
-            <ScrollView  Grid.Row         = "1">
-                <dataForm:SfDataForm x:Name          = "dfLogin"
+            <ScrollView Grid.Row = "1">
+                <dataForm:SfDataForm x:Name      = "dfLogin"
                                 VerticalOptions  = "FillAndExpand" 
                                 HorizontalOptions= "FillAndExpand"                                
                                 ContainerType    = "Outlined"
@@ -44,7 +44,7 @@
                 	        BackgroundColor="Transparent"
                 	        HorizontalOptions="Center"
                             VerticalOptions="Center"
-                	        TextColor="#0741AD"                	        
+                	        TextColor="{StaticResource OficialBlueColor}"                	        
                 	        Title="Cargando..."                	        
                 	        ViewBoxWidth="80" ViewBoxHeight="80"
                             IsVisible="{Binding IsRunning}"                
@@ -56,8 +56,8 @@
                               VerticalOptions  = "Center"
                               HasShadow        = "True"
                               CornerRadius     = "25"                                  
-                              BackgroundColor  = "#0741AD" 
-                              BorderColor      = "Gray" 
+                              BorderColor      = "{StaticResource OficialGrayColor}"
+                              BackgroundColor  = "{StaticResource OficialBlueColor}" 
                               BorderWidth      = "1"
                               ShowIcon         = "True" 
                               ImageSource      = "ic_input.png"                                  

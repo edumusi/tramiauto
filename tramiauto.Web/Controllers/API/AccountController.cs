@@ -196,14 +196,15 @@ namespace tramiauto.Web.Controllers.API
                                                                                                                        , Tipo   = t.Automotor.Tipo
                                                                                                                        }
                                                                             , AdjuntosResponse = t.Adjuntos?.Select(a => new TramiteAdjuntosResponse { Id   = a.Id
-                                                                                                                                                     , Tipo = a.Tipo
+                                                                                                                                                     , Requisito = a.Requisito
+                                                                                                                                                     , Descripcion = a.Descripcion
                                                                                                                                                      , Ruta = a.Ruta
                                                                                                                     }).ToList()
                                                                             }).ToList()
                 , DatosFiscalesResponse = ToDatosFiscalesResponse(usuario.DatosFiscales)
                 , TiposTramite = tiposTramite
                 , Requisitos   = requisitos?.Select(r => new RequisitoResponse { Id = r.Id, Orden = r.Orden, Nombre=r.Nombre, Descripcion=r.Descripcion, IdTipoTramite= r.TipoTramite.Id }).ToList()
-                , FormasDePago = formasDePago
+                , FormasDePago = formasDePago?.Select(fp => new FormaDePagoResponse { Id = fp.Id, Descripcion = fp.Descripcion, IdOpenPay = fp.IdOpenPay, Nombre=fp.Nombre, Tipo=fp.Tipo  }).ToList()
     };
     }
         

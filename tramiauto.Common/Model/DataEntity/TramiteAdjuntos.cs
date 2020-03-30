@@ -7,10 +7,14 @@ namespace tramiauto.Common.Model.DataEntity
     {
         [Key]
         public int Id { get; set; }
+        public int Orden { get; set; }
 
-        [Display(Name = "Tipo Adjunto")]        
-        [MaxLength(50, ErrorMessage = MessageCenter.webAppTextFieldRequired)]
-        public string Tipo { get; set; }
+        [Display(Name = "Requisito")]        
+        [MaxLength(80, ErrorMessage = MessageCenter.webAppTextFieldRequired)]
+        public string Requisito { get; set; }
+
+        [Display(Name = "Descripción")]
+        public string Descripcion { get; set; }
 
         [Display(Name = "Ruta")]
         [MaxLength(300, ErrorMessage = MessageCenter.webAppTextFieldRequired)]

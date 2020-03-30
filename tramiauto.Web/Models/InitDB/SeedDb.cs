@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using tramiauto.Web.Helpers;
 using tramiauto.Web.Models.Entities;
 using tramiauto.Common.Model.DataEntity;
+using tramiauto.Common;
 
 namespace tramiauto.Web.Models.InitDB
 {
@@ -43,25 +44,25 @@ namespace tramiauto.Web.Models.InitDB
         {
             if (!_context.TipoTramites.Any() && !_context.Requisitos.Any())
             {                
-                _context.TipoTramites.Add(new TipoTramite { Orden = 1, Nombre = "Renovación Trajeta Circulación", Descripcion = "Renovación Trajeta Circulación", Costo = 850, TiempoOperacion = 3 });
-                _context.TipoTramites.Add(new TipoTramite { Orden = 2, Nombre = "Cambio de Propetario", Descripcion = "Cambio de Propetario", Costo = 750, TiempoOperacion = 5 });
-                _context.TipoTramites.Add(new TipoTramite { Orden = 3, Nombre = "Placas", Descripcion = "Placas", Costo = 1000, TiempoOperacion = 8 });
-                _context.TipoTramites.Add(new TipoTramite { Orden = 0, Nombre = "Seleccione un Tramite", Descripcion = "Favor de seleccionar un tramite", Costo = -1, TiempoOperacion = -1 });
+                _context.TipoTramites.Add(new TipoTramite { Orden = 1, Nombre = "Renovación Trajeta Circulación", Descripcion = "Renovación Trajeta Circulación", Costo = 850 , CostoUrgente = 100, CostoAtencionEjecutiva = 200 , TiempoOperacion = 3 });
+                _context.TipoTramites.Add(new TipoTramite { Orden = 2, Nombre = "Cambio de Propetario"          , Descripcion = "Cambio de Propetario"          , Costo = 750 , CostoUrgente = 100, CostoAtencionEjecutiva = 200, TiempoOperacion = 5 });
+                _context.TipoTramites.Add(new TipoTramite { Orden = 3, Nombre = "Placas"                        , Descripcion = "Placas"                        , Costo = 1000, CostoUrgente = 100, CostoAtencionEjecutiva = 200 , TiempoOperacion = 8 });
+                _context.TipoTramites.Add(new TipoTramite { Orden = 0, Nombre = "Seleccione un Tramite"         , Descripcion = "Favor de seleccionar un tramite", Costo = -1, CostoUrgente=-1, CostoAtencionEjecutiva=-1, TiempoOperacion = -1 });
                 _context.SaveChanges();
 
                 _context.Requisitos.Add(new Requisito { TipoTramite = _context.TipoTramites.Where(tt => tt.Orden == 0).FirstOrDefault(), Orden = 0, Nombre = "Seleccione un requisito", Descripcion = "Favor de seleccionar un requisito" });
 
                 _context.Requisitos.Add(new Requisito { TipoTramite = _context.TipoTramites.Where(tt => tt.Orden == 1).FirstOrDefault(), Orden = 0, Nombre = "Seleccione un requisito", Descripcion = "Favor de seleccionar un requisito" });
-                _context.Requisitos.Add(new Requisito { TipoTramite = _context.TipoTramites.Where(tt => tt.Orden == 1).FirstOrDefault(), Orden = 1, Nombre = "Tenencia", Descripcion = "Pago de Tenencia" });
-                _context.Requisitos.Add(new Requisito { TipoTramite = _context.TipoTramites.Where(tt => tt.Orden == 1).FirstOrDefault(), Orden = 2, Nombre = "Verificacion", Descripcion = "Pago de Verificacion" });
-                _context.Requisitos.Add(new Requisito { TipoTramite = _context.TipoTramites.Where(tt => tt.Orden == 1).FirstOrDefault(), Orden = 3, Nombre = "Factura", Descripcion = "Factura / Carta Factura" });
+                _context.Requisitos.Add(new Requisito { TipoTramite = _context.TipoTramites.Where(tt => tt.Orden == 1).FirstOrDefault(), Orden = 1, Nombre = "Tenencia"               , Descripcion = "Pago de Tenencia" });
+                _context.Requisitos.Add(new Requisito { TipoTramite = _context.TipoTramites.Where(tt => tt.Orden == 1).FirstOrDefault(), Orden = 2, Nombre = "Verificacion"           , Descripcion = "Pago de Verificacion" });
+                _context.Requisitos.Add(new Requisito { TipoTramite = _context.TipoTramites.Where(tt => tt.Orden == 1).FirstOrDefault(), Orden = 3, Nombre = "Factura"                , Descripcion = "Factura / Carta Factura" });
 
                 _context.Requisitos.Add(new Requisito { TipoTramite = _context.TipoTramites.Where(tt => tt.Orden == 2).FirstOrDefault(), Orden = 0, Nombre = "Seleccione un requisito", Descripcion = "Favor de seleccionar un requisito" });
-                _context.Requisitos.Add(new Requisito { TipoTramite = _context.TipoTramites.Where(tt => tt.Orden == 2).FirstOrDefault(), Orden = 1, Nombre = "Tenencia", Descripcion = "Pago de Tenencia" });
-                _context.Requisitos.Add(new Requisito { TipoTramite = _context.TipoTramites.Where(tt => tt.Orden == 2).FirstOrDefault(), Orden = 2, Nombre = "Verificacion", Descripcion = "Verificacion" });
+                _context.Requisitos.Add(new Requisito { TipoTramite = _context.TipoTramites.Where(tt => tt.Orden == 2).FirstOrDefault(), Orden = 1, Nombre = "Tenencia"               , Descripcion = "Pago de Tenencia" });
+                _context.Requisitos.Add(new Requisito { TipoTramite = _context.TipoTramites.Where(tt => tt.Orden == 2).FirstOrDefault(), Orden = 2, Nombre = "Verificacion"           , Descripcion = "Verificacion" });
 
-                _context.Requisitos.Add(new Requisito { TipoTramite = _context.TipoTramites.Where(tt => tt.Orden == 3).FirstOrDefault(), Orden = 0, Nombre = "Seleccione un requisito", Descripcion = "Favor de seleccionar un requisito" });
-                _context.Requisitos.Add(new Requisito { TipoTramite = _context.TipoTramites.Where(tt => tt.Orden == 3).FirstOrDefault(), Orden = 1, Nombre = "Multas", Descripcion = "Pago de Multas" });
+                _context.Requisitos.Add(new Requisito { TipoTramite = _context.TipoTramites.Where(tt => tt.Orden == 3).FirstOrDefault(), Orden = 0, Nombre = "Seleccione un requisito" , Descripcion = "Favor de seleccionar un requisito" });
+                _context.Requisitos.Add(new Requisito { TipoTramite = _context.TipoTramites.Where(tt => tt.Orden == 3).FirstOrDefault(), Orden = 1, Nombre = "Multas"                  , Descripcion = "Pago de Multas" });
                 _context.Requisitos.Add(new Requisito { TipoTramite = _context.TipoTramites.Where(tt => tt.Orden == 3).FirstOrDefault(), Orden = 2, Nombre = "Comprobante de Domicilio", Descripcion = "Comprobante de Domicilioo" });
                 _context.SaveChanges();
             }
@@ -89,9 +90,9 @@ namespace tramiauto.Web.Models.InitDB
         {
             if (!_context.FormasDePago.Any())
             {
-                _context.FormasDePago.Add(new FormaDePago { Tipo = "CARD" , IdOpenPay = 6, Nombre = "Tarjeta Crédito/Débito", Descripcion = "Pago con tarjeta de crédito ó débito" });
-                _context.FormasDePago.Add(new FormaDePago { Tipo = "BANK" , IdOpenPay = 7, Nombre = "Banco" , Descripcion = "Pago mediante cuenta bancaria" });
-                _context.FormasDePago.Add(new FormaDePago { Tipo = "STORE", IdOpenPay = 8, Nombre = "Tienda", Descripcion = "Pago mediante supermercados, farmacias o tiendas de conveniencia" });
+                _context.FormasDePago.Add(new FormaDePago { Tipo = MessageCenter.FormaDePagoCard , IdOpenPay = 6, Nombre = "Tarjeta Crédito/Débito", Descripcion = "Pago con tarjeta de crédito ó débito" });
+                _context.FormasDePago.Add(new FormaDePago { Tipo = MessageCenter.FormaDePagoBank , IdOpenPay = 7, Nombre = "Banco" , Descripcion = "Pago mediante cuenta bancaria" });
+                _context.FormasDePago.Add(new FormaDePago { Tipo = MessageCenter.FormaDePagoStore, IdOpenPay = 8, Nombre = "Tienda", Descripcion = "Pago mediante supermercados, farmacias o tiendas de conveniencia" });
                 _context.FormasDePago.Add(new FormaDePago { Tipo = "-"    , IdOpenPay = 0, Nombre = "Seleccione un método de Pago", Descripcion = "-" });
                 await _context.SaveChangesAsync();
             }

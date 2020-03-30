@@ -47,6 +47,8 @@ namespace tramiauto.Common
         public const String appLabelErrorNoCam = "Error No Cámara";
         public const String appLabelErrorTram  = "Requisito o Doc";
         public const String appLabelErrorTR    = "Favor de seleccionar el requisito o documento a anexar";
+        public const String appLabelErrorTT    = "Favor de seleccionar el tipo de Tramite a realizar";
+        public const String appLabelErrorFP    = "Favor de seleccionar una forma de pago";
         public const String appDirDocs         = "mx.tramiauto";
 
         public const String appLabelErrorConnect     = "Error de Conectividad";
@@ -80,6 +82,10 @@ namespace tramiauto.Common
         public const String commonMessageRecoverEmail   = "Han sido enviadas instrucciones para recuperar la contresaña al correo electrónico.";
         public const String commonMessagePassReset      = "La contraseña ha sido reestablecida, favor de ingresar al portal.";
         public const String commonMessageErrorPassReset = "Ha ocurrido un error al intentar reestablecer la contraseña. Favor de contactar al administrador.";
+
+        public const String FormaDePagoCard  = "CARD";
+        public const String FormaDePagoBank  = "BANK";
+        public const String FormaDePagoStore = "STORE";
 
         /*******Common Messages********/
     }

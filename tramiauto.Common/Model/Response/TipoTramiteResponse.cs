@@ -21,6 +21,14 @@ namespace tramiauto.Common.Model.Response
         [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]        
         public decimal Costo { get; set; }
 
+        [Display(Name = "Costo de Tramite Urgente")]        
+        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]        
+        public decimal CostoUrgente { get; set; }
+
+        [Display(Name = "Costo de Atención Ejecutiva")]        
+        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]        
+        public decimal CostoAtencionEjecutiva { get; set; }
+
         [Display(Name = "Días Habiles")]        
         public int TiempoOperacion { get; set; }
     }

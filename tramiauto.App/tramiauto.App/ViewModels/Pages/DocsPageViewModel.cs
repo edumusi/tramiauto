@@ -22,7 +22,7 @@ namespace tramiauto.App.ViewModels.Pages
     {
         public DelegateCommand<object> SelectionChangedCommand { get; set; }
 
-        private Tramite _tramite;
+        private TramiteAPP _tramite;
         private string _tipoTramite;
         private Command _openGalleryTappedCommand;
         private Command _takeAPhotoTappedCommand;
@@ -53,7 +53,7 @@ namespace tramiauto.App.ViewModels.Pages
 
         public RequisitoResponse SelectedRequisito { get; set; }
 
-        public Tramite Tramite
+        public TramiteAPP Tramite
         {   get => _tramite;
             set => SetProperty(ref _tramite, value);
         }
@@ -81,7 +81,7 @@ namespace tramiauto.App.ViewModels.Pages
                 IsOpenGallery      = false;
             }
 
-            await App.Current.MainPage.DisplayAlert("OpenGalleryTapped", $"Docs: [{Tramite?.Monto}]", MessageCenter.appLabelAceptar);
+            await App.Current.MainPage.DisplayAlert("OpenGalleryTapped", $"Docs: [{Tramite?.Costo}]", MessageCenter.appLabelAceptar);
             if (!CrossMedia.Current.IsPickPhotoSupported)
             {                
                 await App.Current.MainPage.DisplayAlert("no upload", "picking a photo is not supported", "ok");
@@ -147,7 +147,7 @@ namespace tramiauto.App.ViewModels.Pages
             Doc2Label   = "Doc " + SelectedRequisito.Nombre + " por cargar";
             RaisePropertyChanged("Doc2Label");
 
-            await App.Current.MainPage.DisplayAlert("TakeAPhotoTapped", $"Docs: [{Tramite?.Monto}]", MessageCenter.appLabelAceptar);
+            await App.Current.MainPage.DisplayAlert("TakeAPhotoTapped", $"Docs: [{Tramite?.Costo}]", MessageCenter.appLabelAceptar);
         }
 
         private async void ImageTapped()
@@ -174,14 +174,15 @@ namespace tramiauto.App.ViewModels.Pages
 
             if (parameters.ContainsKey("tramite"))
                { 
-                 Tramite = parameters.GetValue<Tramite>("tramite");
-                 UsuarioResponse _usuario = JsonConvert.DeserializeObject<UsuarioResponse>(Settings.Usuario); 
-                 int.TryParse(Tramite.TipoTramite, out int tt);
-                                
-                 _tipoTramite = _usuario.TiposTramite.Where(Wutt => Wutt.Id == tt).Select(Sutt => Sutt.Nombre).FirstOrDefault().ToString();
-                 Requisitos   =  new ObservableCollection<RequisitoResponse>(_usuario.Requisitos.Where(Wutt => Wutt.IdTipoTramite == tt).OrderBy(r => r.Orden).ToList<RequisitoResponse>());                 
+                 Tramite = parameters.GetValue<TramiteAPP>("tramite");
 
-                 RaisePropertyChanged("Requisitos");
+                 UsuarioResponse _usuario = JsonConvert.DeserializeObject<UsuarioResponse>(Settings.Usuario);                  
+                                
+                 _tipoTramite = _usuario.TiposTramite.Where(Wutt => Wutt.Id == Tramite.TipoTramite.Id).Select(Sutt => Sutt.Nombre).FirstOrDefault().ToString();
+               // Requisitos    = new ObservableCollection<RequisitoResponse>(Tramite.Adjuntos.OrderBy(r => r.Orden).ToList<RequisitoResponse>());
+                Requisitos   =  new ObservableCollection<RequisitoResponse>(_usuario.Requisitos.Where(Wutt => Wutt.IdTipoTramite == Tramite.TipoTramite.Id).OrderBy(r => r.Orden).ToList<RequisitoResponse>());                 
+
+                RaisePropertyChanged("Requisitos");
                }
 
             Title = MessageCenter.appTitleDocsTramite + _tipoTramite;

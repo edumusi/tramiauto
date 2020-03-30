@@ -48,7 +48,7 @@ namespace tramiauto.Common.Model.Response
         public ICollection<RequisitoResponse> Requisitos   { get; set; }
 
         [Display(Name = "Formas de Pago")]
-        public ICollection<FormaDePago> FormasDePago { get; set; }
+        public ICollection<FormaDePagoResponse> FormasDePago { get; set; }
 
     }//CLASS
 }//NAMESPACE

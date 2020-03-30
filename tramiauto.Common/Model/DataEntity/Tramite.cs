@@ -9,7 +9,8 @@ namespace tramiauto.Common.Model.DataEntity
     public class Tramite
     {
         [Key]
-        public int Id { get; set; }        
+        public int Id { get; set; }
+        
 
         [Display(Name = "Tramite")]
         [Required(ErrorMessage      = MessageCenter.webAppTextFieldRequired)]

@@ -15,6 +15,11 @@
             <x:String x:Key="formatPercent">{0:0%}</x:String>
             <x:String x:Key="formatInt">{0:N}</x:String>
 
+            <Color x:Key="OficialBlueColor"  >#0741AD</Color>
+            <Color x:Key="OficialGrayColor"  >#ACB1B4</Color>
+            <Color x:Key="OficialWhiteColor" >#FFFFFF</Color>
+            <Color x:Key="OficialSilverColor">Silver</Color>
+            <Color x:Key="TextColor"         >#495F6E</Color>
         </ResourceDictionary>
 
     </Application.Resources>

@@ -6,7 +6,7 @@
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="tramiauto.App.Views.TramitesPage"
              xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"             
-             BackgroundColor="Silver"
+             BackgroundColor="{StaticResource OficialSilverColor}"
              Title="{Binding Title}">
 
             <StackLayout Padding="15">
@@ -17,8 +17,8 @@
                                   CornerRadius="25"
                                   HasShadow="True"
                                   BorderWidth="1"
-                                  BorderColor="Gray"
-                                  BackgroundColor="#0741AD"
+                                  BorderColor     = "{StaticResource OficialGrayColor}"
+                                  BackgroundColor = "{StaticResource OficialBlueColor}"
                                   ImageSource="ic_input.png"
                                   ShowIcon="True"
                                   ImageAlignment="Start"

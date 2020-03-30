@@ -8,56 +8,66 @@
              xmlns:inputLayout= "clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
              xmlns:numericBox = "clr-namespace:Syncfusion.SfNumericTextBox.XForms;assembly=Syncfusion.SfNumericTextBox.XForms"
              xmlns:comboBox   = "clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
+             xmlns:busyindicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
              Title="{Binding Title}">
     <ContentPage.Content>
         <StackLayout>
-            <syncfusion:SfAccordion x:Name="LayoutRoot" Grid.Row="1" HeaderIconPosition="Start" ExpandMode="Multiple"  AutoScrollPosition="Top" AnimationEasing="SinOut">
-                <syncfusion:SfAccordion.Items>
-                    <syncfusion:AccordionItem IconColor="#0741AD">
-                        <syncfusion:AccordionItem.Header>
-                            <Grid> <Label TextColor="#495F6E" Text="Tipo de Tramite" HeightRequest="50" VerticalTextAlignment="Center"/> </Grid>
-                        </syncfusion:AccordionItem.Header>
-                        <syncfusion:AccordionItem.Content>
-                            <Grid Padding="10,10,10,10" BackgroundColor="#FFFFFF">
-                                <comboBox:SfComboBox x:Name="comboBoxTT" VerticalOptions="FillAndExpand" DropDownCornerRadius="8" HeightRequest="40" MultiSelectMode="None" SelectedIndex="0" DataSource="{Binding TiposTramite, Mode=TwoWay}" DisplayMemberPath="Nombre" >
-                                    <comboBox:SfComboBox.Behaviors>
-                                        <local:EventToCommandBehaviorComboBox Command="{Binding SelectionChangedTT}"  EventName="SelectionChanged"/>
-                                    </comboBox:SfComboBox.Behaviors>
-                                </comboBox:SfComboBox>
-                                <!-- 
-                                  <inputLayout:SfTextInputLayout
-                                   Hint="Amount"
-                                   HelperText="Required *">
-                                   <numericBox:SfNumericTextBox 
-                                      Value="123.45"
-                                      FormatString="c" />
-                                </inputLayout:SfTextInputLayout>
-                                -->
-                            </Grid>
-                        </syncfusion:AccordionItem.Content>
-                    </syncfusion:AccordionItem>
+            <ScrollView>
+                <syncfusion:SfAccordion x:Name="LayoutRoot" Grid.Row="1" HeaderIconPosition="Start" ExpandMode="Multiple"  AutoScrollPosition="Top" AnimationEasing="SinOut">
+                    <syncfusion:SfAccordion.Items>
+                        <syncfusion:AccordionItem IconColor="#0741AD">
+                            <syncfusion:AccordionItem.Header>
+                                <Grid>
+                                    <Label TextColor="{StaticResource TextColor}" FontAttributes = "Bold" Text="1) Tipo de Tramite" HeightRequest="50" VerticalTextAlignment="Center"/>
+                                </Grid>
+                            </syncfusion:AccordionItem.Header>
+                            <syncfusion:AccordionItem.Content>
+                                <Grid Padding="10,10,10,10" BackgroundColor="{StaticResource OficialWhiteColor}">
+                                    <comboBox:SfComboBox x:Name="comboBoxTT" VerticalOptions="FillAndExpand" DropDownCornerRadius="8" HeightRequest="40" MultiSelectMode="None" SelectedIndex="0" DataSource="{Binding TiposTramite, Mode=TwoWay}" DisplayMemberPath="Nombre" >
+                                        <comboBox:SfComboBox.Behaviors>
+                                            <local:EventToCommandBehaviorComboBox Command="{Binding SelectionChangedTT}" EventName="SelectionChanged"/>
+                                        </comboBox:SfComboBox.Behaviors>
+                                    </comboBox:SfComboBox>
+                                </Grid>
+                            </syncfusion:AccordionItem.Content>
+                        </syncfusion:AccordionItem>
 
-                    <syncfusion:AccordionItem>
-                        <syncfusion:AccordionItem.Header>
-                            <Grid> <Label TextColor="#495F6E" Text="Documentación" HeightRequest="50" VerticalTextAlignment="Center"/> </Grid>
-                        </syncfusion:AccordionItem.Header>
-                        <syncfusion:AccordionItem.Content>
-                            <Grid BackgroundColor="#FFFFFF">
-                                <inputLayout:SfTextInputLayout
-                                x:Name="testField"
-                                Hint="Birth date"
-                                ErrorText="Name required*"
-                                HasError="True"
-                                ShowCharCount="true"
-                                CharMaxLength="8"
-                                LeadingViewPosition="Inside" >
-                                <Entry />
-                                <inputLayout:SfTextInputLayout.LeadingView>
+                        <syncfusion:AccordionItem>
+                            <syncfusion:AccordionItem.Header>
+                                <Grid>
+                                    <Label TextColor="{StaticResource TextColor}" FontAttributes = "Bold" Text="2) Documentación" HeightRequest="50" VerticalTextAlignment="Center"/>
+                                </Grid>
+                            </syncfusion:AccordionItem.Header>
+                            <syncfusion:AccordionItem.Content>
+                                <Grid BackgroundColor="{StaticResource OficialWhiteColor}">
+                                    <ListView ItemsSource="{Binding DocsAdjuntos}" HasUnevenRows="True" SeparatorVisibility="None">
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <ViewCell>
+                                                    <StackLayout>
+                                                        <Label Text="{Binding Requisito}" FontSize="Medium" />
+                                                        <Button Text="X" BackgroundColor="Gray" />
+                                                    </StackLayout>
+                                                </ViewCell>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+                                    <!--
+                                    <inputLayout:SfTextInputLayout
+                                    x:Name              = "testFieldLayout"
+                                    Hint                = "Birth date"
+                                    ErrorText           = "Name required*"
+                                    HasError            = "{Binding IsTestEmpty}"
+                                    ShowCharCount       = "True"
+                                    CharMaxLength       = "8"
+                                    LeadingViewPosition = "Inside" >
+                                    <Entry x:Name="testField" Text="{Binding TestField}" />
+                                    <inputLayout:SfTextInputLayout.LeadingView>
                                         <Label Text="&#x1F5D2;"/>
-                                 </inputLayout:SfTextInputLayout.LeadingView>
+                                    </inputLayout:SfTextInputLayout.LeadingView>
                                 </inputLayout:SfTextInputLayout>
-                                
-                                <buttons:SfButton x:Name           = "buttonDocs"                                                                     
+-->
+                                    <buttons:SfButton x:Name           = "buttonDocs"                                                                     
                                                   HeightRequest    = "50"
                                                   WidthRequest     = "80"
                                                   VerticalOptions  = "Start"
@@ -65,46 +75,126 @@
                                                   CornerRadius     = "25"
                                                   HasShadow        = "True"
                                                   BorderWidth      = "1"
-                                                  BorderColor      = "Gray"
-                                                  BackgroundColor  = "#0741AD"
+                                                  BorderColor      = "{StaticResource OficialGrayColor}"
+                                                  BackgroundColor  = "{StaticResource OficialBlueColor}"
                                                   ImageSource      = "ic_input.png"
                                                   ShowIcon         = "True"
                                                   ImageAlignment   = "Start"
                                                   Text             = "Docs"                                  
                                                   Command          = "{Binding AddDocsCommand}"
-                                                  IsVisible        = "{Binding IsVisibleButtonDoc, Mode=TwoWay}"                              
+                                                  IsVisible        = "{Binding IsVisibleButtonDoc, Mode=TwoWay}"
                                             />
-                            </Grid>
-                        </syncfusion:AccordionItem.Content>
-                    </syncfusion:AccordionItem>
+                                </Grid>
+                            </syncfusion:AccordionItem.Content>
+                        </syncfusion:AccordionItem>
 
-                    <syncfusion:AccordionItem>
-                        <syncfusion:AccordionItem.Header>
-                          <Grid> <Label TextColor="#495F6E" Text="Forma de Pago" HeightRequest="50" VerticalTextAlignment="Center"/> </Grid>
-                        </syncfusion:AccordionItem.Header>
-                        <syncfusion:AccordionItem.Content>
-                            <Grid Padding="10,10,10,10" BackgroundColor="#FFFFFF">
-                                <comboBox:SfComboBox x:Name="comboBoxFP" VerticalOptions="FillAndExpand" DropDownCornerRadius="8" HeightRequest="40" MultiSelectMode="None" SelectedIndex="0" DataSource="{Binding FormasDePago, Mode=TwoWay}" DisplayMemberPath="Nombre" >
-                                    <comboBox:SfComboBox.Behaviors>
-                                        <local:EventToCommandBehaviorComboBox Command="{Binding SelectionChangedFP}"  EventName="SelectionChanged"/>
-                                    </comboBox:SfComboBox.Behaviors>
-                                </comboBox:SfComboBox>
-                                <!--
-                                <inputLayout:SfTextInputLayout
-                                    Hint="Name"
-                                    InputViewPadding="5" 
-                                    OutlineCornerRadius="8"
-                                    ContainerType="Outlined"
-                                    HelperText="Enter your name">
-                                    <Entry />
-                                </inputLayout:SfTextInputLayout>
-                                -->
-                            </Grid>
-                        </syncfusion:AccordionItem.Content>
-                    </syncfusion:AccordionItem>
+                        <syncfusion:AccordionItem>
+                            <syncfusion:AccordionItem.Header>
+                                <Grid>
+                                    <Label TextColor="{StaticResource TextColor}" FontAttributes = "Bold" Text="3) Forma de Pago" HeightRequest="50" VerticalTextAlignment="Center"/>
+                                </Grid>
+                            </syncfusion:AccordionItem.Header>
+                            <syncfusion:AccordionItem.Content>
+                                <Grid Padding="10,10,10,10" BackgroundColor="{StaticResource OficialWhiteColor}">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="50"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <comboBox:SfComboBox Grid.Row="0" x:Name="comboBoxFP" VerticalOptions="FillAndExpand" DropDownCornerRadius="8" HeightRequest="40" MultiSelectMode="None" SelectedIndex="0" DataSource="{Binding FormasDePago, Mode=TwoWay}" DisplayMemberPath="Nombre" >
+                                        <comboBox:SfComboBox.Behaviors>
+                                            <local:EventToCommandBehaviorComboBox Command="{Binding SelectionChangedFP}"  EventName="SelectionChanged"/>
+                                        </comboBox:SfComboBox.Behaviors>
+                                    </comboBox:SfComboBox>
 
-                </syncfusion:SfAccordion.Items>
-            </syncfusion:SfAccordion>
+                                    <Grid Grid.Row="1" IsVisible="{Binding VisibleFormaPagoCard, Mode=TwoWay}">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width = "Auto"/>
+                                            <ColumnDefinition Width = "Auto"/>
+                                            <ColumnDefinition Width = "Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <inputLayout:SfTextInputLayout
+                                            Grid.Row            = "0" 
+                                            x:Name              = "HolderNameFieldLayout"
+                                            Hint                = "Nombre"
+                                            HelperText          = "Requerido *"
+                                            ErrorText           = "El nombre de la Tarjeta es requerido*"
+                                            HasError            = "{Binding IsTestEmpty}"
+                                            ShowCharCount       = "True"
+                                            CharMaxLength       = "8"
+                                            LeadingViewPosition = "Inside" >
+                                            <Entry x:Name="HolderName" Text="{Binding Tramite.Card.HolderName}" FontSize="{Binding ContainerLabelFontSize}"/>
+                                            <inputLayout:SfTextInputLayout.LeadingView>
+                                                <Label Text="&#x1F5D2;"/>
+                                            </inputLayout:SfTextInputLayout.LeadingView>
+                                        </inputLayout:SfTextInputLayout>
+                                        <inputLayout:SfTextInputLayout
+                                        Grid.Row            = "1" 
+                                        Hint                = "Number"
+                                        HelperText          = "Requerido *"
+                                        ShowCharCount       = "True"
+                                        CharMaxLength       = "16"
+                                        LeadingViewPosition = "Inside">
+                                            <numericBox:SfNumericTextBox Value="{Binding Tramite.Card.Number}" />
+                                            <inputLayout:SfTextInputLayout.LeadingView>
+                                                <Label Text="&#x1F5D2;"/>
+                                            </inputLayout:SfTextInputLayout.LeadingView>
+                                        </inputLayout:SfTextInputLayout>
+
+                                        <Grid Grid.Row="2">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width = "auto"/>
+                                                <ColumnDefinition Width = "100" />
+                                                <ColumnDefinition Width = "100" />
+                                            </Grid.ColumnDefinitions>
+                                            <inputLayout:SfTextInputLayout
+                                            Grid.Column="0"
+                                           Hint="Expiration Month"
+                                           HelperText="Requerido *">
+                                                <numericBox:SfNumericTextBox 
+                                              Value="00"
+                                              FormatString="c" />
+                                            </inputLayout:SfTextInputLayout>
+                                            <inputLayout:SfTextInputLayout
+                                            Grid.Column="1"
+                                           Hint="Expiration Year"
+                                           HelperText="Requerido *">
+                                                <numericBox:SfNumericTextBox 
+                                              Value="00"
+                                              FormatString="c" />
+                                            </inputLayout:SfTextInputLayout>
+                                            <inputLayout:SfTextInputLayout
+                                            Grid.Column="2"
+                                           Hint="CVV"
+                                           HelperText="Requerido  *">
+                                                <numericBox:SfNumericTextBox 
+                                              Value="0"/>
+                                            </inputLayout:SfTextInputLayout>
+                                        </Grid>
+                                    </Grid>
+                                    <Label Grid.Row="2" IsVisible="{Binding VisibleFormaPagoBank , Mode=TwoWay}" Text="Banco" FontAttributes="Bold"/>
+                                    <Label Grid.Row="3" IsVisible="{Binding VisibleFormaPagoStore, Mode=TwoWay}" Text="Super" FontAttributes="Bold"/>
+
+                                </Grid>
+                            </syncfusion:AccordionItem.Content>
+                        </syncfusion:AccordionItem>
+
+                    </syncfusion:SfAccordion.Items>
+                </syncfusion:SfAccordion>
+            </ScrollView>
+            <busyindicator:SfBusyIndicator Grid.Row          = "1"
+                	                       AnimationType     = "DoubleCircle"                	                       
+                	                       BackgroundColor   = "Transparent"
+                	                       HorizontalOptions = "Center"
+                	                       VerticalOptions   = "Center"
+                	                       TextColor         = "{StaticResource OficialBlueColor}"                	        
+                	                       Title             = "Cargando..."                	        
+                	                       ViewBoxWidth      = "80" ViewBoxHeight="80"
+                	                       IsVisible         = "{Binding IsRunning}"
+                                           AbsoluteLayout.LayoutBounds = "2, 2, .5, .5"
+                	                       AbsoluteLayout.LayoutFlags  = "All"
+                	                     />
             <buttons:SfButton x:Name           = "button"                               
                               HeightRequest    = "50"
                               WidthRequest     = "200"
@@ -113,96 +203,16 @@
                               CornerRadius     = "25"
                               HasShadow        = "True"
                               BorderWidth      = "1"
-                              BorderColor      = "Gray"
-                              BackgroundColor  = "#0741AD"
+                              BorderColor      = "{StaticResource OficialGrayColor}"
+                              BackgroundColor  = "{StaticResource OficialBlueColor}"
                               ImageSource      = "ic_input.png"
                               ShowIcon         = "True"
                               ImageAlignment   = "Start"
                               Text             = "Tramitar"
                               Command          = "{Binding NewTramiteCommand}"
                               CommandParameter = "{x:Reference LayoutRoot}"
+                              IsEnabled        = "{Binding IsEnabled}"
                             />
         </StackLayout>
     </ContentPage.Content>
-</ContentPage>
-<!--    
-    <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"             
-             xmlns:dataForm="clr-namespace:Syncfusion.XForms.DataForm;assembly=Syncfusion.SfDataForm.XForms"
-             xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"            
-             xmlns:local="clr-namespace:tramiauto.App"
-             mc:Ignorable="d"
-             x:Class="tramiauto.App.Views.NuevoTramitePage"
-             Title="{Binding Title}">
-    
-    <ContentPage.Behaviors>
-        <local:DataFormTramiteBehavior />
-    </ContentPage.Behaviors>
-
-    <ContentPage.Content>
-        <Grid  x:Name = "Grid_NRP" AutomationId="GridDF">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="50"/>
-
-            </Grid.RowDefinitions>
-            <ScrollView x:Name = "SV_NRP" AutomationId="scrollViewDF">
-                    <dataForm:SfDataForm x:Name           = "dfTramite"
-                                         VerticalOptions  = "FillAndExpand" 
-                                         HorizontalOptions= "FillAndExpand"                                 
-                                         Grid.Row         = "0"
-                                         LabelPosition    = "Top"                                   
-                                         ContainerType    = "Outlined"
-						                 DataObject       = "{Binding Tramite}"
-                                         NotifyPropertyChanges="True"
-                                     />
-            </ScrollView>
-            <AbsoluteLayout HorizontalOptions="CenterAndExpand">
-                <buttons:SfButton x:Name           = "buttonDocs" 
-                                  AutomationId     = "butDocAI"
-                                  Grid.Row         = "0"
-                                  HeightRequest    = "50"
-                                  WidthRequest     = "80"
-                                  VerticalOptions  = "Center"
-                                  HorizontalOptions= "Center"
-                                  CornerRadius     = "25"
-                                  HasShadow        = "True"
-                                  BorderWidth      = "1"
-                                  BorderColor      = "Gray"
-                                  BackgroundColor  = "#0741AD"
-                                  ImageSource      = "ic_input.png"
-                                  ShowIcon         = "True"
-                                  ImageAlignment   = "Start"
-                                  Text             = "Docs"                                  
-                                  Command          = "{Binding AddDocsCommand}"
-                                  IsVisible        = "{Binding IsVisibleButtonDoc, Mode=TwoWay}"
-                                  AbsoluteLayout.LayoutBounds="0,.25,80,45" AbsoluteLayout.LayoutFlags="XProportional,YProportional"
-                            />
-            </AbsoluteLayout>
-            <buttons:SfButton x:Name           = "button" 
-                              Grid.Row         = "1"
-                              HeightRequest    = "50"
-                              WidthRequest     = "200"
-                              VerticalOptions  = "Center"
-                              HorizontalOptions= "Center"
-                              CornerRadius     = "25"
-                              HasShadow        = "True"
-                              BorderWidth      = "1"
-                              BorderColor      = "Gray"
-                              BackgroundColor  = "#0741AD"
-                              ImageSource      = "ic_input.png"
-                              ShowIcon         = "True"
-                              ImageAlignment   = "Start"
-                              Text             = "Tramitar"
-                              Command          = "{Binding NewTramiteCommand}"
-                              CommandParameter = "{x:Reference dfTramite}"
-                            />
-        </Grid>
-    </ContentPage.Content>
-</ContentPage>
-    -->
-    
-    
-    
+</ContentPage>    

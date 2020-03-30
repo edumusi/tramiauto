@@ -9,8 +9,13 @@ namespace tramiauto.Common.Model.Response
     {
         public int Id { get; set; }
 
-        [Display(Name = "Tipo Adjunto")]        
-        public string Tipo { get; set; }
+        public int Orden { get; set; }
+
+        [Display(Name = "Requisito")]        
+        public string Requisito { get; set; }
+
+        [Display(Name = "Descripción")]
+        public string Descripcion { get; set; }
 
         [Display(Name = "Ruta")]        
         public string Ruta { get; set; }

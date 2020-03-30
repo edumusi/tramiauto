@@ -69,7 +69,7 @@ namespace tramiauto.Web.Helpers
 
         public List<TipoTramiteResponse> GetTipoTramites()
         {
-            var list = _dataContext.TipoTramites.Select(tt=> new TipoTramiteResponse { Id = tt.Id, Costo = tt.Costo, Nombre = tt.Nombre, Descripcion= tt.Descripcion, TiempoOperacion=tt.TiempoOperacion }
+            var list = _dataContext.TipoTramites.Select(tt=> new TipoTramiteResponse { Id = tt.Id, Costo = tt.Costo, CostoUrgente = tt.CostoUrgente, CostoAtencionEjecutiva=tt.CostoAtencionEjecutiva, Nombre = tt.Nombre, Descripcion= tt.Descripcion, TiempoOperacion=tt.TiempoOperacion }
                                                        ).OrderBy(v => v.Id).ToList();          
 
             return list;

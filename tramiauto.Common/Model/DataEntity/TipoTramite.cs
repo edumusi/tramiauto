@@ -28,6 +28,20 @@ namespace tramiauto.Common.Model.DataEntity
         [Column(TypeName = "decimal(18,4)")]
         public decimal Costo { get; set; }
 
+        [Display(Name = "Costo de Tramite Urgente")]
+        [Required(ErrorMessage = MessageCenter.webAppTextFieldRequired)]
+        [MaxLength(7, ErrorMessage = MessageCenter.webAppTextFieldMaxLength)]
+        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
+        [Column(TypeName = "decimal(18,4)")]
+        public decimal CostoUrgente { get; set; }
+
+        [Display(Name = "Costo de Atención Ejecutiva")]
+        [Required(ErrorMessage = MessageCenter.webAppTextFieldRequired)]
+        [MaxLength(7, ErrorMessage = MessageCenter.webAppTextFieldMaxLength)]
+        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
+        [Column(TypeName = "decimal(18,4)")]
+        public decimal CostoAtencionEjecutiva { get; set; }
+
         [Display(Name = "Días Habiles")]
         [Required(ErrorMessage     = MessageCenter.webAppTextFieldRequired)]
         [MaxLength(5, ErrorMessage = MessageCenter.webAppTextFieldMaxLength)]
