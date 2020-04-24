@@ -10,7 +10,7 @@ namespace tramiauto.Common.Services
     {        
         List<Menu> GenerateMenuWebAppRightHeader(bool IsAuthenticated, string name);
 
-        List<Menu> GenerateMenuWebAppLeftHeader(bool IsAuthenticated, string rol);
+        List<Menu> GenerateMenuWebAppLeftHeader(bool IsAuthenticated, string rol, string sectionActive);
     }//Class
 
 }//NameSpace

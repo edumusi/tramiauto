@@ -67,7 +67,7 @@ namespace tramiauto.Common.Services
                 };
         }
 
-        public List<Menu> GenerateMenuWebAppLeftHeader(bool IsAuthenticated, string rol)
+        public List<Menu> GenerateMenuWebAppLeftHeader(bool IsAuthenticated, string rol, string sectionActive)
         {
             if (IsAuthenticated && rol == RoleTA.Admin)
             return new List<Menu>
@@ -119,7 +119,25 @@ namespace tramiauto.Common.Services
                             }
                 };
 
-            return new List<Menu>();
+            return new List<Menu> {  new Menu{ Icon       = "fa fa-home",
+                                               PageName   = "Index",
+                                               Controller = "Home",
+                                               Title      = "Inicio",
+                                               ActiveClass= sectionActive=="HomeIndex" ? "active" :""
+                                             }
+                                   , new Menu{ Icon       = "fa fa-id-card",
+                                               PageName   = "Price",
+                                               Controller = "Home",
+                                               Title      = "Precios",
+                                               ActiveClass= sectionActive=="HomePrice" ? "active" :""
+                                             }
+                                   , new Menu{ Icon       = "fa fa-user",
+                                               PageName   = "Login",
+                                               Controller = "Account",
+                                               Title      = "Portal",
+                                               ActiveClass= sectionActive=="PortalLogin" ? "active" :""
+                                             }
+                                  };
         }
 
     }//Class

@@ -68,6 +68,8 @@ namespace tramiauto.Common
 
 
         /*******Common Messages********/
+        public const String slogan                   = "Práctico y sencillo, mis coches en regla";
+        public const String productDescription       = "Breve descripción del servicio";
         public const String commonMessageChoose      = "[Por favor seleccione]";
         public const String commonMessageChooseValue = "-1";
 

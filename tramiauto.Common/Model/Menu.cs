@@ -14,5 +14,7 @@ namespace tramiauto.Common.Model
 
         public string Controller { get; set; }
 
+        public string ActiveClass { get; set; }
+
     }//Class
 }//NameSpace

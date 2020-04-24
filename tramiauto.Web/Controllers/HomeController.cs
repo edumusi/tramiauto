@@ -28,13 +28,38 @@ namespace tramiauto.Web.Controllers
 
         public IActionResult Index()
         {
-            ViewBag.MenuLeft  = _menuService.GenerateMenuWebAppLeftHeader (User.Identity.IsAuthenticated, _userHelper.GetRol( (User.Identity as ClaimsIdentity) ).FirstOrDefault() );
+            ViewBag.MenuLeft  = _menuService.GenerateMenuWebAppLeftHeader (User.Identity.IsAuthenticated, _userHelper.GetRol( (User.Identity as ClaimsIdentity) ).FirstOrDefault(), "HomeIndex");
             ViewBag.MenuRight = _menuService.GenerateMenuWebAppRightHeader(User.Identity.IsAuthenticated, User.Identity.Name);
+            ViewBag.ClassIni  = "fade-in";
+            ViewBag.Intro     = "<!-- Intro -->" +
+                                    "<div id = 'intro' > " +
+                                    "     <h1> " + MessageCenter.slogan + " </h1>" +
+                                    "        <p>" + MessageCenter.productDescription + "</p>" +
+                                    "           <ul class='actions'> " +
+                                    "        <li><a href = '#header' class='button icon solid solo fa-arrow-down scrolly' > Más info</a></li>" +
+                                    "    </ul>" +
+                                    "</div>" +
+                                 "<!-- Intro -->";
+            ViewBag.headerClass = "Commercial";
+
+            return View();
+        }
+
+
+        public IActionResult Price()
+        {
+            ViewBag.MenuLeft  = _menuService.GenerateMenuWebAppLeftHeader(User.Identity.IsAuthenticated, _userHelper.GetRol((User.Identity as ClaimsIdentity)).FirstOrDefault(), "HomePrice");
+            ViewBag.MenuRight = _menuService.GenerateMenuWebAppRightHeader(User.Identity.IsAuthenticated, User.Identity.Name);
+            ViewBag.headerClass = "Commercial";
+
+
             return View();
         }
 
         public IActionResult Privacy()
         {
+            
+
             return View();
         }
 
@@ -48,6 +73,8 @@ namespace tramiauto.Web.Controllers
         public IActionResult Error404()
         {
             ViewBag.Message = MessageCenter.webAppMessagePageNotFound;
+            
+
             return View();
         }
 

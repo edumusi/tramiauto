@@ -1,65 +1,88 @@
 ﻿@{ var menuRight = ViewBag?.MenuRight == null ? new List<tramiauto.Common.Model.Menu>() : ViewBag?.MenuRight; }
+@{ var menuLeft = ViewBag?.MenuLeft == null ? new List<tramiauto.Common.Model.Menu>() : ViewBag?.MenuLeft;    }
+@{ var headerClass = ViewBag?.headerClass == null ? "headerPortal" : "header";                                }
 
-@{ var menuLeft = ViewBag?.MenuLeft == null ? new List<tramiauto.Common.Model.Menu>() : ViewBag?.MenuLeft; }
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Portal Tramiauto</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <!-- CSS Template-->
+    <link rel="stylesheet" href="@Href("~/assets/css/main.css")" />
+    <noscript><link rel="stylesheet" href="@Href("~/assets/css/noscript.css")" /></noscript>
+    <!-- CSS Template-->
+    <!-- CSS  MVC ASP.NET-->
+    <link rel="stylesheet" href="@Href("~/lib/bootstrap/dist/css/bootstrap.min.css")" />
+    <link rel="stylesheet" href="@Href("~/assets/css/site.css")" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- CSS  MVC ASP.NET-->
 </head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                @if (User.Identity.IsAuthenticated)
-                {<a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"> <img src="~/images/LogoIcon.png" alt="Tramiauto" width="50" height="50" /></a>}
-                else
-                {<a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Portal</a>}
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <!-- MENU DERECHO INI -->
-                    <ul class="navbar-nav ">
+<body class="is-preload">
+    <!-- Wrapper -->
+    <div id="wrapper" class=@ViewBag?.ClassIni>
 
-                        @foreach (var m in @menuRight)
-                        {
-                            <li><a asp-area="" asp-controller="@m.Controller" asp-action="@m.PageName"><i class="@m.Icon"></i> @m.Title </a> </li>
-}
-                    </ul>
-                    <!-- MENU DERECHO FIN -->
-                    <!-- MENU IZQUIERDO INI -->
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item"> <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index"><i class="fa fa-home"></i> Home</a> </li>
-                        @foreach (var m in @menuLeft)
-                        {
-                            <li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-controller="@m.Controller" asp-action="@m.PageName"><i class="@m.Icon"></i> @m.Title </a> </li>
-                        }
-                    </ul>
-                    <!-- MENU IZQUIERDO FIN -->
-                </div>
-            </div>
+        @Html.Raw((String)@ViewBag?.Intro)
+
+        <!-- Header -->
+        <header id="@headerClass">
+            <a asp-controller="Home" asp-action="Index" class="logo"><img src="@Url.Content("~/images/LogoIcon.png")" alt="Tramiauto" width="50" height="50" /></a>
+        </header>
+        <!-- Header -->
+        <!-- Nav -->
+        <nav id="nav">
+            <ul class="links">
+                @foreach (var m in @menuLeft)
+                {
+                    <li><a asp-controller="@m.Controller" asp-action="@m.PageName"><i class="@m.Icon"></i> @m.Title </a> </li>
+                }
+            </ul>
+            <ul class="icons">
+                @foreach (var m in @menuRight)
+                {
+                    <li><a asp-area="" asp-controller="@m.Controller" asp-action="@m.PageName"><i class="@m.Icon"></i> @m.Title </a> </li>
+                }
+                <li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+                <li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+                <li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+            </ul>
         </nav>
-    </header>
-    <div class="container box-shadow-raduis">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-    <br /><br />
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; @DateTime.Now.Year - Portal Tramiauto - <a asp-area="" asp-controller="Home" asp-action="Privacy"><i class="fa fa-file"></i> Política de Privacidad</a>
+        <!-- Nav -->
+
+        @RenderBody()
+
+        <!-- Copyright -->
+        <div id="copyright">
+            <ul>
+                <li> <a asp-area="" asp-controller="Home" asp-action="Privacy"><i class="fa fa-file"></i> Política de Privacidad</a></li>
+                <li>&copy; @DateTime.Now.Year - Portal Tramiauto</li>
+            </ul>
         </div>
-    </footer>
+        <!-- Copyright -->
+
+    </div>
+    <!-- Wrapper -->
+    <!-- Scripts MVC ASP.NET-->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
+    <!-- Scripts MVC ASP.NET-->
+    <!-- Scripts Template-->
+    <script src="@Href("~/assets/js/jquery.scrollex.min.js")"></script>
+    <script src="@Href("~/assets/js/jquery.scrolly.min.js")"></script>
+    <script src="@Href("~/assets/js/browser.min.js")"></script>
+    <script src="@Href("~/assets/js/breakpoints.min.js")"></script>
+    <script src="@Href("~/assets/js/util.js")"></script>
+    <script src="@Href("~/assets/js/main.js")"></script>
+    <!-- Scripts Template-->
+
 </body>
 </html>
+
+
+
+
+
+

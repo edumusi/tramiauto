@@ -5,22 +5,24 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-asdsad
-<h4>@ViewBag.Title</h4>
-asdasd
-<hr />
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<!-- Main -->
+<div id="main">
+    <h4>@ViewBag.Title</h4>
+
+    <hr />
 
     <div id="tabs">
         <ul>
             <li><a href="#tabs-1">Perfil</a></li>
-            <li><a href="#tabs-2">Cambiar Contraseña</a></li>            
+            <li><a href="#tabs-2">Cambiar Contraseña</a></li>
         </ul>
         <div id="tabs-1">
             <form asp-action="ChangeUser">
                 <input type="hidden" asp-for="OldPassword" />
                 <input type="hidden" asp-for="NewPassword" />
-                <input type="hidden" asp-for="Confirm"     />
+                <input type="hidden" asp-for="Confirm" />
                 <div class="row">
                     <div class="col-md-8">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -106,23 +108,25 @@ asdasd
                     <div class="col-md-4"></div>
                 </div>
             </form>
-        </div>        
-    </div>   
+        </div>
+    </div>
 
 
-@section Scripts 
-{ 
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}  
-    
+</div>
+<!-- Main -->
+
+@section Scripts
+{
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <script type="text/javascript">
-        $(document).ready(function ()
-        {            
+        $(document).ready(function () {
             $("#tabs").tabs({ active: 0 });
 
         });
-	</script>
+    </script>
 }
 
 
