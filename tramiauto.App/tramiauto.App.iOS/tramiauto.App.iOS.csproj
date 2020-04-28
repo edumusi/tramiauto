@@ -193,40 +193,40 @@
       <Version>1.0.25.3</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.Buttons">
-      <Version>17.4.0.51</Version>
+      <Version>18.1.0.45</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.Buttons.IOS">
-      <Version>17.4.0.51</Version>
+      <Version>18.1.0.45</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.Core">
-      <Version>17.4.0.55</Version>
+      <Version>18.1.0.45</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.Expander">
-      <Version>17.4.0.51</Version>
+      <Version>18.1.0.45</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfBusyIndicator">
-      <Version>17.4.0.51</Version>
+      <Version>18.1.0.45</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfBusyIndicator.IOS">
-      <Version>17.4.0.51</Version>
+      <Version>18.1.0.45</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfComboBox">
-      <Version>17.4.0.51</Version>
+      <Version>18.1.0.45</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfComboBox.IOS">
-      <Version>17.4.0.51</Version>
+      <Version>18.1.0.45</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfDataForm">
-      <Version>17.4.0.51</Version>
+      <Version>18.1.0.45</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfDataForm.IOS">
-      <Version>17.4.0.51</Version>
+      <Version>18.1.0.45</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfRotator">
-      <Version>17.4.0.51</Version>
+      <Version>18.1.0.45</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfRotator.IOS">
-      <Version>17.4.0.51</Version>
+      <Version>18.1.0.45</Version>
     </PackageReference>
     <PackageReference Include="Xam.Plugin.Connectivity">
       <Version>3.2.0</Version>
@@ -237,8 +237,8 @@
     <PackageReference Include="Xamarin.FFImageLoading.Forms">
       <Version>2.4.11.982</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.Forms" Version="4.4.0.991640" />
-    <PackageReference Include="Prism.DryIoc.Forms" Version="7.2.0.1367" />
+    <PackageReference Include="Xamarin.Forms" Version="4.5.0.657" />
+    <PackageReference Include="Prism.DryIoc.Forms" Version="7.2.0.1422" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\tramiauto.App\tramiauto.App.csproj">

@@ -21,7 +21,8 @@ namespace tramiauto.App
 
         protected override async void OnInitialized()
         {
-            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MjE1OTgxQDMxMzcyZTM0MmUzMG0yV2tIWEFhSitrRmYzczdsYXRKSlRIRGdKd0hKSUtETklQZ0hXWGFtQkU9;MjE1OTgyQDMxMzcyZTM0MmUzMEJibzg3RE9NcFVtQklGZWU0SVhoSWFjZG9PMEZLV3ZRTGxuSUFQYTRJSTg9;MjE1OTgzQDMxMzcyZTM0MmUzMFYyMzBmYWNHR1RWQUxadC9Xa29FSi9Fa3NpL29CWm5DRUQ3aVZwOVlxSm89;MjE1OTg0QDMxMzcyZTM0MmUzMFNkWDRtL01iUnJ3VGFJc2Q0L291aGNKZjUyaS9KblY5ZjFHNVU5MnJEMFE9;MjE1OTg1QDMxMzcyZTM0MmUzME55Ylk2dEQwWERnQ3BtRXhQT3Q5Tk4rUlVXd2dmL3pBZWsyVWwxUmNSQWc9");
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MjQ3NzIwQDMxMzgyZTMxMmUzMFQyOHpMV0k3Z2hkUnNBaGREVVo4dExaVWdJd0NzZTV2bFlkWUZMejBpRWs9");
+
             if ( CrossOpenpay.IsSupported )
                { CrossOpenpay.Current.Initialize(OPENPAY_ID, OPENPAY_PUBLIC_KEY, false); }
 

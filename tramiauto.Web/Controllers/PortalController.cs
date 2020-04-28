@@ -7,6 +7,7 @@ using tramiauto.Common.Services;
 using tramiauto.Web.Helpers;
 using tramiauto.Web.Models;
 using Microsoft.AspNetCore.Mvc;
+using tramiauto.Common.Model;
 
 namespace tramiauto.Web.Controllers
 {
@@ -35,7 +36,9 @@ namespace tramiauto.Web.Controllers
             ViewBag.MenuRight   = _menuService.GenerateMenuWebAppRightHeader(User.Identity.IsAuthenticated, User.Identity.Name);
             ViewBag.headerClass = "Portal";
 
-            return View();
+            spacingModel modelValue = new spacingModel { CellSpacing = new double[] { 10, 10 } };
+
+            return View(modelValue);            
         }
     }
 }

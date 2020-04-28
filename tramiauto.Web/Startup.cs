@@ -96,6 +96,9 @@ namespace tramiauto.Web
                 app.UseHsts();
             }
 
+            //Register Syncfusion license
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MjQ3Mjk5QDMxMzgyZTMxMmUzMElWRTNoYjJJQWFjYlRNdzc2R2RmRmxTN1BpL0NzUG0wcUwwMUpWczhxV0k9");
+
             app.UseStatusCodePagesWithReExecute("/error/{0}");
             app.UseHttpsRedirection();
             app.UseStaticFiles();

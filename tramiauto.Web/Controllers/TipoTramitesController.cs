@@ -8,6 +8,7 @@ using tramiauto.Common.Model.DataEntity;
 using tramiauto.Common.Services;
 using tramiauto.Web.Helpers;
 using tramiauto.Web.Models;
+using Syncfusion.EJ2.Grids;
 
 namespace tramiauto.Web.Controllers
 {
@@ -27,11 +28,11 @@ namespace tramiauto.Web.Controllers
         // GET: TipoTramites
         public async Task<IActionResult> Index()
         {
-            ViewBag.MenuLeft  = _menuService.GenerateMenuWebAppLeftHeader(User.Identity.IsAuthenticated, _userHelper.GetRol((User.Identity as ClaimsIdentity)).FirstOrDefault(),"TipoTramitesIndex");
-            ViewBag.MenuRight = _menuService.GenerateMenuWebAppRightHeader(User.Identity.IsAuthenticated, User.Identity.Name);            
-
-
-            return View(await _dataContext.TipoTramites.ToListAsync());
+            ViewBag.MenuLeft   = _menuService.GenerateMenuWebAppLeftHeader(User.Identity.IsAuthenticated, _userHelper.GetRol((User.Identity as ClaimsIdentity)).FirstOrDefault(),"TipoTramitesIndex");
+            ViewBag.MenuRight  = _menuService.GenerateMenuWebAppRightHeader(User.Identity.IsAuthenticated, User.Identity.Name);            
+            ViewBag.datasource = await _dataContext.TipoTramites.Where(i => i.Costo > 0).ToListAsync();
+            
+            return View();
         }
 
         // GET: TipoTramites/Details/5
